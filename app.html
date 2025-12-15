@@ -152,7 +152,7 @@ async function callAI(type){
   const input=document.getElementById(type+"Input").value.trim()
   if(!input) return alert("Please enter text")
 
-  const res=await fetch(`/.netlify/functions/${type}`,{
+  const res=await fetch("/api/pricing")`,{
     method:"POST",
     headers:{ "Content-Type":"application/json" },
     body:JSON.stringify({ text:input })
