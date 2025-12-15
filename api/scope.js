@@ -22,6 +22,68 @@ export default async function handler(req, res) {
             {
               role: "user",
               content: `Rewrite this into a professional scope of work with Included, Excluded, and Change Requests sections:\n\n${text}`
+              export default async function handler(req, res) {
+  try {
+    const { text } = req.body || {};
+
+    if (!text) {
+      return res.status(400).json({
+        output: "No scope description provided."
+      });
+    }
+
+    const response = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.key01}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "llama-3.1-8b-instant",
+          messages: [
+            {
+              role: "user",
+              content: `
+Rewrite the project description below into a clear, professional scope of work.
+
+Rules:
+- Use clear section headings
+- Include only what is explicitly mentioned
+- Do not assume development or additional services
+- Be precise and unambiguous
+- Keep language client-friendly but firm
+
+Structure the output exactly as:
+1. Project Overview
+2. Included
+3. Excluded
+4. Revisions & Change Requests
+
+Project description:
+${text}
+`
+            }
+          ],
+          temperature: 0.2
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    const output =
+      data?.choices?.[0]?.message?.content ||
+      "Scope could not be generated.";
+
+    res.status(200).json({ output });
+  } catch {
+    res.status(500).json({
+      output: "Server error while generating scope."
+    });
+  }
+}
             }
           ],
           temperature: 0.2
