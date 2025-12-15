@@ -1,27 +1,12 @@
-export async function handler(event) {
+export default async function handler(req, res) {
   try {
-    const { text } = JSON.parse(event.body || "{}");
+    const { text } = req.body || {};
 
     if (!text) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ output: "No situation provided." })
-      };
+      return res.status(400).json({
+        output: "No situation provided."
+      });
     }
-
-    const prompt = `
-Write a calm, professional client response.
-
-Tone:
-- Firm
-- Polite
-- Non-defensive
-
-No legal threats.
-
-Situation:
-"""${text}"""
-`;
 
     const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
@@ -32,41 +17,28 @@ Situation:
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "mixtral-8x7b-32768",
-          messages: [{ role: "user", content: prompt }],
+          model: "llama3-70b-8192",
+          messages: [
+            {
+              role: "user",
+              content: `Write a calm, professional client response:\n\n${text}`
+            }
+          ],
           temperature: 0.3
         })
       }
     );
 
-    const raw = await response.text();
-    let parsed;
-
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({
-          output: "AI response could not be parsed."
-        })
-      };
-    }
+    const data = await response.json();
 
     const output =
-      parsed?.choices?.[0]?.message?.content ??
+      data?.choices?.[0]?.message?.content ||
       "Response could not be generated.";
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ output })
-    };
+    res.status(200).json({ output });
   } catch {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        output: "Unexpected error while generating response."
-      })
-    };
+    res.status(500).json({
+      output: "Server error while generating response."
+    });
   }
 }
