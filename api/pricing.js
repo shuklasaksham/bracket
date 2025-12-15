@@ -21,15 +21,27 @@ export default async function handler(req, res) {
           messages: [
             {
               role: "user",
-              content: `
-You are helping an experienced freelance designer price a project in India.
-Based on the project description:
-- Give a realistic pricing RANGE in INR
-- Briefly explain what factors influenced this range
-- Clearly mention key assumptions or risks
-- Keep the tone confident and professional
-- Avoid package tiers or sales language
-- Keep the response concise and practical under 50 words or less
+content: `
+You are an experienced freelance designer pricing a project in India.
+
+Rules (must follow):
+- Max 3 short sections
+- Max 2 bullet points per section
+- No introductions or conclusions
+- No headings other than those specified
+- Keep total length under 45 words
+
+Format exactly like this:
+
+Price Range (INR):
+₹X – ₹Y
+
+Key Factors:
+- factor 1
+- factor 2
+
+Assumptions:
+- assumption 1
 
 Project description:
 ${text}
