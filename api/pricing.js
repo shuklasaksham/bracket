@@ -1,19 +1,20 @@
 export default async function handler(req, res) {
   try {
-    const { text } = req.body || {};
-
-    if (!text) {
-      return res.status(400).json({
-        output: "No project description provided."
-      });
+    if (req.method !== "POST") {
+      return res.status(405).json({ output: "Method not allowed" });
     }
 
-    const response = await fetch(
+    const { text } = req.body || {};
+    if (!text) {
+      return res.status(400).json({ output: "No input text received" });
+    }
+
+    const groqRes = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -21,7 +22,7 @@ export default async function handler(req, res) {
           messages: [
             {
               role: "user",
-              content: `Generate a pricing range in INR with assumptions and risks:\n\n${text}`
+              content: `Generate a pricing range in INR with assumptions:\n\n${text}`
             }
           ],
           temperature: 0.2
@@ -29,16 +30,19 @@ export default async function handler(req, res) {
       }
     );
 
-    const data = await response.json();
+    const rawText = await groqRes.text();
 
-    const output =
-      data?.choices?.[0]?.message?.content ||
-      "Pricing could not be generated.";
+    // 👇 TEMP DEBUG RESPONSE
+    return res.status(200).json({
+      debug: true,
+      groqStatus: groqRes.status,
+      groqResponse: rawText
+    });
 
-    res.status(200).json({ output });
   } catch (err) {
-    res.status(500).json({
-      output: "Server error while generating pricing."
+    return res.status(500).json({
+      output: "Server crashed",
+      error: String(err)
     });
   }
 }
