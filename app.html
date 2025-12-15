@@ -141,26 +141,31 @@ button{
 </div>
 
 <script>
-function switchTab(id,el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
-  el.classList.add('active')
-  document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'))
-  document.getElementById(id).classList.remove('hidden')
+function switchTab(id, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
 }
 
-async function callAI(type){
-  const input=document.getElementById(type+"Input").value.trim()
-  if(!input) return alert("Please enter text")
+async function callAI(type) {
+  const input = document.getElementById(type + "Input").value.trim();
+  if (!input) return alert("Please enter text");
 
-  const res=await fetch("/api/pricing")`,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({ text:input })
-  })
+  try {
+    const res = await fetch(`/api/${type}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: input })
+    });
 
-  const data=await res.json()
-  document.getElementById(type+"Output").value=data.output
-  document.getElementById(type+"Result").classList.remove("hidden")
+    const data = await res.json();
+
+    document.getElementById(type + "Output").value = data.output;
+    document.getElementById(type + "Result").classList.remove("hidden");
+  } catch (err) {
+    alert("Something went wrong. Please try again.");
+  }
 }
 </script>
 
