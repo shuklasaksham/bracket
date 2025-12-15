@@ -1,27 +1,12 @@
-export async function handler(event) {
+export default async function handler(req, res) {
   try {
-    const { text } = JSON.parse(event.body || "{}");
+    const { text } = req.body || {};
 
     if (!text) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ output: "No scope text provided." })
-      };
+      return res.status(400).json({
+        output: "No scope description provided."
+      });
     }
-
-    const prompt = `
-Rewrite the following into a professional scope of work.
-
-Include:
-- Included
-- Excluded
-- Change Requests
-
-Do not add deliverables.
-
-Text:
-"""${text}"""
-`;
 
     const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
@@ -32,41 +17,28 @@ Text:
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "mixtral-8x7b-32768",
-          messages: [{ role: "user", content: prompt }],
+          model: "llama3-70b-8192",
+          messages: [
+            {
+              role: "user",
+              content: `Rewrite this into a professional scope of work with Included, Excluded, and Change Requests sections:\n\n${text}`
+            }
+          ],
           temperature: 0.2
         })
       }
     );
 
-    const raw = await response.text();
-    let parsed;
-
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({
-          output: "AI response could not be parsed."
-        })
-      };
-    }
+    const data = await response.json();
 
     const output =
-      parsed?.choices?.[0]?.message?.content ??
+      data?.choices?.[0]?.message?.content ||
       "Scope could not be generated.";
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ output })
-    };
+    res.status(200).json({ output });
   } catch {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        output: "Unexpected error while generating scope."
-      })
-    };
+    res.status(500).json({
+      output: "Server error while generating scope."
+    });
   }
 }
