@@ -10,23 +10,28 @@ export default async function handler(req, res) {
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+          Authorization: `Bearer ${process.env.key01}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "llama3-8b-8192",
-          messages: [{ role: "user", content: text }],
+          model: "llama-3.1-8b-instant",
+          messages: [
+            {
+              role: "user",
+              content: `Give a pricing range in INR with assumptions and risks:\n\n${text}`
+            }
+          ],
           temperature: 0.2
         })
       }
     );
 
-    const raw = await groqRes.text();
-    const parsed = JSON.parse(raw);
+    const data = await groqRes.json();
 
     return res.status(200).json({
-      output: parsed.choices[0].message.content
+      output: data.choices[0].message.content
     });
+
   } catch (err) {
     return res.status(500).json({
       output: "Pricing generation failed",
