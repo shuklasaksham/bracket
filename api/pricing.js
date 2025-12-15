@@ -1,12 +1,8 @@
 export default async function handler(req, res) {
   try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Method not allowed" });
-    }
-
     const { text } = req.body || {};
     if (!text) {
-      return res.status(400).json({ error: "No input provided" });
+      return res.status(400).json({ output: "No input provided" });
     }
 
     const groqRes = await fetch(
@@ -14,33 +10,27 @@ export default async function handler(req, res) {
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.key01}`,
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
-          messages: [
-            {
-              role: "user",
-              content: text
-            }
-          ],
+          model: "llama3-8b-8192",
+          messages: [{ role: "user", content: text }],
           temperature: 0.2
         })
       }
     );
 
-    const rawText = await groqRes.text();
+    const raw = await groqRes.text();
+    const parsed = JSON.parse(raw);
 
     return res.status(200).json({
-      groqStatus: groqRes.status,
-      groqRawResponse: rawText
+      output: parsed.choices[0].message.content
     });
-
   } catch (err) {
     return res.status(500).json({
-      error: "Function crashed",
-      details: String(err)
+      output: "Pricing generation failed",
+      error: String(err)
     });
   }
 }
