@@ -24,7 +24,7 @@ export default async function handler(req, res) {
               content: `
 You are helping an experienced freelance designer price a project in India.
 
-Based on the project description below:
+Based on the project description below under 50 words:
 - Give a realistic pricing RANGE in INR
 - Briefly explain what factors influenced this range
 - Clearly mention key assumptions or risks
