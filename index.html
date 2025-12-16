@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PROJECT X — Clarity for Designers</title>
+<title>Bracket — Clarity for Designers</title>
 
 <style>
 :root{
@@ -23,7 +23,7 @@ body{
   font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
   color:var(--text-dark);
   background:var(--bg-light);
-  line-height:1.6;
+  line-height:1.65;
 }
 
 a{text-decoration:none;color:inherit}
@@ -36,15 +36,18 @@ a{text-decoration:none;color:inherit}
 
 /* NAVBAR */
 .navbar{
+  position:sticky;
+  top:0;
+  z-index:10;
   background:var(--bg-dark);
   color:#fff;
-  border-bottom:1px solid rgba(255,255,255,0.1);
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .nav-inner{
   max-width:1100px;
   margin:0 auto;
-  padding:16px 20px;
+  padding:14px 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -52,13 +55,12 @@ a{text-decoration:none;color:inherit}
 
 .logo{
   font-weight:700;
-  font-size:16px;
   letter-spacing:0.4px;
 }
 
 .nav-links{
   display:flex;
-  gap:28px;
+  gap:24px;
   align-items:center;
 }
 
@@ -83,8 +85,8 @@ a{text-decoration:none;color:inherit}
 
 .hero-grid{
   display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:48px;
+  grid-template-columns:1.3fr 1fr;
+  gap:56px;
   align-items:center;
 }
 
@@ -97,7 +99,8 @@ a{text-decoration:none;color:inherit}
 .hero p{
   font-size:18px;
   color:#c7d2fe;
-  margin-bottom:32px;
+  margin-bottom:28px;
+  max-width:520px;
 }
 
 .cta{
@@ -122,7 +125,7 @@ a{text-decoration:none;color:inherit}
   color:var(--text-dark);
   border-radius:20px;
   padding:28px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.4);
+  box-shadow:0 30px 60px rgba(0,0,0,0.35);
 }
 
 .preview-item{
@@ -135,7 +138,7 @@ a{text-decoration:none;color:inherit}
 .preview-item strong{
   display:block;
   font-size:14px;
-  margin-bottom:4px;
+  margin-bottom:6px;
 }
 
 .preview-item span{
@@ -146,7 +149,7 @@ a{text-decoration:none;color:inherit}
 /* SECTIONS */
 section h2{
   font-size:30px;
-  margin-bottom:24px;
+  margin-bottom:20px;
 }
 
 .problem ul{
@@ -159,30 +162,36 @@ section h2{
   font-size:16px;
 }
 
-/* FEATURES */
-.features{
+/* HOW IT WORKS */
+.steps{
   background:var(--bg-soft);
 }
 
-.feature-grid{
+.step-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:32px;
 }
 
-.feature{
+.step{
   background:#fff;
   border-radius:20px;
   padding:28px;
   border:1px solid var(--border);
 }
 
-.feature h3{
-  margin-top:0;
+.step span{
+  font-size:13px;
+  color:var(--accent);
+  font-weight:600;
+}
+
+.step h3{
+  margin:10px 0;
   font-size:18px;
 }
 
-.feature p{
+.step p{
   font-size:14px;
   color:var(--text-muted);
 }
@@ -215,6 +224,7 @@ footer{
   border-top:1px solid var(--border);
   font-size:13px;
   color:var(--text-muted);
+  text-align:center;
 }
 
 /* RESPONSIVE */
@@ -225,9 +235,6 @@ footer{
   .hero h1{
     font-size:34px;
   }
-  .nav-links{
-    gap:16px;
-  }
 }
 </style>
 </head>
@@ -237,9 +244,9 @@ footer{
 <!-- NAV -->
 <div class="navbar">
   <div class="nav-inner">
-    <div class="logo">PROJECT X</div>
+    <div class="logo">BRACKET</div>
     <div class="nav-links">
-      <a href="#features">How it works</a>
+      <a href="#how">How it works</a>
       <a href="/app.html" class="primary">Open tool</a>
     </div>
   </div>
@@ -250,31 +257,31 @@ footer{
   <div class="container hero-grid">
     <div>
       <h1>
-        Clarity for Designers.<br>
-        Pricing, Scope & Client Communication — without guesswork.
+        Clarity for freelance designers.<br>
+        Pricing, scope & client conversations — done right.
       </h1>
       <p>
-        PROJECT X helps designers price fairly, define scope clearly,
-        and handle client conversations professionally.
+        Bracket helps you think clearly about pricing, define boundaries upfront,
+        and respond to clients professionally — without second-guessing yourself.
       </p>
-      <a href="/app.html" class="cta">Start using the tool →</a>
+      <a href="/app.html" class="cta">Open Bracket →</a>
       <div class="micro">
-        No login · Free to use · Early version · Built for Indian designers
+        No login · Free to use · Early version · Built for real freelance work
       </div>
     </div>
 
     <div class="preview-card">
       <div class="preview-item">
-        <strong>Pricing</strong>
-        <span>Defensible project price ranges</span>
+        <strong>Pricing clarity</strong>
+        <span>Realistic ranges, not random numbers</span>
       </div>
       <div class="preview-item">
-        <strong>Scope</strong>
-        <span>Clear boundaries & deliverables</span>
+        <strong>Clear scope</strong>
+        <span>What’s included. What’s not.</span>
       </div>
       <div class="preview-item">
-        <strong>Client Playbook</strong>
-        <span>Professional ready-to-send messages</span>
+        <strong>Client playbook</strong>
+        <span>Calm, firm, copy-ready replies</span>
       </div>
     </div>
   </div>
@@ -283,32 +290,35 @@ footer{
 <!-- PROBLEM -->
 <section class="problem">
   <div class="container">
-    <h2>If you’re a designer, this probably sounds familiar</h2>
+    <h2>Most freelance problems aren’t about skill</h2>
     <ul>
-      <li>Unsure whether your price is too high or too low</li>
-      <li>Clients asking for “just one more change”</li>
-      <li>Scope creep without clear boundaries</li>
-      <li>Awkward conversations around revisions, timelines, and cost</li>
+      <li>Pricing feels like guesswork</li>
+      <li>Scope gets blurry mid-project</li>
+      <li>Client conversations become awkward or defensive</li>
+      <li>You spend more energy explaining than designing</li>
     </ul>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features" id="features">
+<!-- HOW IT WORKS -->
+<section class="steps" id="how">
   <div class="container">
-    <h2>What PROJECT X helps you do</h2>
-    <div class="feature-grid">
-      <div class="feature">
-        <h3>Pricing</h3>
-        <p>Calculate realistic, defensible price ranges based on scope, experience, and urgency.</p>
+    <h2>How Bracket helps</h2>
+    <div class="step-grid">
+      <div class="step">
+        <span>01</span>
+        <h3>Describe the project</h3>
+        <p>Write the project details in plain language — no forms, no jargon.</p>
       </div>
-      <div class="feature">
-        <h3>Scope</h3>
-        <p>Generate clear scopes of work that protect your time and reduce misunderstandings.</p>
+      <div class="step">
+        <span>02</span>
+        <h3>Get structured clarity</h3>
+        <p>Bracket returns pricing ranges, scope boundaries, or responses you can trust.</p>
       </div>
-      <div class="feature">
-        <h3>Client Playbook</h3>
-        <p>Handle common client situations with calm, professional, copy-ready messages.</p>
+      <div class="step">
+        <span>03</span>
+        <h3>Stay in control</h3>
+        <p>You decide what to send, adjust, or ignore. Bracket guides — it doesn’t decide.</p>
       </div>
     </div>
   </div>
@@ -317,12 +327,12 @@ footer{
 <!-- TRUST -->
 <section class="trust">
   <div class="container">
-    <h2>Why designers trust PROJECT X</h2>
+    <h2>Why designers feel comfortable using Bracket</h2>
     <ul>
-      <li>Built by a designer, not a consultancy</li>
+      <li>Built by a designer, not a sales team</li>
+      <li>No login, no data storage</li>
       <li>Focused on Indian freelance realities</li>
-      <li>No login, no data capture</li>
-      <li>You stay in control — this is guidance, not advice</li>
+      <li>Advice, not automation</li>
     </ul>
   </div>
 </section>
@@ -330,13 +340,13 @@ footer{
 <!-- FINAL CTA -->
 <section class="final">
   <div class="container">
-    <h2>Ready to work with more clarity and confidence?</h2>
-    <a href="/app.html" class="cta">Open PROJECT X →</a>
+    <h2>Work with more confidence — starting today</h2>
+    <a href="/app.html" class="cta">Open Bracket →</a>
   </div>
 </section>
 
 <footer>
-  © PROJECT X · Early version — feedback welcome · Contact: shuklasaksham01@gmail.com
+  © Bracket · Early version · Feedback welcome · shuklasaksham01@gmail.com
 </footer>
 
 </body>
