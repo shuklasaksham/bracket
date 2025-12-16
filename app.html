@@ -24,7 +24,6 @@ body{
   color:#fff;
 }
 
-/* NAV */
 .navbar{
   border-bottom:1px solid rgba(255,255,255,0.1);
 }
@@ -36,9 +35,7 @@ body{
   justify-content:space-between;
 }
 .logo a{color:#fff;text-decoration:none;font-weight:700}
-.nav-links a{color:#c7d2fe;text-decoration:none;font-size:14px}
 
-/* APP */
 .app-shell{display:flex;justify-content:center;padding:32px 16px}
 .app{width:100%;max-width:720px}
 
@@ -51,21 +48,26 @@ body{
   color:var(--text-dark);
   border-radius:16px;
   padding:24px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.35);
 }
 
-textarea{
+label{
+  display:block;
+  font-size:13px;
+  margin-top:14px;
+  margin-bottom:6px;
+  color:var(--text-muted);
+}
+
+select, textarea{
   width:100%;
-  height:130px;
   padding:12px;
   border-radius:10px;
   border:1px solid var(--border);
   font-size:14px;
-  resize:none;
 }
 
 button{
-  margin-top:16px;
+  margin-top:20px;
   width:100%;
   padding:14px;
   border:none;
@@ -94,7 +96,6 @@ button{
 <div class="navbar">
   <div class="nav-inner">
     <div class="logo"><a href="/">BRACKET</a></div>
-    <div class="nav-links"><a href="/">Home</a></div>
   </div>
 </div>
 
@@ -107,17 +108,59 @@ button{
   <div class="tab" onclick="switchTab('playbook',this)">Client Playbook</div>
 </div>
 
-<!-- PRICING -->
+<!-- ================= PRICING (CHANGED) ================= -->
 <div id="pricing" class="card">
-  <h3>Describe project for pricing</h3>
-  <textarea id="pricingInput"></textarea>
-  <button onclick="callAI('pricing')">Analyse & calculate</button>
+
+  <h3>Project pricing details</h3>
+
+  <label>Project type</label>
+  <select id="projectType">
+    <option>Brand identity</option>
+    <option>Website design</option>
+    <option>UI/UX design</option>
+    <option>Landing page</option>
+    <option>Other</option>
+  </select>
+
+  <label>Scope size</label>
+  <select id="scopeSize">
+    <option>Small</option>
+    <option>Medium</option>
+    <option>Large</option>
+  </select>
+
+  <label>Timeline</label>
+  <select id="timeline">
+    <option>Relaxed</option>
+    <option>Normal</option>
+    <option>Fast</option>
+    <option>Rush</option>
+  </select>
+
+  <label>Revisions</label>
+  <select id="revisions">
+    <option>1–2 rounds</option>
+    <option>3–4 rounds</option>
+    <option>Unlimited / unclear</option>
+  </select>
+
+  <label>Your experience level</label>
+  <select id="experience">
+    <option>Early</option>
+    <option>Mid</option>
+    <option>Senior</option>
+  </select>
+
+  <button onclick="calculatePricing()">Calculate price</button>
+
   <div id="pricingResult" class="result hidden">
     <textarea id="pricingOutput" readonly></textarea>
   </div>
-</div>
 
-<!-- SCOPE -->
+</div>
+<!-- ================= END PRICING ================= -->
+
+<!-- SCOPE (UNCHANGED) -->
 <div id="scope" class="card hidden">
   <h3>Describe project scope</h3>
   <textarea id="scopeInput"></textarea>
@@ -127,7 +170,7 @@ button{
   </div>
 </div>
 
-<!-- PLAYBOOK -->
+<!-- PLAYBOOK (UNCHANGED) -->
 <div id="playbook" class="card hidden">
   <h3>Describe client situation</h3>
   <textarea id="playbookInput"></textarea>
@@ -141,31 +184,59 @@ button{
 </div>
 
 <script>
-function switchTab(id, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+function switchTab(id, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+  document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
 
-async function callAI(type) {
-  const input = document.getElementById(type + "Input").value.trim();
-  if (!input) return alert("Please enter text");
+/* ===== PRICING LOGIC ===== */
+function calculatePricing(){
+  let base = 30000;
 
-  try {
-    const res = await fetch(`/api/${type}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: input })
-    });
+  const scopeMap = { Small:1, Medium:1.4, Large:1.8 };
+  const timelineMap = { Relaxed:1, Normal:1.1, Fast:1.25, Rush:1.4 };
+  const expMap = { Early:0.8, Mid:1, Senior:1.3 };
+  const revisionMap = {
+    "1–2 rounds":1,
+    "3–4 rounds":1.15,
+    "Unlimited / unclear":1.35
+  };
 
-    const data = await res.json();
+  const price =
+    base *
+    scopeMap[scopeSize.value] *
+    timelineMap[timeline.value] *
+    expMap[experience.value] *
+    revisionMap[revisions.value];
 
-    document.getElementById(type + "Output").value = data.output;
-    document.getElementById(type + "Result").classList.remove("hidden");
-  } catch (err) {
-    alert("Something went wrong. Please try again.");
-  }
+  const min = Math.round(price * 0.9);
+  const max = Math.round(price * 1.1);
+
+  pricingOutput.value =
+`Recommended range (INR):
+₹${min.toLocaleString()} – ₹${max.toLocaleString()}
+
+Based on scope size, timeline urgency, revision load, and experience level.`;
+
+  pricingResult.classList.remove("hidden");
+}
+
+/* ===== EXISTING AI CALL ===== */
+async function callAI(type){
+  const input=document.getElementById(type+"Input").value.trim();
+  if(!input) return alert("Please enter text");
+
+  const res=await fetch(`/api/${type}`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ text:input })
+  });
+
+  const data=await res.json();
+  document.getElementById(type+"Output").value=data.output;
+  document.getElementById(type+"Result").classList.remove("hidden");
 }
 </script>
 
