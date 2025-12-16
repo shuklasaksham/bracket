@@ -18,8 +18,8 @@
 
   --accent:#5b5bff;
 
-  --border-light:rgba(15,23,42,0.08);
   --glass-bg:rgba(255,255,255,0.72);
+  --border-light:rgba(15,23,42,0.08);
 }
 
 *{box-sizing:border-box}
@@ -31,7 +31,6 @@ body{
   color:var(--text-primary);
   line-height:1.7;
 
-  /* LIGHT PREMIUM AMBIENT BACKGROUND */
   background:
     radial-gradient(1000px 520px at 12% 10%, rgba(170,150,255,0.30), transparent 60%),
     radial-gradient(900px 520px at 88% 15%, rgba(255,170,210,0.22), transparent 65%),
@@ -47,16 +46,14 @@ a{text-decoration:none;color:inherit}
   padding:96px 20px;
 }
 
-/* NAV — GLASS */
+/* NAV — SHARED */
 .navbar{
   position:sticky;
   top:0;
   z-index:10;
-
   background:var(--glass-bg);
   backdrop-filter:blur(14px) saturate(160%);
   -webkit-backdrop-filter:blur(14px) saturate(160%);
-
   border-bottom:1px solid var(--border-light);
 }
 
@@ -69,9 +66,7 @@ a{text-decoration:none;color:inherit}
   justify-content:space-between;
 }
 
-.brand img{
-  height:32px;
-}
+.brand img{height:32px}
 
 .nav-links a{
   font-size:14px;
@@ -79,17 +74,10 @@ a{text-decoration:none;color:inherit}
 }
 
 /* HERO */
-.hero{
-  text-align:center;
-}
+.hero{text-align:center}
 
-.hero-logo{
-  margin-bottom:28px;
-}
-
-.hero-logo img{
-  height:96px;
-}
+.hero-logo{margin-bottom:28px}
+.hero-logo img{height:96px}
 
 .hero h1{
   font-family:'Inter Tight', sans-serif;
@@ -107,7 +95,7 @@ a{text-decoration:none;color:inherit}
   margin:0 auto 40px;
 }
 
-/* CTA — GLASSY, BUT CLEAN */
+/* CTA */
 .hero-action{
   display:flex;
   flex-direction:column;
@@ -118,46 +106,27 @@ a{text-decoration:none;color:inherit}
 .cta{
   padding:14px 34px;
   border-radius:16px;
-
   background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.55),
-      rgba(255,255,255,0.25)
-    ),
+    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.25)),
     var(--accent);
-
   backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-
-  color:#ffffff;
+  color:#fff;
   font-weight:600;
   font-size:15px;
-
   border:1px solid rgba(255,255,255,0.45);
-
   box-shadow:
     0 16px 36px rgba(91,91,255,0.35),
     inset 0 1px 0 rgba(255,255,255,0.55);
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
+  transition:.2s ease;
 }
 
 .cta:hover{
   transform:translateY(-1px);
-  box-shadow:
-    0 22px 48px rgba(91,91,255,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.65);
 }
 
-.micro{
-  font-size:13px;
-  color:var(--text-muted);
-}
+.micro{font-size:13px;color:var(--text-muted)}
 
-/* PREVIEW — LIGHT GLASS CARDS (NO BLACK) */
+/* PREVIEW */
 .preview{
   margin-top:80px;
   display:grid;
@@ -167,35 +136,17 @@ a{text-decoration:none;color:inherit}
 
 .preview-item{
   background:var(--glass-bg);
-  backdrop-filter:blur(12px) saturate(140%);
-  -webkit-backdrop-filter:blur(12px) saturate(140%);
-
+  backdrop-filter:blur(12px);
   border-radius:22px;
   padding:28px;
-
   border:1px solid var(--border-light);
-
-  box-shadow:
-    0 20px 40px rgba(15,23,42,0.14),
-    inset 0 1px 0 rgba(255,255,255,0.65);
-
-  transition:
-    transform .3s ease,
-    box-shadow .3s ease;
-}
-
-.preview-item:hover{
-  transform:translateY(-4px);
-  box-shadow:
-    0 30px 60px rgba(15,23,42,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.75);
+  box-shadow:0 20px 40px rgba(15,23,42,0.14);
 }
 
 .preview-item strong{
   font-family:'Inter Tight', sans-serif;
   display:block;
   margin-bottom:8px;
-  font-size:16px;
 }
 
 .preview-item span{
@@ -204,18 +155,13 @@ a{text-decoration:none;color:inherit}
 }
 
 /* FINAL */
-.final{
-  text-align:center;
-  padding:100px 20px;
-}
-
+.final{text-align:center;padding:100px 20px}
 .final h2{
   font-family:'Inter Tight', sans-serif;
   font-size:38px;
   margin-bottom:24px;
 }
 
-/* FOOTER */
 footer{
   padding:32px 20px;
   border-top:1px solid var(--border-light);
@@ -224,7 +170,6 @@ footer{
   text-align:center;
 }
 
-/* RESPONSIVE */
 @media(max-width:900px){
   .hero h1{font-size:40px}
 }
@@ -245,18 +190,13 @@ footer{
   </div>
 </div>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container">
-
     <div class="hero-logo">
       <img src="/logo-mark.png" alt="Bracket">
     </div>
 
-    <h1>
-      Clarity for designers<br>
-      who take their work seriously.
-    </h1>
+    <h1>Pricing clarity for designers<br>who take their work seriously.</h1>
 
     <p>
       Decide what to charge, define scope confidently,
@@ -283,11 +223,9 @@ footer{
         <span>Professional responses for difficult moments</span>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- FINAL -->
 <section class="final">
   <h2>Work with clarity, not anxiety</h2>
   <a href="/app.html" class="cta">Open Bracket →</a>
