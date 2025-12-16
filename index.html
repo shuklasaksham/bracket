@@ -25,7 +25,6 @@
 }
 
 *{box-sizing:border-box}
-
 html{scroll-behavior:smooth}
 
 body{
@@ -36,7 +35,7 @@ body{
   line-height:1.7;
 }
 
-/* subtle grain for premium feel */
+/* subtle grain */
 body::after{
   content:"";
   position:fixed;
@@ -54,7 +53,7 @@ a{text-decoration:none;color:inherit}
   padding:120px 24px;
 }
 
-/* NAV */
+/* NAVBAR */
 .navbar{
   position:sticky;
   top:0;
@@ -67,16 +66,28 @@ a{text-decoration:none;color:inherit}
 .nav-inner{
   max-width:1120px;
   margin:0 auto;
-  padding:18px 24px;
+  padding:16px 24px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
-.logo{
+/* LOGO */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand img{
+  height:28px;
+  width:auto;
+}
+
+.brand span{
   font-family:'Inter Tight', sans-serif;
   font-weight:700;
-  letter-spacing:1px;
+  letter-spacing:0.8px;
   font-size:14px;
 }
 
@@ -92,7 +103,6 @@ a{text-decoration:none;color:inherit}
   background:var(--bg-main);
 }
 
-/* cinematic gradient layer */
 .hero::before{
   content:"";
   position:absolute;
@@ -112,6 +122,17 @@ a{text-decoration:none;color:inherit}
   text-align:center;
 }
 
+.hero-logo{
+  display:flex;
+  justify-content:center;
+  margin-bottom:28px;
+}
+
+.hero-logo img{
+  height:48px;
+  opacity:0.9;
+}
+
 .hero h1{
   font-family:'Inter Tight', sans-serif;
   font-size:56px;
@@ -128,7 +149,7 @@ a{text-decoration:none;color:inherit}
   margin:0 auto 48px;
 }
 
-/* HERO ACTION */
+/* CTA */
 .hero-action{
   display:flex;
   flex-direction:column;
@@ -208,6 +229,7 @@ footer{
 /* RESPONSIVE */
 @media(max-width:900px){
   .hero h1{font-size:40px}
+  .hero-logo img{height:40px}
 }
 </style>
 </head>
@@ -217,7 +239,10 @@ footer{
 <!-- NAV -->
 <div class="navbar">
   <div class="nav-inner">
-    <div class="logo">BRACKET</div>
+    <div class="brand">
+      <img src="/logo-icon.png" alt="Bracket logo">
+      <span>BRACKET</span>
+    </div>
     <div class="nav-links">
       <a href="/app.html">Open tool</a>
     </div>
@@ -227,6 +252,11 @@ footer{
 <!-- HERO -->
 <section class="hero">
   <div class="container">
+
+    <div class="hero-logo">
+      <img src="/logo-mark.png" alt="Bracket">
+    </div>
+
     <h1>
       Pricing clarity for designers<br>
       who take their work seriously.
@@ -257,6 +287,7 @@ footer{
         <span>Professional responses for difficult moments</span>
       </div>
     </div>
+
   </div>
 </section>
 
