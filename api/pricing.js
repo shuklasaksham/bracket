@@ -2,17 +2,18 @@ export default async function handler(req, res) {
   try {
     const {
       projectType,
+      experience,
       size,
       clarity,
       timeline,
       context
     } = req.body || {};
 
-    if (!projectType) {
+    if (!projectType || !experience) {
       return res.status(400).json({ output: "Missing pricing inputs." });
     }
 
-    /* ---------- BASE PRICES (80% INDIA STANDARD) ---------- */
+    /* ---------- BASE PRICES (≈80% INDIA STANDARD) ---------- */
     const basePrice = {
       "UI/UX – Product / SaaS": 12000,
       "UI/UX – Website / Marketing": 10000,
@@ -35,51 +36,55 @@ export default async function handler(req, res) {
       "Custom / Not sure yet": 12000
     };
 
+    /* ---------- MULTIPLIERS ---------- */
+    const experienceM = {
+      "Early-career (0–2 years)": 0.8,
+      "Mid-level (3–5 years)": 1.0,
+      "Senior (6–10 years)": 1.25,
+      "Very senior / specialist (10+ years)": 1.5
+    };
+
     const sizeM = { Small: 1, Medium: 1.7, Large: 2.6 };
     const clarityM = {
       "Very clear": 1,
       "Somewhat clear": 1.2,
       "Exploratory / unclear": 1.45
     };
-    const timelineM = {
-      Flexible: 1,
-      Normal: 1.15,
-      Urgent: 1.35
-    };
+    const timelineM = { Flexible: 1, Normal: 1.15, Urgent: 1.35 };
 
     const base = basePrice[projectType] || 10000;
 
     const computed =
       base *
+      (experienceM[experience] || 1) *
       (sizeM[size] || 1) *
       (clarityM[clarity] || 1) *
       (timelineM[timeline] || 1);
 
     const lower = Math.round(computed / 1000) * 1000;
-    const upper = Math.round(lower * 1.3 / 1000) * 1000;
+    const upper = Math.round((lower * 1.3) / 1000) * 1000;
 
-    const rangeText = `Rs. ${lower.toLocaleString("en-IN")} – Rs. ${upper.toLocaleString("en-IN")}`;
+    const rangeText =
+      `Rs. ${lower.toLocaleString("en-IN")} – Rs. ${upper.toLocaleString("en-IN")}`;
 
-    /* ---------- AI NARRATIVE ONLY ---------- */
+    /* ---------- AI NARRATIVE (NO NUMBERS INVENTED) ---------- */
     const prompt = `
 You are a senior freelance designer in India.
 
 Explain why the following price range is reasonable and professional.
 
 Rules:
-- Do NOT mention numbers other than the given range
-- No bullet points
-- No headings
-- Calm, confident, consultant tone
+- Do NOT introduce new numbers
+- Do NOT list bullets or headings
+- Calm, confident consultant tone
 - 3–4 short sentences max
-- under 30 words
-- include professional level formatting
 
 Price range:
 ${rangeText}
 
 Inputs:
 Project type: ${projectType}
+Designer experience: ${experience}
 Project size: ${size}
 Client clarity: ${clarity}
 Timeline: ${timeline}
@@ -105,7 +110,7 @@ Additional context: ${context || "None"}
     const aiData = await aiRes.json();
     const narrative =
       aiData?.choices?.[0]?.message?.content ||
-      "This range reflects scope, risk, and timeline considerations.";
+      "This range reflects scope, risk, experience, and timeline considerations.";
 
     return res.status(200).json({
       output: `${rangeText}\n\n${narrative}`
