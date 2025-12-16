@@ -18,7 +18,7 @@
 
   --accent:#5b5bff;
 
-  --glass-bg:rgba(255,255,255,0.55);
+  --glass-bg:rgba(255,255,255,0.72);
   --border-light:rgba(15,23,42,0.08);
 }
 
@@ -37,32 +37,31 @@ body{
     #f9fafb;
 }
 
-/* NAVBAR */
+/* ================= NAVBAR (SAME AS INDEX) ================= */
 .navbar{
   position:sticky;
   top:0;
   z-index:10;
-  background:rgba(255,255,255,0.65);
+
+  background:var(--glass-bg);
   backdrop-filter:blur(14px) saturate(160%);
   -webkit-backdrop-filter:blur(14px) saturate(160%);
+
   border-bottom:1px solid var(--border-light);
 }
 
 .nav-inner{
   max-width:1100px;
-  margin:auto;
-  padding:20px 24px;
+  margin:0 auto;
+  padding:24px;
+
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
-.logo a{
-  font-family:'Inter Tight', sans-serif;
-  font-weight:600;
-  letter-spacing:0.4px;
-  text-decoration:none;
-  color:var(--text-primary);
+.brand img{
+  height:32px;
 }
 
 .nav-links a{
@@ -71,7 +70,7 @@ body{
   text-decoration:none;
 }
 
-/* APP LAYOUT */
+/* ================= APP LAYOUT ================= */
 .app-shell{
   display:flex;
   justify-content:center;
@@ -83,7 +82,7 @@ body{
   max-width:760px;
 }
 
-/* TABS */
+/* ================= TABS ================= */
 .tabs{
   display:flex;
   gap:32px;
@@ -103,9 +102,9 @@ body{
   border-bottom:2px solid var(--accent);
 }
 
-/* 🔹 GLASS TOOL CARD */
+/* ================= GLASS CARD ================= */
 .card{
-  background:var(--glass-bg);
+  background:rgba(255,255,255,0.55);
   backdrop-filter:blur(22px) saturate(170%);
   -webkit-backdrop-filter:blur(22px) saturate(170%);
 
@@ -118,13 +117,12 @@ body{
     inset 0 1px 0 rgba(255,255,255,0.75);
 }
 
-/* HEADINGS */
 .card h3{
   font-family:'Inter Tight', sans-serif;
   margin-top:0;
 }
 
-/* FORMS */
+/* ================= FORMS ================= */
 label{
   display:block;
   margin-top:18px;
@@ -148,14 +146,14 @@ textarea{
   resize:none;
 }
 
-/* OUTPUT */
+/* OUTPUT TEXTAREA */
 textarea.output-box{
   resize:none;
   overflow:hidden;
   min-height:120px;
 }
 
-/* BUTTON — GLASS */
+/* ================= BUTTON ================= */
 button{
   margin-top:22px;
   width:100%;
@@ -193,7 +191,7 @@ button:hover{
     inset 0 1px 0 rgba(255,255,255,0.55);
 }
 
-/* RESULT */
+/* ================= RESULT ================= */
 .result{
   margin-top:18px;
   padding:16px;
@@ -208,14 +206,19 @@ button:hover{
 
 <body>
 
-<!-- NAV -->
+<!-- ================= NAV ================= -->
 <div class="navbar">
   <div class="nav-inner">
-    <div class="logo"><a href="/">BRACKET</a></div>
-    <div class="nav-links"><a href="/">Home</a></div>
+    <div class="brand">
+      <img src="/logo-icon.png" alt="Bracket">
+    </div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+    </div>
   </div>
 </div>
 
+<!-- ================= APP ================= -->
 <div class="app-shell">
 <div class="app">
 
