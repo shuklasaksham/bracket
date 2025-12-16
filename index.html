@@ -1,437 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bracket — Clarity for Designers</title>
+  <meta charset="UTF-8" />
+  <title>Project Bracket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root{
-  --bg-dark:#0f1220;
-  --bg-light:#ffffff;
-  --bg-soft:#f8fafc;
-  --text-dark:#0f172a;
-  --text-muted:#64748b;
-  --accent:#6366f1;
-  --border:#e5e7eb;
-}
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f0f0f;
+      color: #eaeaea;
+      margin: 0;
+    }
 
-*{box-sizing:border-box}
+    .container {
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 24px;
+    }
 
-html{
-  scroll-behavior:smooth;
-}
+    h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
 
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  color:var(--text-dark);
-  background:var(--bg-light);
-  line-height:1.6;
-}
+    .sub {
+      color: #aaa;
+      margin-bottom: 32px;
+    }
 
-a{text-decoration:none;color:inherit}
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 6px;
+    }
 
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:96px 20px;
-}
+    select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+    }
 
-/* NAVBAR */
-.navbar{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:var(--bg-dark);
-  color:#fff;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  transition:box-shadow 0.3s ease;
-}
+    select, textarea {
+      background: #1b1b1b;
+      color: #fff;
+    }
 
-.navbar.scrolled{
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
-}
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
 
-.nav-inner{
-  max-width:1100px;
-  margin:0 auto;
-  padding:16px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
+    button {
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+      margin-top: 28px;
+      cursor: pointer;
+    }
 
-.logo{
-  font-weight:700;
-  letter-spacing:0.4px;
-}
+    .output {
+      margin-top: 36px;
+      padding: 20px;
+      background: #161616;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
 
-.nav-links{
-  display:flex;
-  gap:28px;
-  align-items:center;
-}
-
-.nav-links a{
-  font-size:14px;
-  color:#c7d2fe;
-  transition:opacity 0.2s ease;
-}
-
-.nav-links a:hover{
-  opacity:0.85;
-}
-
-.nav-links a.primary{
-  background:var(--accent);
-  color:#fff;
-  padding:10px 18px;
-  border-radius:10px;
-  font-weight:600;
-  transition:transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.nav-links a.primary:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px rgba(99,102,241,0.4);
-}
-
-/* HERO */
-.hero{
-  background:var(--bg-dark);
-  color:#fff;
-  overflow:hidden;
-}
-
-.hero-grid{
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:48px;
-  align-items:center;
-}
-
-.hero h1{
-  font-size:44px;
-  line-height:1.15;
-  margin-bottom:20px;
-}
-
-.hero p{
-  font-size:18px;
-  color:#c7d2fe;
-  margin-bottom:32px;
-}
-
-.cta{
-  display:inline-block;
-  background:var(--accent);
-  color:#fff;
-  padding:16px 32px;
-  border-radius:14px;
-  font-weight:600;
-  font-size:16px;
-  transition:transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.cta:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 30px rgba(99,102,241,0.45);
-}
-
-.micro{
-  margin-top:14px;
-  font-size:13px;
-  color:#9ca3af;
-}
-
-/* HERO ANIMATION */
-.hero-animate{
-  opacity:0;
-  transform:translateY(16px);
-  animation:fadeUp 0.8s ease forwards;
-}
-
-.hero-animate.delay{
-  animation-delay:0.15s;
-}
-
-@keyframes fadeUp{
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-/* PREVIEW CARD */
-.preview-card{
-  background:#ffffff;
-  color:var(--text-dark);
-  border-radius:20px;
-  padding:28px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.4);
-  transition:transform 0.3s ease;
-}
-
-.preview-card:hover{
-  transform:translateY(-6px);
-}
-
-.preview-item{
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:12px;
-  transition:background 0.2s ease;
-}
-
-.preview-item:hover{
-  background:#f8fafc;
-}
-
-.preview-item strong{
-  display:block;
-  font-size:14px;
-  margin-bottom:4px;
-}
-
-.preview-item span{
-  font-size:13px;
-  color:var(--text-muted);
-}
-
-/* SECTIONS */
-section{
-  opacity:0;
-  transform:translateY(24px);
-  transition:opacity 0.6s ease, transform 0.6s ease;
-}
-
-section.visible{
-  opacity:1;
-  transform:none;
-}
-
-section h2{
-  font-size:30px;
-  margin-bottom:24px;
-}
-
-/* PROBLEM */
-.problem ul{
-  max-width:720px;
-  padding-left:18px;
-}
-
-.problem li{
-  margin-bottom:14px;
-  font-size:16px;
-}
-
-/* FEATURES */
-.features{
-  background:var(--bg-soft);
-}
-
-.feature-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:32px;
-}
-
-.feature{
-  background:#fff;
-  border-radius:20px;
-  padding:28px;
-  border:1px solid var(--border);
-  transition:transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.feature:hover{
-  transform:translateY(-6px);
-  box-shadow:0 20px 40px rgba(0,0,0,0.08);
-}
-
-.feature h3{
-  margin-top:0;
-  font-size:18px;
-}
-
-.feature p{
-  font-size:14px;
-  color:var(--text-muted);
-}
-
-/* TRUST */
-.trust{
-  background:var(--bg-dark);
-  color:#fff;
-}
-
-.trust ul{
-  max-width:720px;
-  padding-left:18px;
-}
-
-.trust li{
-  margin-bottom:12px;
-  color:#c7d2fe;
-}
-
-/* FINAL CTA */
-.final h2{
-  font-size:32px;
-  margin-bottom:20px;
-}
-
-/* FOOTER */
-footer{
-  padding:32px 20px;
-  border-top:1px solid var(--border);
-  font-size:13px;
-  color:var(--text-muted);
-}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero-grid{
-    grid-template-columns:1fr;
-  }
-  .hero h1{
-    font-size:34px;
-  }
-}
-
-/* --- */
-</style>
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+    }
+  </style>
 </head>
 
 <body>
-
-<!-- NAV -->
-<div class="navbar" id="nav">
-  <div class="nav-inner">
-    <div class="logo">BRACKET</div>
-    <div class="nav-links">
-      <a href="#features">How it works</a>
-      <a href="/app.html" class="primary">Open tool</a>
-    </div>
-  </div>
-</div>
-
-<!-- HERO -->
-<section class="hero visible">
-  <div class="container hero-grid">
-    <div>
-      <h1 class="hero-animate">
-        Clarity for Designers.<br>
-        Pricing, Scope & Client Communication — without guesswork.
-      </h1>
-      <p class="hero-animate delay">
-        Bracket helps designers price fairly, define scope clearly,
-        and handle client conversations professionally.
-      </p>
-      <a href="/app.html" class="cta hero-animate delay">Start using the tool →</a>
-      <div class="micro hero-animate delay">
-        No login · Free to use · Early version · Built for Indian designers
-      </div>
-    </div>
-
-    <div class="preview-card hero-animate delay">
-      <div class="preview-item">
-        <strong>Pricing</strong>
-        <span>Defensible project price ranges</span>
-      </div>
-      <div class="preview-item">
-        <strong>Scope</strong>
-        <span>Clear boundaries & deliverables</span>
-      </div>
-      <div class="preview-item">
-        <strong>Client Playbook</strong>
-        <span>Professional ready-to-send messages</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section class="problem">
   <div class="container">
-    <h2>If you’re a designer, this probably sounds familiar</h2>
-    <ul>
-      <li>Unsure whether your price is too high or too low</li>
-      <li>Clients asking for “just one more change”</li>
-      <li>Scope creep without clear boundaries</li>
-      <li>Awkward conversations around revisions, timelines, and cost</li>
-    </ul>
+    <h1>Project Bracket</h1>
+    <p class="sub">
+      AI-assisted scope clarity & realistic pricing.
+    </p>
+
+    <label>Project type</label>
+    <select id="projectType">
+      <option value="uiux">UI / UX Design</option>
+      <option value="branding">Branding & Identity</option>
+      <option value="website">Website Design</option>
+      <option value="mobile">Mobile App Design</option>
+      <option value="illustration">Illustration</option>
+      <option value="custom">Custom / Undefined</option>
+    </select>
+
+    <label>Project scale</label>
+    <select id="scale">
+      <option value="small">Small</option>
+      <option value="medium">Medium</option>
+      <option value="large">Large</option>
+    </select>
+
+    <label>Timeline</label>
+    <select id="timeline">
+      <option value="relaxed">Flexible</option>
+      <option value="normal">Standard</option>
+      <option value="urgent">Urgent</option>
+    </select>
+
+    <label>Additional context (optional)</label>
+    <textarea
+      id="details"
+      placeholder="Constraints, expectations, references, internal politics, unknowns…"
+    ></textarea>
+
+    <button onclick="generate()">Generate Bracket</button>
+
+    <div id="output" class="output" style="display:none;"></div>
+
+    <footer>
+      Quote → Scope → Assumptions → Risk
+    </footer>
   </div>
-</section>
 
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="container">
-    <h2>What Bracket helps you do</h2>
-    <div class="feature-grid">
-      <div class="feature">
-        <h3>Pricing</h3>
-        <p>Calculate realistic, defensible price ranges based on scope and urgency.</p>
-      </div>
-      <div class="feature">
-        <h3>Scope</h3>
-        <p>Generate clear scopes of work that protect your time and reduce misunderstandings.</p>
-      </div>
-      <div class="feature">
-        <h3>Client Playbook</h3>
-        <p>Handle common client situations with calm, professional, copy-ready messages.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <script>
+    async function generate() {
+      const payload = {
+        projectType: projectType.value,
+        scale: scale.value,
+        timeline: timeline.value,
+        details: details.value
+      };
 
-<!-- TRUST -->
-<section class="trust">
-  <div class="container">
-    <h2>Why designers trust Bracket</h2>
-    <ul>
-      <li>Built by a designer, not a consultancy</li>
-      <li>Focused on Indian freelance realities</li>
-      <li>No login, no data capture</li>
-      <li>You stay in control — this is guidance, not advice</li>
-    </ul>
-  </div>
-</section>
+      output.style.display = "block";
+      output.textContent = "Analyzing scope…";
 
-<!-- FINAL CTA -->
-<section class="final">
-  <div class="container">
-    <h2>Ready to work with more clarity and confidence?</h2>
-    <a href="/app.html" class="cta">Open Bracket →</a>
-  </div>
-</section>
+      const res = await fetch("/api/pricing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-<footer>
-  © Bracket · Early version — feedback welcome · Contact: shuklasaksham01@gmail.com
-</footer>
-
-<script>
-// reveal sections on scroll
-const sections = document.querySelectorAll("section");
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add("visible");
+      const data = await res.json();
+      output.textContent = data.output || "Something broke.";
     }
-  });
-},{threshold:0.15});
-
-sections.forEach(sec => observer.observe(sec));
-
-// navbar shadow on scroll
-window.addEventListener("scroll",()=>{
-  document.getElementById("nav")
-    .classList.toggle("scrolled", window.scrollY > 10);
-});
-</script>
-
+  </script>
 </body>
 </html>
