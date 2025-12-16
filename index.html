@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bracket — Professional Pricing & Scope for Designers</title>
+<title>Bracket — Pricing Clarity for Designers</title>
 
+<!-- Premium fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
@@ -12,8 +13,8 @@
 <style>
 :root{
   --bg-main:#0b0d14;
-  --bg-surface:#111422;
   --bg-card:#15182b;
+  --bg-surface:#111422;
 
   --text-primary:#e6e8f0;
   --text-secondary:#a6accd;
@@ -25,12 +26,24 @@
 
 *{box-sizing:border-box}
 
+html{scroll-behavior:smooth}
+
 body{
   margin:0;
   font-family:'Inter', system-ui, sans-serif;
   background:var(--bg-main);
   color:var(--text-primary);
   line-height:1.7;
+}
+
+/* subtle grain for premium feel */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9999;
 }
 
 a{text-decoration:none;color:inherit}
@@ -46,7 +59,7 @@ a{text-decoration:none;color:inherit}
   position:sticky;
   top:0;
   z-index:10;
-  background:rgba(11,13,20,0.9);
+  background:rgba(11,13,20,0.85);
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
 }
@@ -74,9 +87,29 @@ a{text-decoration:none;color:inherit}
 
 /* HERO */
 .hero{
-  text-align:center;
+  position:relative;
+  overflow:hidden;
+  background:var(--bg-main);
+}
+
+/* cinematic gradient layer */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
   background:
-    radial-gradient(1000px 500px at 50% -10%, rgba(124,124,255,0.14), transparent 45%);
+    radial-gradient(60% 40% at 20% 30%, rgba(140,120,255,0.28), transparent 60%),
+    radial-gradient(50% 35% at 80% 20%, rgba(255,120,180,0.22), transparent 65%),
+    radial-gradient(45% 30% at 60% 80%, rgba(80,200,255,0.18), transparent 70%);
+  filter:blur(140px);
+  transform:scale(1.15);
+  z-index:0;
+}
+
+.hero > .container{
+  position:relative;
+  z-index:1;
+  text-align:center;
 }
 
 .hero h1{
@@ -110,13 +143,13 @@ a{text-decoration:none;color:inherit}
   border-radius:14px;
   font-weight:600;
   font-size:15px;
-  box-shadow:0 12px 28px rgba(124,124,255,0.35);
+  box-shadow:0 14px 32px rgba(124,124,255,0.35);
   transition:transform .2s ease, box-shadow .2s ease;
 }
 
 .cta:hover{
   transform:translateY(-1px);
-  box-shadow:0 18px 36px rgba(124,124,255,0.45);
+  box-shadow:0 20px 44px rgba(124,124,255,0.45);
 }
 
 .micro{
@@ -137,6 +170,7 @@ a{text-decoration:none;color:inherit}
   border-radius:20px;
   padding:28px;
   border:1px solid var(--border);
+  box-shadow:0 30px 60px rgba(0,0,0,0.45);
 }
 
 .preview-item strong{
@@ -150,19 +184,6 @@ a{text-decoration:none;color:inherit}
   color:var(--text-muted);
 }
 
-/* SECTIONS */
-section h2{
-  font-family:'Inter Tight', sans-serif;
-  font-size:38px;
-  margin-bottom:32px;
-}
-
-.section-text{
-  max-width:720px;
-  font-size:17px;
-  color:var(--text-secondary);
-}
-
 /* FINAL CTA */
 .final{
   text-align:center;
@@ -170,6 +191,7 @@ section h2{
 }
 
 .final h2{
+  font-family:'Inter Tight', sans-serif;
   font-size:40px;
   margin-bottom:24px;
 }
@@ -209,8 +231,9 @@ footer{
       Pricing clarity for designers<br>
       who take their work seriously.
     </h1>
+
     <p>
-      Decide what to charge, define scope clearly,
+      Decide what to charge, define scope confidently,
       and handle client conversations calmly —
       without second-guessing yourself.
     </p>
