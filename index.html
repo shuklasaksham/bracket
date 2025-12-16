@@ -17,7 +17,10 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
@@ -35,20 +38,19 @@ a{text-decoration:none;color:inherit}
   padding:96px 20px;
 }
 
-/* ---------------- NAVBAR ---------------- */
+/* NAVBAR */
 .navbar{
-  position:fixed;
+  position:sticky;
   top:0;
-  width:100%;
   z-index:100;
-  background:rgba(15,18,32,0.85);
-  backdrop-filter:blur(10px);
+  background:var(--bg-dark);
+  color:#fff;
   border-bottom:1px solid rgba(255,255,255,0.08);
-  transition:all 0.3s ease;
+  transition:box-shadow 0.3s ease;
 }
 
-.navbar.shrink{
-  background:#0f1220;
+.navbar.scrolled{
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
 .nav-inner{
@@ -56,24 +58,29 @@ a{text-decoration:none;color:inherit}
   margin:0 auto;
   padding:16px 20px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
 .logo{
   font-weight:700;
-  letter-spacing:0.5px;
-  color:#fff;
+  letter-spacing:0.4px;
 }
 
 .nav-links{
   display:flex;
-  gap:24px;
+  gap:28px;
+  align-items:center;
 }
 
 .nav-links a{
   font-size:14px;
   color:#c7d2fe;
+  transition:opacity 0.2s ease;
+}
+
+.nav-links a:hover{
+  opacity:0.85;
 }
 
 .nav-links a.primary{
@@ -82,43 +89,38 @@ a{text-decoration:none;color:inherit}
   padding:10px 18px;
   border-radius:10px;
   font-weight:600;
-  transition:transform .15s ease, box-shadow .15s ease;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .nav-links a.primary:hover{
   transform:translateY(-1px);
-  box-shadow:0 10px 25px rgba(99,102,241,.35);
+  box-shadow:0 8px 20px rgba(99,102,241,0.4);
 }
 
-/* ---------------- HERO ---------------- */
+/* HERO */
 .hero{
   background:var(--bg-dark);
   color:#fff;
-  padding-top:120px;
+  overflow:hidden;
 }
 
 .hero-grid{
   display:grid;
   grid-template-columns:1.2fr 1fr;
-  gap:56px;
+  gap:48px;
   align-items:center;
 }
 
 .hero h1{
-  font-size:46px;
+  font-size:44px;
   line-height:1.15;
   margin-bottom:20px;
-  opacity:0;
-  transform:translateY(20px);
-  animation:fadeUp .8s ease forwards;
 }
 
 .hero p{
   font-size:18px;
   color:#c7d2fe;
   margin-bottom:32px;
-  opacity:0;
-  animation:fadeUp .8s ease .15s forwards;
 }
 
 .cta{
@@ -129,12 +131,12 @@ a{text-decoration:none;color:inherit}
   border-radius:14px;
   font-weight:600;
   font-size:16px;
-  transition:transform .15s ease, box-shadow .15s ease;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cta:hover{
   transform:translateY(-2px);
-  box-shadow:0 14px 30px rgba(99,102,241,.45);
+  box-shadow:0 12px 30px rgba(99,102,241,0.45);
 }
 
 .micro{
@@ -143,26 +145,48 @@ a{text-decoration:none;color:inherit}
   color:#9ca3af;
 }
 
-/* ---------------- PREVIEW CARD ---------------- */
+/* HERO ANIMATION */
+.hero-animate{
+  opacity:0;
+  transform:translateY(16px);
+  animation:fadeUp 0.8s ease forwards;
+}
+
+.hero-animate.delay{
+  animation-delay:0.15s;
+}
+
+@keyframes fadeUp{
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* PREVIEW CARD */
 .preview-card{
-  background:#fff;
+  background:#ffffff;
   color:var(--text-dark);
-  border-radius:22px;
+  border-radius:20px;
   padding:28px;
-  box-shadow:0 40px 80px rgba(0,0,0,0.45);
-  animation:float 6s ease-in-out infinite;
+  box-shadow:0 30px 60px rgba(0,0,0,0.4);
+  transition:transform 0.3s ease;
+}
+
+.preview-card:hover{
+  transform:translateY(-6px);
 }
 
 .preview-item{
   border:1px solid var(--border);
-  border-radius:14px;
+  border-radius:12px;
   padding:16px;
-  margin-bottom:14px;
-  transition:transform .2s ease;
+  margin-bottom:12px;
+  transition:background 0.2s ease;
 }
 
 .preview-item:hover{
-  transform:translateX(6px);
+  background:#f8fafc;
 }
 
 .preview-item strong{
@@ -176,7 +200,35 @@ a{text-decoration:none;color:inherit}
   color:var(--text-muted);
 }
 
-/* ---------------- FEATURES ---------------- */
+/* SECTIONS */
+section{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+
+section.visible{
+  opacity:1;
+  transform:none;
+}
+
+section h2{
+  font-size:30px;
+  margin-bottom:24px;
+}
+
+/* PROBLEM */
+.problem ul{
+  max-width:720px;
+  padding-left:18px;
+}
+
+.problem li{
+  margin-bottom:14px;
+  font-size:16px;
+}
+
+/* FEATURES */
 .features{
   background:var(--bg-soft);
 }
@@ -189,21 +241,20 @@ a{text-decoration:none;color:inherit}
 
 .feature{
   background:#fff;
-  border-radius:22px;
-  padding:32px;
+  border-radius:20px;
+  padding:28px;
   border:1px solid var(--border);
-  opacity:0;
-  transform:translateY(20px);
-  transition:.6s ease;
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.feature.visible{
-  opacity:1;
-  transform:translateY(0);
+.feature:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.08);
 }
 
 .feature h3{
   margin-top:0;
+  font-size:18px;
 }
 
 .feature p{
@@ -211,7 +262,7 @@ a{text-decoration:none;color:inherit}
   color:var(--text-muted);
 }
 
-/* ---------------- TRUST ---------------- */
+/* TRUST */
 .trust{
   background:var(--bg-dark);
   color:#fff;
@@ -227,37 +278,38 @@ a{text-decoration:none;color:inherit}
   color:#c7d2fe;
 }
 
-/* ---------------- FOOTER ---------------- */
+/* FINAL CTA */
+.final h2{
+  font-size:32px;
+  margin-bottom:20px;
+}
+
+/* FOOTER */
 footer{
   padding:32px 20px;
   border-top:1px solid var(--border);
   font-size:13px;
   color:var(--text-muted);
-  text-align:center;
 }
 
-/* ---------------- ANIMATIONS ---------------- */
-@keyframes fadeUp{
-  to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
-
-/* ---------------- RESPONSIVE ---------------- */
+/* RESPONSIVE */
 @media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr}
-  .hero h1{font-size:34px}
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+  .hero h1{
+    font-size:34px;
+  }
 }
+
+/* --- */
 </style>
 </head>
 
 <body>
 
 <!-- NAV -->
-<div class="navbar" id="navbar">
+<div class="navbar" id="nav">
   <div class="nav-inner">
     <div class="logo">BRACKET</div>
     <div class="nav-links">
@@ -268,22 +320,27 @@ footer{
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero visible">
   <div class="container hero-grid">
     <div>
-      <h1>Clarity for Designers.<br>Pricing, Scope & Client Confidence.</h1>
-      <p>
-        Bracket helps you price fairly, define scope clearly,
-        and handle client conversations without stress.
+      <h1 class="hero-animate">
+        Clarity for Designers.<br>
+        Pricing, Scope & Client Communication — without guesswork.
+      </h1>
+      <p class="hero-animate delay">
+        Bracket helps designers price fairly, define scope clearly,
+        and handle client conversations professionally.
       </p>
-      <a href="/app.html" class="cta">Start using Bracket →</a>
-      <div class="micro">No login · Free · Built for Indian freelancers</div>
+      <a href="/app.html" class="cta hero-animate delay">Start using the tool →</a>
+      <div class="micro hero-animate delay">
+        No login · Free to use · Early version · Built for Indian designers
+      </div>
     </div>
 
-    <div class="preview-card">
+    <div class="preview-card hero-animate delay">
       <div class="preview-item">
         <strong>Pricing</strong>
-        <span>Defensible INR ranges</span>
+        <span>Defensible project price ranges</span>
       </div>
       <div class="preview-item">
         <strong>Scope</strong>
@@ -291,43 +348,89 @@ footer{
       </div>
       <div class="preview-item">
         <strong>Client Playbook</strong>
-        <span>Professional ready-to-send replies</span>
+        <span>Professional ready-to-send messages</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <h2>If you’re a designer, this probably sounds familiar</h2>
+    <ul>
+      <li>Unsure whether your price is too high or too low</li>
+      <li>Clients asking for “just one more change”</li>
+      <li>Scope creep without clear boundaries</li>
+      <li>Awkward conversations around revisions, timelines, and cost</li>
+    </ul>
   </div>
 </section>
 
 <!-- FEATURES -->
 <section class="features" id="features">
   <div class="container">
-    <h2>How Bracket helps</h2>
+    <h2>What Bracket helps you do</h2>
     <div class="feature-grid">
-      <div class="feature"> <h3>Pricing clarity</h3><p>No undercharging. No overthinking.</p></div>
-      <div class="feature"> <h3>Clear scope</h3><p>Protect your time and boundaries.</p></div>
-      <div class="feature"> <h3>Client playbook</h3><p>Say the right thing, calmly.</p></div>
+      <div class="feature">
+        <h3>Pricing</h3>
+        <p>Calculate realistic, defensible price ranges based on scope and urgency.</p>
+      </div>
+      <div class="feature">
+        <h3>Scope</h3>
+        <p>Generate clear scopes of work that protect your time and reduce misunderstandings.</p>
+      </div>
+      <div class="feature">
+        <h3>Client Playbook</h3>
+        <p>Handle common client situations with calm, professional, copy-ready messages.</p>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- TRUST -->
+<section class="trust">
+  <div class="container">
+    <h2>Why designers trust Bracket</h2>
+    <ul>
+      <li>Built by a designer, not a consultancy</li>
+      <li>Focused on Indian freelance realities</li>
+      <li>No login, no data capture</li>
+      <li>You stay in control — this is guidance, not advice</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="container">
+    <h2>Ready to work with more clarity and confidence?</h2>
+    <a href="/app.html" class="cta">Open Bracket →</a>
+  </div>
+</section>
+
 <footer>
-  © Bracket · Early version · Feedback welcome
+  © Bracket · Early version — feedback welcome · Contact: shuklasaksham01@gmail.com
 </footer>
 
 <script>
-/* Navbar shrink */
-window.addEventListener("scroll",()=>{
-  document.getElementById("navbar")
-    .classList.toggle("shrink",window.scrollY>10);
-});
-
-/* Feature reveal */
-const features=document.querySelectorAll(".feature");
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add("visible");
+// reveal sections on scroll
+const sections = document.querySelectorAll("section");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
   });
-},{threshold:.2});
-features.forEach(f=>obs.observe(f));
+},{threshold:0.15});
+
+sections.forEach(sec => observer.observe(sec));
+
+// navbar shadow on scroll
+window.addEventListener("scroll",()=>{
+  document.getElementById("nav")
+    .classList.toggle("scrolled", window.scrollY > 10);
+});
 </script>
 
 </body>
