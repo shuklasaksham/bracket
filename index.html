@@ -3,37 +3,37 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bracket — Pricing, Scope & Client Clarity for Designers</title>
+<title>Bracket — Professional Pricing & Scope for Designers</title>
+
+<!-- PREMIUM FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg-main:#0b0d14;
   --bg-surface:#111422;
   --bg-card:#15182b;
-  --bg-light:#ffffff;
 
   --text-primary:#e6e8f0;
   --text-secondary:#a6accd;
   --text-muted:#7c82a1;
 
   --accent:#7c7cff;
-  --accent-soft:rgba(124,124,255,0.15);
-
   --border:rgba(255,255,255,0.08);
 }
 
 *{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family:'Inter', system-ui, sans-serif;
   background:var(--bg-main);
   color:var(--text-primary);
-  line-height:1.65;
+  line-height:1.7;
 }
 
 a{text-decoration:none;color:inherit}
@@ -41,14 +41,14 @@ a{text-decoration:none;color:inherit}
 .container{
   max-width:1180px;
   margin:0 auto;
-  padding:110px 24px;
+  padding:120px 24px;
 }
 
 /* NAV */
 .navbar{
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:10;
   background:rgba(11,13,20,0.85);
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
@@ -64,6 +64,7 @@ a{text-decoration:none;color:inherit}
 }
 
 .logo{
+  font-family:'Inter Tight', sans-serif;
   font-weight:700;
   letter-spacing:1px;
   font-size:14px;
@@ -72,7 +73,6 @@ a{text-decoration:none;color:inherit}
 .nav-links{
   display:flex;
   gap:28px;
-  align-items:center;
 }
 
 .nav-links a{
@@ -98,25 +98,24 @@ a{text-decoration:none;color:inherit}
 
 .hero-grid{
   display:grid;
-  grid-template-columns:1.3fr 1fr;
-  gap:72px;
+  grid-template-columns:1.35fr 1fr;
+  gap:80px;
   align-items:center;
 }
 
 .hero h1{
-  font-size:52px;
-  line-height:1.08;
-  letter-spacing:-0.5px;
-  margin-bottom:24px;
-  animation:fadeUp 0.8s ease forwards;
+  font-family:'Inter Tight', sans-serif;
+  font-size:56px;
+  line-height:1.05;
+  letter-spacing:-0.6px;
+  margin-bottom:28px;
 }
 
 .hero p{
-  font-size:18px;
+  font-size:19px;
   color:var(--text-secondary);
-  max-width:520px;
-  margin-bottom:40px;
-  animation:fadeUp 0.9s ease forwards;
+  max-width:560px;
+  margin-bottom:44px;
 }
 
 .cta{
@@ -137,7 +136,7 @@ a{text-decoration:none;color:inherit}
 }
 
 .micro{
-  margin-top:16px;
+  margin-top:18px;
   font-size:13px;
   color:var(--text-muted);
 }
@@ -145,60 +144,46 @@ a{text-decoration:none;color:inherit}
 /* PREVIEW CARD */
 .preview-card{
   background:var(--bg-card);
-  border-radius:22px;
-  padding:32px;
+  border-radius:24px;
+  padding:36px;
   border:1px solid var(--border);
-  box-shadow:
-    0 40px 80px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-  animation:fadeUp 1s ease forwards;
+  box-shadow:0 40px 80px rgba(0,0,0,0.6);
 }
 
 .preview-item{
   background:var(--bg-surface);
   border-radius:16px;
-  padding:18px;
-  margin-bottom:14px;
+  padding:20px;
+  margin-bottom:16px;
   border:1px solid var(--border);
-  transition:transform .25s ease;
-}
-
-.preview-item:hover{
-  transform:translateY(-2px);
 }
 
 .preview-item strong{
+  font-family:'Inter Tight', sans-serif;
   display:block;
-  font-size:14px;
+  font-size:15px;
   margin-bottom:6px;
 }
 
 .preview-item span{
-  font-size:13px;
+  font-size:14px;
   color:var(--text-muted);
 }
 
 /* SECTION HEADERS */
 section h2{
-  font-size:36px;
+  font-family:'Inter Tight', sans-serif;
+  font-size:38px;
   letter-spacing:-0.4px;
   margin-bottom:36px;
 }
 
-/* PROBLEM */
-.problem{
-  background:var(--bg-main);
-}
-
-.problem ul{
-  max-width:760px;
-  padding-left:18px;
-}
-
-.problem li{
-  margin-bottom:18px;
+/* PHILOSOPHY */
+.philosophy p{
+  max-width:720px;
   font-size:17px;
   color:var(--text-secondary);
+  margin-bottom:22px;
 }
 
 /* FEATURES */
@@ -208,38 +193,61 @@ section h2{
 
 .feature-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:40px;
 }
 
 .feature{
   background:var(--bg-card);
   border-radius:24px;
-  padding:36px;
+  padding:40px;
   border:1px solid var(--border);
   box-shadow:0 30px 70px rgba(0,0,0,0.5);
-  transition:transform .25s ease;
-}
-
-.feature:hover{
-  transform:translateY(-4px);
 }
 
 .feature h3{
-  margin-top:0;
-  margin-bottom:14px;
+  font-family:'Inter Tight', sans-serif;
   font-size:20px;
+  margin-bottom:14px;
 }
 
 .feature p{
+  font-size:15px;
+  color:var(--text-muted);
+}
+
+/* HOW IT THINKS */
+.how{
+  background:var(--bg-main);
+}
+
+.how-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:36px;
+}
+
+.how-item{
+  background:var(--bg-card);
+  border-radius:22px;
+  padding:32px;
+  border:1px solid var(--border);
+}
+
+.how-item strong{
+  display:block;
+  margin-bottom:10px;
+  font-family:'Inter Tight', sans-serif;
+}
+
+.how-item span{
   font-size:14px;
   color:var(--text-muted);
-  max-width:320px;
 }
 
 /* TRUST */
 .trust{
-  background:var(--bg-main);
+  background:var(--bg-surface);
 }
 
 .trust ul{
@@ -255,35 +263,29 @@ section h2{
 
 /* FINAL CTA */
 .final{
+  text-align:center;
   background:
     radial-gradient(800px 400px at 50% 0%, rgba(124,124,255,0.15), transparent 50%);
-  text-align:center;
 }
 
 .final h2{
-  font-size:38px;
+  font-size:42px;
   margin-bottom:28px;
 }
 
 /* FOOTER */
 footer{
-  padding:36px 20px;
+  padding:40px 20px;
   border-top:1px solid var(--border);
   font-size:13px;
   color:var(--text-muted);
   text-align:center;
 }
 
-/* ANIMATION */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(14px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
 /* RESPONSIVE */
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr}
-  .hero h1{font-size:38px}
+  .hero h1{font-size:40px}
 }
 </style>
 </head>
@@ -295,7 +297,7 @@ footer{
   <div class="nav-inner">
     <div class="logo">BRACKET</div>
     <div class="nav-links">
-      <a href="#features">How it works</a>
+      <a href="#features">Product</a>
       <a href="/app.html" class="primary">Open tool</a>
     </div>
   </div>
@@ -306,13 +308,13 @@ footer{
   <div class="container hero-grid">
     <div>
       <h1>
-        Professional pricing,<br>
-        clear scope,<br>
-        calm client conversations.
+        Pricing clarity<br>
+        for serious designers.
       </h1>
       <p>
-        Bracket helps designers make confident decisions about pricing,
-        scope, and boundaries — grounded in real freelance experience.
+        Bracket helps you decide what to charge, what to include,
+        and how to communicate boundaries — clearly, calmly,
+        and without second-guessing yourself.
       </p>
       <a href="/app.html" class="cta">Open Bracket →</a>
       <div class="micro">
@@ -323,30 +325,33 @@ footer{
     <div class="preview-card">
       <div class="preview-item">
         <strong>Pricing</strong>
-        <span>Logic-backed ranges based on experience, scope, and risk</span>
+        <span>Experience-aware price ranges grounded in real freelance norms</span>
       </div>
       <div class="preview-item">
         <strong>Scope</strong>
-        <span>Clear deliverables and exclusions clients understand</span>
+        <span>Clear inclusions, exclusions, and revision boundaries</span>
       </div>
       <div class="preview-item">
         <strong>Client Playbook</strong>
-        <span>Short, firm responses for difficult conversations</span>
+        <span>Calm, firm responses for difficult conversations</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROBLEM -->
-<section class="problem">
+<!-- PHILOSOPHY -->
+<section class="philosophy">
   <div class="container">
-    <h2>Design work suffers when clarity is missing</h2>
-    <ul>
-      <li>Prices set by instinct instead of logic</li>
-      <li>Scope that keeps expanding without agreement</li>
-      <li>Clients testing boundaries unintentionally</li>
-      <li>Uncomfortable conversations about money and change</li>
-    </ul>
+    <h2>A tool that respects your judgment</h2>
+    <p>
+      Bracket is not a pricing calculator and not a template generator.
+      It exists to support professional judgment — not replace it.
+    </p>
+    <p>
+      Every recommendation is grounded in experience level,
+      project complexity, and risk, while leaving the final decision
+      firmly in your hands.
+    </p>
   </div>
 </section>
 
@@ -358,23 +363,48 @@ footer{
       <div class="feature">
         <h3>Price with confidence</h3>
         <p>
-          Generate defensible price ranges that reflect your experience,
-          project complexity, and timeline pressure.
+          Generate realistic price ranges that reflect your experience,
+          scope size, clarity, and urgency — without undercutting yourself.
         </p>
       </div>
       <div class="feature">
         <h3>Define scope clearly</h3>
         <p>
-          Turn loose project descriptions into clear, client-ready scopes
-          that prevent misunderstandings.
+          Turn loose briefs into precise scopes that protect your time
+          and reduce misunderstandings before work begins.
         </p>
       </div>
       <div class="feature">
-        <h3>Handle clients calmly</h3>
+        <h3>Handle clients professionally</h3>
         <p>
-          Use ready-to-send responses that are firm, respectful,
-          and emotionally neutral.
+          Use short, emotionally neutral responses that keep conversations
+          productive and respectful.
         </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT THINKS -->
+<section class="how">
+  <div class="container">
+    <h2>How Bracket thinks about pricing</h2>
+    <div class="how-grid">
+      <div class="how-item">
+        <strong>Experience matters</strong>
+        <span>Your years of practice affect decision speed, quality, and risk.</span>
+      </div>
+      <div class="how-item">
+        <strong>Clarity reduces cost</strong>
+        <span>Clear briefs cost less than exploratory work.</span>
+      </div>
+      <div class="how-item">
+        <strong>Urgency has a price</strong>
+        <span>Rushed timelines create opportunity and stress costs.</span>
+      </div>
+      <div class="how-item">
+        <strong>Ranges protect both sides</strong>
+        <span>Flexible pricing avoids conflict when scope evolves.</span>
       </div>
     </div>
   </div>
@@ -383,12 +413,12 @@ footer{
 <!-- TRUST -->
 <section class="trust">
   <div class="container">
-    <h2>Designed for real freelance work</h2>
+    <h2>Built for real freelance work</h2>
     <ul>
       <li>Opinionated logic, not generic advice</li>
-      <li>No data capture or tracking</li>
+      <li>No tracking, no dark patterns</li>
       <li>AI assists judgment — it doesn’t replace it</li>
-      <li>You stay in control of every decision</li>
+      <li>You remain in control of every decision</li>
     </ul>
   </div>
 </section>
@@ -396,7 +426,7 @@ footer{
 <!-- FINAL CTA -->
 <section class="final">
   <div class="container">
-    <h2>Ready to work with more clarity?</h2>
+    <h2>Work with clarity, not anxiety</h2>
     <a href="/app.html" class="cta">Open Bracket →</a>
   </div>
 </section>
