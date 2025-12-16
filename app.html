@@ -42,9 +42,22 @@ body{
 .app-shell{display:flex;justify-content:center;padding:32px 16px}
 .app{width:100%;max-width:720px}
 
-.tabs{display:flex;gap:24px;border-bottom:1px solid rgba(255,255,255,0.2);margin-bottom:16px}
-.tab{cursor:pointer;color:#c7d2fe;font-weight:600;padding-bottom:10px}
-.tab.active{color:#fff;border-bottom:2px solid #fff}
+.tabs{
+  display:flex;
+  gap:24px;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  margin-bottom:16px
+}
+.tab{
+  cursor:pointer;
+  color:#c7d2fe;
+  font-weight:600;
+  padding-bottom:10px
+}
+.tab.active{
+  color:#fff;
+  border-bottom:2px solid #fff
+}
 
 .card{
   background:#fff;
@@ -54,18 +67,26 @@ body{
   box-shadow:0 30px 60px rgba(0,0,0,0.35);
 }
 
-textarea{
+label{
+  display:block;
+  margin-top:14px;
+  font-size:14px;
+  font-weight:600;
+}
+
+select, textarea{
   width:100%;
-  height:130px;
+  margin-top:6px;
   padding:12px;
   border-radius:10px;
   border:1px solid var(--border);
   font-size:14px;
-  resize:none;
 }
 
+textarea{resize:none;height:100px}
+
 button{
-  margin-top:16px;
+  margin-top:18px;
   width:100%;
   padding:14px;
   border:none;
@@ -109,9 +130,53 @@ button{
 
 <!-- PRICING -->
 <div id="pricing" class="card">
-  <h3>Describe project for pricing</h3>
-  <textarea id="pricingInput"></textarea>
-  <button onclick="callAI('pricing')">Analyse & calculate</button>
+  <h3>Pricing</h3>
+
+  <label>Project type</label>
+  <select id="projectType">
+    <option>UI/UX – Product / SaaS</option>
+    <option>UI/UX – Website / Marketing</option>
+    <option>Mobile App Design</option>
+    <option>Web Design (Visual only)</option>
+    <option>Design System / Component Library</option>
+    <option>Brand Identity (Logo + basics)</option>
+    <option>Brand Refresh / Rebrand</option>
+    <option>Brand Guidelines / Visual Language</option>
+    <option>Illustration / Artwork</option>
+    <option>Social Media Creatives</option>
+    <option>Presentation / Pitch Deck</option>
+    <option>No-code Website (Webflow / Framer)</option>
+    <option>Landing Page (Conversion-focused)</option>
+    <option>Design Audit / Review</option>
+    <option>Custom / Not sure yet</option>
+  </select>
+
+  <label>Project size</label>
+  <select id="projectSize">
+    <option>Small</option>
+    <option>Medium</option>
+    <option>Large</option>
+  </select>
+
+  <label>Client clarity</label>
+  <select id="clientClarity">
+    <option>Very clear</option>
+    <option>Somewhat clear</option>
+    <option>Exploratory / unclear</option>
+  </select>
+
+  <label>Timeline</label>
+  <select id="timeline">
+    <option>Flexible</option>
+    <option>Normal</option>
+    <option>Urgent</option>
+  </select>
+
+  <label>Additional context (optional)</label>
+  <textarea id="pricingContext"></textarea>
+
+  <button onclick="callPricing()">Generate range</button>
+
   <div id="pricingResult" class="result hidden">
     <textarea id="pricingOutput" readonly></textarea>
   </div>
@@ -148,24 +213,39 @@ function switchTab(id, el) {
   document.getElementById(id).classList.remove('hidden');
 }
 
+async function callPricing() {
+  const payload = {
+    projectType: projectType.value,
+    size: projectSize.value,
+    clarity: clientClarity.value,
+    timeline: timeline.value,
+    context: pricingContext.value
+  };
+
+  const res = await fetch("/api/pricing", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  pricingOutput.value = data.output;
+  pricingResult.classList.remove("hidden");
+}
+
 async function callAI(type) {
   const input = document.getElementById(type + "Input").value.trim();
   if (!input) return alert("Please enter text");
 
-  try {
-    const res = await fetch(`/api/${type}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: input })
-    });
+  const res = await fetch(`/api/${type}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: input })
+  });
 
-    const data = await res.json();
-
-    document.getElementById(type + "Output").value = data.output;
-    document.getElementById(type + "Result").classList.remove("hidden");
-  } catch (err) {
-    alert("Something went wrong. Please try again.");
-  }
+  const data = await res.json();
+  document.getElementById(type + "Output").value = data.output;
+  document.getElementById(type + "Result").classList.remove("hidden");
 }
 </script>
 
