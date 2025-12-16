@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bracket — App</title>
+
+<style>
+:root{
+  --bg-dark:#0f1220;
+  --bg-light:#ffffff;
+  --text-dark:#0f172a;
+  --text-muted:#64748b;
+  --accent:#6366f1;
+  --border:#e5e7eb;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg-dark);
+  color:#fff;
+}
+
+/* NAV */
+.navbar{
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.nav-inner{
+  max-width:1100px;
+  margin:auto;
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+}
+.logo a{color:#fff;text-decoration:none;font-weight:700}
+.nav-links a{color:#c7d2fe;text-decoration:none;font-size:14px}
+
+/* APP */
+.app-shell{display:flex;justify-content:center;padding:32px 16px}
+.app{width:100%;max-width:720px}
+
+.tabs{display:flex;gap:24px;border-bottom:1px solid rgba(255,255,255,0.2);margin-bottom:16px}
+.tab{cursor:pointer;color:#c7d2fe;font-weight:600;padding-bottom:10px}
+.tab.active{color:#fff;border-bottom:2px solid #fff}
+
+.card{
+  background:#fff;
+  color:var(--text-dark);
+  border-radius:16px;
+  padding:24px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.35);
+}
+
+textarea{
+  width:100%;
+  height:130px;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  font-size:14px;
+  resize:none;
+}
+
+button{
+  margin-top:16px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:600;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:16px;
+  padding:16px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#f9fafb;
+}
+
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div class="nav-inner">
+    <div class="logo"><a href="/">BRACKET</a></div>
+    <div class="nav-links"><a href="/">Home</a></div>
+  </div>
+</div>
+
+<div class="app-shell">
+<div class="app">
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('pricing',this)">Pricing</div>
+  <div class="tab" onclick="switchTab('scope',this)">Scope</div>
+  <div class="tab" onclick="switchTab('playbook',this)">Client Playbook</div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" class="card">
+  <h3>Describe project for pricing</h3>
+  <textarea id="pricingInput"></textarea>
+  <button onclick="callAI('pricing')">Analyse & calculate</button>
+  <div id="pricingResult" class="result hidden">
+    <textarea id="pricingOutput" readonly></textarea>
+  </div>
+</div>
+
+<!-- SCOPE -->
+<div id="scope" class="card hidden">
+  <h3>Describe project scope</h3>
+  <textarea id="scopeInput"></textarea>
+  <button onclick="callAI('scope')">Generate scope</button>
+  <div id="scopeResult" class="result hidden">
+    <textarea id="scopeOutput" readonly></textarea>
+  </div>
+</div>
+
+<!-- PLAYBOOK -->
+<div id="playbook" class="card hidden">
+  <h3>Describe client situation</h3>
+  <textarea id="playbookInput"></textarea>
+  <button onclick="callAI('playbook')">Generate response</button>
+  <div id="playbookResult" class="result hidden">
+    <textarea id="playbookOutput" readonly></textarea>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+function switchTab(id, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+async function callAI(type) {
+  const input = document.getElementById(type + "Input").value.trim();
+  if (!input) return alert("Please enter text");
+
+  try {
+    const res = await fetch(`/api/${type}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: input })
+    });
+
+    const data = await res.json();
+
+    document.getElementById(type + "Output").value = data.output;
+    document.getElementById(type + "Result").classList.remove("hidden");
+  } catch (err) {
+    alert("Something went wrong. Please try again.");
+  }
+}
+</script>
+
+</body>
+</html>
