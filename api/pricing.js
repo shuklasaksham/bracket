@@ -2,14 +2,12 @@ export default async function handler(req, res) {
   try {
     const { projectType, scale, timeline, details } = req.body || {};
 
-    if (!projectType || !scale || !timeline) {
-      return res.status(400).json({
-        output: "Missing project information."
-      });
+    if (!projectType) {
+      return res.status(400).json({ output: "Missing project data." });
     }
 
-    // Base pricing (₹) – realistic Indian freelance / studio range
-    const basePricing = {
+    // Indian market base floors (₹)
+    const base = {
       uiux: 8000,
       branding: 10000,
       website: 12000,
@@ -18,57 +16,68 @@ export default async function handler(req, res) {
       custom: 9000
     };
 
-    const scaleMultiplier = {
-      small: 1,
-      medium: 1.8,
-      large: 2.8
-    };
+    const scaleM = { small: 1, medium: 1.8, large: 2.8 };
+    const timeM = { relaxed: 1, normal: 1.15, urgent: 1.35 };
 
-    const timelineMultiplier = {
-      relaxed: 1,
-      normal: 1.15,
-      urgent: 1.35
-    };
-
-    const base = basePricing[projectType] || 8000;
     const price =
       Math.round(
-        base *
-        scaleMultiplier[scale] *
-        timelineMultiplier[timeline] / 500
+        (base[projectType] || 8000) *
+        (scaleM[scale] || 1) *
+        (timeM[timeline] || 1) / 500
       ) * 500;
 
-    const typeLabel = {
-      uiux: "UI/UX design",
-      branding: "branding work",
-      website: "website design",
-      mobile: "mobile app design",
-      illustration: "illustration work",
-      custom: "custom project"
-    }[projectType];
+    // ---- AI INTERPRETATION LAYER ----
+    const aiPrompt = `
+You are a senior design consultant in India.
 
-    let response = `Here’s a realistic bracket for this ${typeLabel} project.\n\n`;
+User project:
+Type: ${projectType}
+Scale: ${scale}
+Timeline: ${timeline}
+Extra context: ${details || "None"}
 
-    response += `• Scope: ${scale} complexity\n`;
-    response += `• Timeline: ${timeline}\n\n`;
+Respond with:
+1. A calm, human explanation of scope
+2. Clear assumptions
+3. 2–3 risk flags
+4. Revision expectations
+Tone: professional, grounded, not salesy.
+`;
 
-    response += `Based on similar work done in the Indian market, a fair estimate would land around:\n\n`;
-    response += `₹${price.toLocaleString("en-IN")}\n\n`;
+    const groqRes = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.key01}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "llama-3.1-70b-versatile",
+          messages: [{ role: "user", content: aiPrompt }]
+        })
+      }
+    );
 
-    response += `This accounts for actual working hours, revisions, and delivery — not inflated agency pricing, and not unsustainable underpricing either.\n\n`;
+    const groqData = await groqRes.json();
+    const aiText =
+      groqData?.choices?.[0]?.message?.content ||
+      "Scope discussion required.";
 
-    if (details && details.trim().length > 0) {
-      response += `You mentioned additional context:\n"${details.trim()}"\n\n`;
-      response += `That context may slightly shift scope or revisions once discussed properly, but this bracket still holds as a sensible starting point.\n\n`;
-    }
+    const finalOutput = `
+Estimated Bracket: ₹${price.toLocaleString("en-IN")}
 
-    response += `Next step would normally be clarifying assumptions, revision limits, and handoff format before locking this into a formal quote.`;
+${aiText}
 
-    return res.status(200).json({ output: response });
+This number is a working bracket, not a final quote.
+Final pricing depends on locked scope and confirmed assumptions.
+`;
 
-  } catch (err) {
+    return res.status(200).json({ output: finalOutput });
+
+  } catch (e) {
     return res.status(500).json({
-      output: "Internal error while calculating pricing."
+      output: "AI or pricing layer failed."
     });
   }
 }
