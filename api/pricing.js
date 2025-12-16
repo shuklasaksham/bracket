@@ -1,47 +1,67 @@
 export default async function handler(req, res) {
   try {
-    const { projectType, scale, timeline, details } = req.body || {};
+    const {
+      projectType,
+      complexity,
+      deliverables,
+      clarity,
+      timeline,
+      details
+    } = req.body || {};
 
-    if (!projectType) {
-      return res.status(400).json({ output: "Missing project data." });
-    }
-
-    // Indian market base floors (₹)
+    // --- Pricing logic (India-realistic floor) ---
     const base = {
-      uiux: 8000,
-      branding: 10000,
-      website: 12000,
-      mobile: 15000,
-      illustration: 6000,
-      custom: 9000
+      uiux: 9000,
+      branding: 11000,
+      website: 13000,
+      mobile: 16000,
+      illustration: 7000,
+      custom: 10000
     };
 
-    const scaleM = { small: 1, medium: 1.8, large: 2.8 };
-    const timeM = { relaxed: 1, normal: 1.15, urgent: 1.35 };
+    const complexityM = { simple: 1, moderate: 1.6, complex: 2.4 };
+    const deliverableM = { few: 1, some: 1.5, many: 2.2 };
+    const clarityM = { clear: 1, partial: 1.2, unclear: 1.4 };
+    const timelineM = { flexible: 1, standard: 1.15, urgent: 1.35 };
 
     const price =
       Math.round(
-        (base[projectType] || 8000) *
-        (scaleM[scale] || 1) *
-        (timeM[timeline] || 1) / 500
+        (base[projectType] || 9000) *
+        complexityM[complexity] *
+        deliverableM[deliverables] *
+        clarityM[clarity] *
+        timelineM[timeline] / 500
       ) * 500;
 
-    // ---- AI INTERPRETATION LAYER ----
-    const aiPrompt = `
-You are a senior design consultant in India.
+    // --- AI layer ---
+    const prompt = `
+You are a senior Indian design consultant.
 
-User project:
-Type: ${projectType}
-Scale: ${scale}
+Generate THREE clearly separated sections:
+
+SECTION 1: SCOPE
+- What is INCLUDED
+- What is EXCLUDED
+- Key assumptions
+
+SECTION 2: RISKS & REVISION RULES
+- 2–3 real risks
+- Revision expectations
+
+SECTION 3: CLIENT PLAYBOOK
+- How the client should work with the designer
+- What speeds things up
+- What causes delays
+
+Context:
+Project type: ${projectType}
+Complexity: ${complexity}
+Deliverables: ${deliverables}
+Client clarity: ${clarity}
 Timeline: ${timeline}
 Extra context: ${details || "None"}
 
-Respond with:
-1. A calm, human explanation of scope
-2. Clear assumptions
-3. 2–3 risk flags
-4. Revision expectations
-Tone: professional, grounded, not salesy.
+Tone: calm, firm, experienced. No fluff.
 `;
 
     const groqRes = await fetch(
@@ -49,35 +69,37 @@ Tone: professional, grounded, not salesy.
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.key01}`,
+          Authorization: `Bearer ${process.env.key01}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           model: "llama-3.1-70b-versatile",
-          messages: [{ role: "user", content: aiPrompt }]
+          messages: [{ role: "user", content: prompt }]
         })
       }
     );
 
-    const groqData = await groqRes.json();
+    const aiData = await groqRes.json();
     const aiText =
-      groqData?.choices?.[0]?.message?.content ||
-      "Scope discussion required.";
+      aiData?.choices?.[0]?.message?.content ||
+      "AI interpretation unavailable.";
 
-    const finalOutput = `
-Estimated Bracket: ₹${price.toLocaleString("en-IN")}
+    const output = `
+ESTIMATED PRICE BRACKET
+₹${price.toLocaleString("en-IN")}
 
 ${aiText}
 
-This number is a working bracket, not a final quote.
-Final pricing depends on locked scope and confirmed assumptions.
+NOTE:
+This is a working bracket, not a final quote.
+Final numbers lock only after scope confirmation.
 `;
 
-    return res.status(200).json({ output: finalOutput });
+    return res.status(200).json({ output });
 
-  } catch (e) {
+  } catch (err) {
     return res.status(500).json({
-      output: "AI or pricing layer failed."
+      output: "Pricing or AI layer failed."
     });
   }
 }
