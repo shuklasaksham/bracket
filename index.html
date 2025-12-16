@@ -7,53 +7,66 @@
 
 <style>
 :root{
-  --bg-dark:#0f1220;
+  --bg-main:#0b0d14;
+  --bg-surface:#111422;
+  --bg-card:#15182b;
   --bg-light:#ffffff;
-  --bg-soft:#f8fafc;
-  --text-dark:#0f172a;
-  --text-muted:#64748b;
-  --accent:#6366f1;
-  --border:#e5e7eb;
+
+  --text-primary:#e6e8f0;
+  --text-secondary:#a6accd;
+  --text-muted:#7c82a1;
+
+  --accent:#7c7cff;
+  --accent-soft:rgba(124,124,255,0.15);
+
+  --border:rgba(255,255,255,0.08);
 }
 
 *{box-sizing:border-box}
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  color:var(--text-dark);
-  background:var(--bg-light);
+  background:var(--bg-main);
+  color:var(--text-primary);
   line-height:1.65;
 }
 
 a{text-decoration:none;color:inherit}
 
 .container{
-  max-width:1120px;
+  max-width:1180px;
   margin:0 auto;
-  padding:96px 20px;
+  padding:110px 24px;
 }
 
-/* NAVBAR */
+/* NAV */
 .navbar{
-  background:var(--bg-dark);
-  color:#fff;
-  border-bottom:1px solid rgba(255,255,255,0.1);
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(11,13,20,0.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
 }
 
 .nav-inner{
-  max-width:1120px;
+  max-width:1180px;
   margin:0 auto;
-  padding:18px 20px;
+  padding:18px 24px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
 
 .logo{
   font-weight:700;
-  font-size:15px;
-  letter-spacing:0.6px;
+  letter-spacing:1px;
+  font-size:14px;
 }
 
 .nav-links{
@@ -64,74 +77,94 @@ a{text-decoration:none;color:inherit}
 
 .nav-links a{
   font-size:14px;
-  color:#c7d2fe;
+  color:var(--text-secondary);
 }
 
 .nav-links a.primary{
+  padding:10px 18px;
   background:var(--accent);
   color:#fff;
-  padding:10px 18px;
-  border-radius:10px;
+  border-radius:12px;
   font-weight:600;
+  box-shadow:0 10px 30px rgba(124,124,255,0.35);
 }
 
 /* HERO */
 .hero{
-  background:var(--bg-dark);
-  color:#fff;
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(124,124,255,0.12), transparent 40%),
+    radial-gradient(900px 500px at 90% 10%, rgba(124,124,255,0.08), transparent 45%);
 }
 
 .hero-grid{
   display:grid;
-  grid-template-columns:1.25fr 0.9fr;
-  gap:56px;
+  grid-template-columns:1.3fr 1fr;
+  gap:72px;
   align-items:center;
 }
 
 .hero h1{
-  font-size:46px;
-  line-height:1.12;
-  margin-bottom:22px;
-  letter-spacing:-0.3px;
+  font-size:52px;
+  line-height:1.08;
+  letter-spacing:-0.5px;
+  margin-bottom:24px;
+  animation:fadeUp 0.8s ease forwards;
 }
 
 .hero p{
   font-size:18px;
-  color:#c7d2fe;
+  color:var(--text-secondary);
   max-width:520px;
-  margin-bottom:36px;
+  margin-bottom:40px;
+  animation:fadeUp 0.9s ease forwards;
 }
 
 .cta{
   display:inline-block;
+  padding:18px 36px;
   background:var(--accent);
   color:#fff;
-  padding:16px 34px;
-  border-radius:14px;
+  border-radius:16px;
   font-weight:600;
   font-size:16px;
+  box-shadow:0 20px 40px rgba(124,124,255,0.35);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 28px 60px rgba(124,124,255,0.45);
 }
 
 .micro{
-  margin-top:14px;
+  margin-top:16px;
   font-size:13px;
-  color:#9ca3af;
+  color:var(--text-muted);
 }
 
-/* HERO CARD */
+/* PREVIEW CARD */
 .preview-card{
-  background:#ffffff;
-  color:var(--text-dark);
+  background:var(--bg-card);
   border-radius:22px;
-  padding:30px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.45);
+  padding:32px;
+  border:1px solid var(--border);
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  animation:fadeUp 1s ease forwards;
 }
 
 .preview-item{
-  border:1px solid var(--border);
-  border-radius:14px;
+  background:var(--bg-surface);
+  border-radius:16px;
   padding:18px;
   margin-bottom:14px;
+  border:1px solid var(--border);
+  transition:transform .25s ease;
+}
+
+.preview-item:hover{
+  transform:translateY(-2px);
 }
 
 .preview-item strong{
@@ -147,14 +180,14 @@ a{text-decoration:none;color:inherit}
 
 /* SECTION HEADERS */
 section h2{
-  font-size:32px;
-  margin-bottom:28px;
-  letter-spacing:-0.2px;
+  font-size:36px;
+  letter-spacing:-0.4px;
+  margin-bottom:36px;
 }
 
 /* PROBLEM */
 .problem{
-  background:#fff;
+  background:var(--bg-main);
 }
 
 .problem ul{
@@ -163,32 +196,39 @@ section h2{
 }
 
 .problem li{
-  margin-bottom:16px;
-  font-size:16px;
+  margin-bottom:18px;
+  font-size:17px;
+  color:var(--text-secondary);
 }
 
 /* FEATURES */
 .features{
-  background:var(--bg-soft);
+  background:var(--bg-surface);
 }
 
 .feature-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:36px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
 }
 
 .feature{
-  background:#fff;
-  border-radius:22px;
-  padding:32px;
+  background:var(--bg-card);
+  border-radius:24px;
+  padding:36px;
   border:1px solid var(--border);
+  box-shadow:0 30px 70px rgba(0,0,0,0.5);
+  transition:transform .25s ease;
+}
+
+.feature:hover{
+  transform:translateY(-4px);
 }
 
 .feature h3{
   margin-top:0;
-  font-size:18px;
-  margin-bottom:12px;
+  margin-bottom:14px;
+  font-size:20px;
 }
 
 .feature p{
@@ -199,8 +239,7 @@ section h2{
 
 /* TRUST */
 .trust{
-  background:var(--bg-dark);
-  color:#fff;
+  background:var(--bg-main);
 }
 
 .trust ul{
@@ -209,38 +248,42 @@ section h2{
 }
 
 .trust li{
-  margin-bottom:14px;
-  color:#c7d2fe;
-  font-size:15px;
+  margin-bottom:16px;
+  font-size:16px;
+  color:var(--text-secondary);
 }
 
 /* FINAL CTA */
 .final{
-  background:#fff;
+  background:
+    radial-gradient(800px 400px at 50% 0%, rgba(124,124,255,0.15), transparent 50%);
+  text-align:center;
 }
 
 .final h2{
-  font-size:34px;
-  margin-bottom:22px;
+  font-size:38px;
+  margin-bottom:28px;
 }
 
 /* FOOTER */
 footer{
-  padding:32px 20px;
+  padding:36px 20px;
   border-top:1px solid var(--border);
   font-size:13px;
   color:var(--text-muted);
   text-align:center;
 }
 
+/* ANIMATION */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
 /* RESPONSIVE */
 @media(max-width:900px){
-  .hero-grid{
-    grid-template-columns:1fr;
-  }
-  .hero h1{
-    font-size:36px;
-  }
+  .hero-grid{grid-template-columns:1fr}
+  .hero h1{font-size:38px}
 }
 </style>
 </head>
@@ -263,33 +306,32 @@ footer{
   <div class="container hero-grid">
     <div>
       <h1>
-        Price your work clearly.<br>
-        Define scope confidently.<br>
-        Handle clients professionally.
+        Professional pricing,<br>
+        clear scope,<br>
+        calm client conversations.
       </h1>
       <p>
-        Bracket is a practical tool for designers who want
-        defensible pricing, clear boundaries, and calm client conversations —
-        without guesswork or awkwardness.
+        Bracket helps designers make confident decisions about pricing,
+        scope, and boundaries — grounded in real freelance experience.
       </p>
       <a href="/app.html" class="cta">Open Bracket →</a>
       <div class="micro">
-        No login · Free to use · Built for Indian freelance realities
+        Free · No login · Built for Indian freelance realities
       </div>
     </div>
 
     <div class="preview-card">
       <div class="preview-item">
         <strong>Pricing</strong>
-        <span>Logic-backed price ranges that reflect experience, scope, and risk</span>
+        <span>Logic-backed ranges based on experience, scope, and risk</span>
       </div>
       <div class="preview-item">
         <strong>Scope</strong>
-        <span>Clear, client-friendly scopes that prevent misunderstandings</span>
+        <span>Clear deliverables and exclusions clients understand</span>
       </div>
       <div class="preview-item">
         <strong>Client Playbook</strong>
-        <span>Short, firm responses for common client situations</span>
+        <span>Short, firm responses for difficult conversations</span>
       </div>
     </div>
   </div>
@@ -298,12 +340,12 @@ footer{
 <!-- PROBLEM -->
 <section class="problem">
   <div class="container">
-    <h2>Design work breaks down when clarity is missing</h2>
+    <h2>Design work suffers when clarity is missing</h2>
     <ul>
-      <li>Pricing based on gut feeling instead of defensible logic</li>
-      <li>Unclear scope leading to endless revisions</li>
-      <li>Clients pushing boundaries because expectations weren’t written down</li>
-      <li>Discomfort around timelines, changes, and money</li>
+      <li>Prices set by instinct instead of logic</li>
+      <li>Scope that keeps expanding without agreement</li>
+      <li>Clients testing boundaries unintentionally</li>
+      <li>Uncomfortable conversations about money and change</li>
     </ul>
   </div>
 </section>
@@ -316,22 +358,22 @@ footer{
       <div class="feature">
         <h3>Price with confidence</h3>
         <p>
-          Generate realistic price ranges based on project type,
-          experience level, clarity, and urgency — grounded in Indian freelance norms.
+          Generate defensible price ranges that reflect your experience,
+          project complexity, and timeline pressure.
         </p>
       </div>
       <div class="feature">
         <h3>Define scope clearly</h3>
         <p>
-          Turn messy project descriptions into clean scopes that
-          protect your time and reduce misunderstandings.
+          Turn loose project descriptions into clear, client-ready scopes
+          that prevent misunderstandings.
         </p>
       </div>
       <div class="feature">
         <h3>Handle clients calmly</h3>
         <p>
-          Get ready-to-send responses for common client situations —
-          firm, professional, and emotionally neutral.
+          Use ready-to-send responses that are firm, respectful,
+          and emotionally neutral.
         </p>
       </div>
     </div>
@@ -341,12 +383,12 @@ footer{
 <!-- TRUST -->
 <section class="trust">
   <div class="container">
-    <h2>Built with real freelance work in mind</h2>
+    <h2>Designed for real freelance work</h2>
     <ul>
-      <li>Opinionated, not generic</li>
-      <li>No dark patterns, no data capture</li>
+      <li>Opinionated logic, not generic advice</li>
+      <li>No data capture or tracking</li>
       <li>AI assists judgment — it doesn’t replace it</li>
-      <li>You stay in control of pricing and decisions</li>
+      <li>You stay in control of every decision</li>
     </ul>
   </div>
 </section>
