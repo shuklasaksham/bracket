@@ -1,73 +1,74 @@
 export default async function handler(req, res) {
   try {
-    const { text } = req.body || {};
+    const { projectType, scale, timeline, details } = req.body || {};
 
-    if (!text) {
+    if (!projectType || !scale || !timeline) {
       return res.status(400).json({
-        output: "Missing pricing details."
+        output: "Missing project information."
       });
     }
 
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.key01}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
-          messages: [
-            {
-              role: "user",
-              content: `
-You are an experienced freelance designer working in the Indian market.
+    // Base pricing (₹) – realistic Indian freelance / studio range
+    const basePricing = {
+      uiux: 8000,
+      branding: 10000,
+      website: 12000,
+      mobile: 15000,
+      illustration: 6000,
+      custom: 9000
+    };
 
-Your job is to suggest a realistic project pricing range in INR based on Indian freelance standards — not agency pricing and not international rates.
+    const scaleMultiplier = {
+      small: 1,
+      medium: 1.8,
+      large: 2.8
+    };
 
-Guidelines:
-- Assume most Indian clients are price-sensitive
-- Prefer conservative, defensible pricing over aspirational numbers
-- Adjust pricing based on scope size, experience level, client type, and risk
-- If something suggests underpricing risk, mention it clearly
-- Do NOT exaggerate value or upsell
-- Do NOT use markdown, asterisks, or emojis
-- Keep the response practical, grounded, and human
+    const timelineMultiplier = {
+      relaxed: 1,
+      normal: 1.15,
+      urgent: 1.35
+    };
 
-Respond using this structure only:
+    const base = basePricing[projectType] || 8000;
+    const price =
+      Math.round(
+        base *
+        scaleMultiplier[scale] *
+        timelineMultiplier[timeline] / 500
+      ) * 500;
 
-Price Range (INR):
-₹X – ₹Y
+    const typeLabel = {
+      uiux: "UI/UX design",
+      branding: "branding work",
+      website: "website design",
+      mobile: "mobile app design",
+      illustration: "illustration work",
+      custom: "custom project"
+    }[projectType];
 
-Why this range:
-- 2–3 short reasons tied to scope, experience, and client type
+    let response = `Here’s a realistic bracket for this ${typeLabel} project.\n\n`;
 
-Notes:
-- 1–2 practical cautions or assumptions
+    response += `• Scope: ${scale} complexity\n`;
+    response += `• Timeline: ${timeline}\n\n`;
 
-Project details:
-${text}
-`
-            }
-          ],
-          temperature: 0.25
-        })
-      }
-    );
+    response += `Based on similar work done in the Indian market, a fair estimate would land around:\n\n`;
+    response += `₹${price.toLocaleString("en-IN")}\n\n`;
 
-    const data = await response.json();
+    response += `This accounts for actual working hours, revisions, and delivery — not inflated agency pricing, and not unsustainable underpricing either.\n\n`;
 
-    return res.status(200).json({
-      output:
-        data?.choices?.[0]?.message?.content ||
-        "Pricing could not be generated."
-    });
+    if (details && details.trim().length > 0) {
+      response += `You mentioned additional context:\n"${details.trim()}"\n\n`;
+      response += `That context may slightly shift scope or revisions once discussed properly, but this bracket still holds as a sensible starting point.\n\n`;
+    }
+
+    response += `Next step would normally be clarifying assumptions, revision limits, and handoff format before locking this into a formal quote.`;
+
+    return res.status(200).json({ output: response });
 
   } catch (err) {
     return res.status(500).json({
-      output: "Pricing generation failed.",
-      error: String(err)
+      output: "Internal error while calculating pricing."
     });
   }
 }
