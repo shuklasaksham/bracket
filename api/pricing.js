@@ -7,16 +7,16 @@ export default async function handler(req, res) {
       revisions,
       clientType,
       experienceLevel,
-      riskFlags
+      notes
     } = req.body || {};
 
-    if (!projectType || !scopeSize || !timeline || !experienceLevel) {
+    if (!projectType || !scopeSize || !timeline || !revisions || !clientType || !experienceLevel) {
       return res.status(400).json({
-        output: "Incomplete pricing information provided."
+        output: "Missing required pricing parameters."
       });
     }
 
-    const groqRes = await fetch(
+    const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
       {
         method: "POST",
@@ -30,52 +30,48 @@ export default async function handler(req, res) {
             {
               role: "user",
               content: `
-You are assisting a professional freelance designer in India.
+You are helping an Indian freelance designer explain project pricing.
 
-Using the parameters below, clearly PRESENT a pricing recommendation.
-Do NOT invent logic — only explain based on inputs.
+Context (already decided internally):
+- Project Type: ${projectType}
+- Scope Size: ${scopeSize}
+- Timeline: ${timeline}
+- Revisions: ${revisions}
+- Client Type: ${clientType}
+- Designer Experience: ${experienceLevel}
 
-Rules:
-- No markdown
-- No quotation marks
-- Max 3 short sections
-- No sales language
-- Under 45 words total
+Optional extra project details:
+${notes || "None provided."}
 
-Format exactly like this:
+Your task:
+- Explain the pricing clearly and confidently
+- Mention why the project falls in this range
+- Highlight any risk factors if present
+- Keep it practical and grounded in Indian freelance reality
+- Do NOT sound like a proposal or sales pitch
+- Do NOT use bullet overload
 
+Format:
 Price Range (INR):
 ₹X – ₹Y
 
-Why:
-- reason 1
-- reason 2
+Why this range:
+(short paragraph)
 
-Assumptions:
-- assumption 1
-
-Inputs:
-Project type: ${projectType}
-Scope size: ${scopeSize}
-Timeline: ${timeline}
-Revisions: ${revisions || "Not specified"}
-Client type: ${clientType || "Not specified"}
-Experience level: ${experienceLevel}
-Risk flags: ${riskFlags || "None"}
+Notes / Risks:
+(1–2 lines max)
 `
             }
           ],
-          temperature: 0.2
+          temperature: 0.35
         })
       }
     );
 
-    const data = await groqRes.json();
+    const data = await response.json();
 
     return res.status(200).json({
-      output:
-        data?.choices?.[0]?.message?.content ||
-        "Pricing could not be generated."
+      output: data?.choices?.[0]?.message?.content || "Pricing could not be generated."
     });
 
   } catch (err) {
