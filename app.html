@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bracket — App</title>
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
@@ -15,9 +14,7 @@
   --text-primary:#0f172a;
   --text-secondary:#475569;
   --text-muted:#64748b;
-
   --accent:#5b5bff;
-
   --glass-bg:rgba(255,255,255,0.72);
   --border-light:rgba(15,23,42,0.08);
 }
@@ -28,8 +25,6 @@ body{
   margin:0;
   font-family:'Inter', system-ui, sans-serif;
   color:var(--text-primary);
-  line-height:1.6;
-
   background:
     radial-gradient(1000px 520px at 12% 10%, rgba(170,150,255,0.30), transparent 60%),
     radial-gradient(900px 520px at 88% 15%, rgba(255,170,210,0.22), transparent 65%),
@@ -37,16 +32,13 @@ body{
     #f9fafb;
 }
 
-/* ================= NAVBAR (SAME AS INDEX) ================= */
+/* NAV */
 .navbar{
   position:sticky;
   top:0;
   z-index:10;
-
   background:var(--glass-bg);
   backdrop-filter:blur(14px) saturate(160%);
-  -webkit-backdrop-filter:blur(14px) saturate(160%);
-
   border-bottom:1px solid var(--border-light);
 }
 
@@ -54,15 +46,12 @@ body{
   max-width:1100px;
   margin:0 auto;
   padding:24px;
-
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
 
-.brand img{
-  height:32px;
-}
+.brand img{height:32px}
 
 .nav-links a{
   font-size:14px;
@@ -70,19 +59,11 @@ body{
   text-decoration:none;
 }
 
-/* ================= APP LAYOUT ================= */
-.app-shell{
-  display:flex;
-  justify-content:center;
-  padding:48px 16px;
-}
+/* APP */
+.app-shell{display:flex;justify-content:center;padding:48px 16px}
+.app{width:100%;max-width:760px}
 
-.app{
-  width:100%;
-  max-width:760px;
-}
-
-/* ================= TABS ================= */
+/* TABS */
 .tabs{
   display:flex;
   gap:32px;
@@ -102,19 +83,14 @@ body{
   border-bottom:2px solid var(--accent);
 }
 
-/* ================= GLASS CARD ================= */
+/* CARD */
 .card{
   background:rgba(255,255,255,0.55);
-  backdrop-filter:blur(22px) saturate(170%);
-  -webkit-backdrop-filter:blur(22px) saturate(170%);
-
+  backdrop-filter:blur(22px);
   border-radius:22px;
   padding:28px;
-
   border:1px solid rgba(255,255,255,0.55);
-  box-shadow:
-    0 28px 60px rgba(15,23,42,0.16),
-    inset 0 1px 0 rgba(255,255,255,0.75);
+  box-shadow:0 28px 60px rgba(15,23,42,0.16);
 }
 
 .card h3{
@@ -122,7 +98,7 @@ body{
   margin-top:0;
 }
 
-/* ================= FORMS ================= */
+/* FORMS */
 label{
   display:block;
   margin-top:18px;
@@ -138,65 +114,37 @@ select, textarea{
   border-radius:12px;
   border:1px solid var(--border-light);
   font-size:14px;
-  font-family:inherit;
-  background:rgba(255,255,255,0.9);
+  background:#fff;
 }
 
-textarea{
-  resize:none;
-}
+textarea{resize:none}
+textarea.output-box{min-height:120px;overflow:hidden}
 
-/* OUTPUT TEXTAREA */
-textarea.output-box{
-  resize:none;
-  overflow:hidden;
-  min-height:120px;
-}
-
-/* ================= BUTTON ================= */
+/* BUTTONS */
 button{
-  margin-top:22px;
+  margin-top:18px;
   width:100%;
   padding:14px;
-  border:none;
   border-radius:14px;
-
+  border:none;
   background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.4),
-      rgba(255,255,255,0.15)
-    ),
+    linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0.15)),
     var(--accent);
-
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-
-  color:#ffffff;
-  font-size:15px;
+  color:#fff;
   font-weight:600;
   cursor:pointer;
-
-  box-shadow:
-    0 16px 36px rgba(91,91,255,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.45);
-
-  transition:transform .2s ease, box-shadow .2s ease;
 }
 
-button:hover{
-  transform:translateY(-1px);
-  box-shadow:
-    0 22px 48px rgba(91,91,255,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.55);
+button.reset{
+  background:#e5e7eb;
+  color:#0f172a;
 }
 
-/* ================= RESULT ================= */
+/* RESULT */
 .result{
   margin-top:18px;
   padding:16px;
   border-radius:14px;
-  border:1px solid var(--border-light);
   background:rgba(255,255,255,0.85);
 }
 
@@ -206,19 +154,18 @@ button:hover{
 
 <body>
 
-<!-- ================= NAV ================= -->
+<!-- NAV -->
 <div class="navbar">
   <div class="nav-inner">
-    <div class="brand">
+    <a href="/" class="brand">
       <img src="/logo-icon.png" alt="Bracket">
-    </div>
+    </a>
     <div class="nav-links">
-      <a href="/">Home</a>
+      <a href="/contact.html">Contact</a>
     </div>
   </div>
 </div>
 
-<!-- ================= APP ================= -->
 <div class="app-shell">
 <div class="app">
 
@@ -234,33 +181,24 @@ button:hover{
 
   <label>Project type</label>
   <select id="projectType">
+    <option value="" selected disabled>Select project type</option>
     <option>UI/UX – Product / SaaS</option>
     <option>UI/UX – Website / Marketing</option>
     <option>Mobile App Design</option>
-    <option>Web Design (Visual only)</option>
-    <option>Design System / Component Library</option>
-    <option>Brand Identity (Logo + basics)</option>
-    <option>Brand Refresh / Rebrand</option>
-    <option>Brand Guidelines / Visual Language</option>
-    <option>Illustration / Artwork</option>
-    <option>Social Media Creatives</option>
-    <option>Presentation / Pitch Deck</option>
-    <option>No-code Website (Webflow / Framer)</option>
-    <option>Landing Page (Conversion-focused)</option>
-    <option>Design Audit / Review</option>
     <option>Custom / Not sure yet</option>
   </select>
 
   <label>Designer experience</label>
   <select id="experience">
+    <option value="" selected disabled>Select experience</option>
     <option>Early-career (0–2 years)</option>
     <option>Mid-level (3–5 years)</option>
     <option>Senior (6–10 years)</option>
-    <option>Very senior / specialist (10+ years)</option>
   </select>
 
   <label>Project size</label>
   <select id="projectSize">
+    <option value="" selected disabled>Select size</option>
     <option>Small</option>
     <option>Medium</option>
     <option>Large</option>
@@ -268,6 +206,7 @@ button:hover{
 
   <label>Client clarity</label>
   <select id="clientClarity">
+    <option value="" selected disabled>Select clarity</option>
     <option>Very clear</option>
     <option>Somewhat clear</option>
     <option>Exploratory / unclear</option>
@@ -275,6 +214,7 @@ button:hover{
 
   <label>Timeline</label>
   <select id="timeline">
+    <option value="" selected disabled>Select timeline</option>
     <option>Flexible</option>
     <option>Normal</option>
     <option>Urgent</option>
@@ -284,29 +224,10 @@ button:hover{
   <textarea id="pricingContext"></textarea>
 
   <button onclick="callPricing()">Generate range</button>
+  <button class="reset" onclick="resetPricing()">Reset</button>
 
   <div id="pricingResult" class="result hidden">
     <textarea id="pricingOutput" class="output-box" readonly></textarea>
-  </div>
-</div>
-
-<!-- SCOPE -->
-<div id="scope" class="card hidden">
-  <h3>Describe project scope</h3>
-  <textarea id="scopeInput"></textarea>
-  <button onclick="callAI('scope')">Generate scope</button>
-  <div id="scopeResult" class="result hidden">
-    <textarea id="scopeOutput" class="output-box" readonly></textarea>
-  </div>
-</div>
-
-<!-- PLAYBOOK -->
-<div id="playbook" class="card hidden">
-  <h3>Describe client situation</h3>
-  <textarea id="playbookInput"></textarea>
-  <button onclick="callAI('playbook')">Generate response</button>
-  <div id="playbookResult" class="result hidden">
-    <textarea id="playbookOutput" class="output-box" readonly></textarea>
   </div>
 </div>
 
@@ -324,6 +245,17 @@ function switchTab(id, el){
 function autoResize(el){
   el.style.height = "auto";
   el.style.height = el.scrollHeight + "px";
+}
+
+function resetPricing(){
+  projectType.selectedIndex = 0;
+  experience.selectedIndex = 0;
+  projectSize.selectedIndex = 0;
+  clientClarity.selectedIndex = 0;
+  timeline.selectedIndex = 0;
+  pricingContext.value = "";
+  pricingOutput.value = "";
+  pricingResult.classList.add("hidden");
 }
 
 async function callPricing(){
@@ -346,23 +278,6 @@ async function callPricing(){
   pricingOutput.value = data.output;
   pricingResult.classList.remove("hidden");
   autoResize(pricingOutput);
-}
-
-async function callAI(type){
-  const input = document.getElementById(type+"Input").value.trim();
-  if(!input) return alert("Please enter text");
-
-  const res = await fetch(`/api/${type}`,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({ text: input })
-  });
-
-  const data = await res.json();
-  const output = document.getElementById(type+"Output");
-  output.value = data.output;
-  document.getElementById(type+"Result").classList.remove("hidden");
-  autoResize(output);
 }
 </script>
 
