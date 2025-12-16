@@ -161,7 +161,7 @@ async function callAI(type) {
 
     const data = await res.json();
 
-    document.getElementById(type + "Output").value =   JSON.stringify(data, null, 2);
+    document.getElementById(type + "Output").value = data.output;
     document.getElementById(type + "Result").classList.remove("hidden");
   } catch (err) {
     alert("Something went wrong. Please try again.");
