@@ -25,15 +25,10 @@ body{
 }
 
 /* NAV */
-.navbar{
-  border-bottom:1px solid rgba(255,255,255,0.1);
-}
+.navbar{border-bottom:1px solid rgba(255,255,255,0.1)}
 .nav-inner{
-  max-width:1100px;
-  margin:auto;
-  padding:16px 20px;
-  display:flex;
-  justify-content:space-between;
+  max-width:1100px;margin:auto;padding:16px 20px;
+  display:flex;justify-content:space-between
 }
 .logo a{color:#fff;text-decoration:none;font-weight:700}
 .nav-links a{color:#c7d2fe;text-decoration:none;font-size:14px}
@@ -43,75 +38,39 @@ body{
 .app{width:100%;max-width:720px}
 
 .tabs{
-  display:flex;
-  gap:24px;
-  border-bottom:1px solid rgba(255,255,255,0.2);
+  display:flex;gap:24px;border-bottom:1px solid rgba(255,255,255,0.2);
   margin-bottom:16px
 }
-.tab{
-  cursor:pointer;
-  color:#c7d2fe;
-  font-weight:600;
-  padding-bottom:10px
-}
-.tab.active{
-  color:#fff;
-  border-bottom:2px solid #fff
-}
+.tab{cursor:pointer;color:#c7d2fe;font-weight:600;padding-bottom:10px}
+.tab.active{color:#fff;border-bottom:2px solid #fff}
 
 .card{
-  background:#fff;
-  color:var(--text-dark);
-  border-radius:16px;
-  padding:24px;
+  background:#fff;color:var(--text-dark);
+  border-radius:16px;padding:24px;
   box-shadow:0 30px 60px rgba(0,0,0,0.35);
 }
 
-label{
-  display:block;
-  margin-top:14px;
-  font-size:14px;
-  font-weight:600;
-}
-
+label{display:block;margin-top:14px;font-size:14px;font-weight:600}
 select, textarea{
-  width:100%;
-  margin-top:6px;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  font-size:14px;
+  width:100%;margin-top:6px;padding:12px;border-radius:10px;
+  border:1px solid var(--border);font-size:14px
 }
-
 textarea{resize:none;height:100px}
 
 button{
-  margin-top:18px;
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:600;
-  background:var(--accent);
-  color:#fff;
-  cursor:pointer;
+  margin-top:18px;width:100%;padding:14px;border:none;border-radius:12px;
+  font-size:16px;font-weight:600;background:var(--accent);color:#fff;cursor:pointer
 }
 
 .result{
-  margin-top:16px;
-  padding:16px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:#f9fafb;
+  margin-top:16px;padding:16px;border-radius:10px;
+  border:1px solid var(--border);background:#f9fafb
 }
-
 .hidden{display:none}
 </style>
 </head>
 
 <body>
-
 <div class="navbar">
   <div class="nav-inner">
     <div class="logo"><a href="/">BRACKET</a></div>
@@ -149,6 +108,14 @@ button{
     <option>Landing Page (Conversion-focused)</option>
     <option>Design Audit / Review</option>
     <option>Custom / Not sure yet</option>
+  </select>
+
+  <label>Designer experience</label>
+  <select id="experience">
+    <option>Early-career (0–2 years)</option>
+    <option>Mid-level (3–5 years)</option>
+    <option>Senior (6–10 years)</option>
+    <option>Very senior / specialist (10+ years)</option>
   </select>
 
   <label>Project size</label>
@@ -206,26 +173,27 @@ button{
 </div>
 
 <script>
-function switchTab(id, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+function switchTab(id, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+  document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
 
-async function callPricing() {
+async function callPricing(){
   const payload = {
     projectType: projectType.value,
+    experience: experience.value,
     size: projectSize.value,
     clarity: clientClarity.value,
     timeline: timeline.value,
     context: pricingContext.value
   };
 
-  const res = await fetch("/api/pricing", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+  const res = await fetch("/api/pricing",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(payload)
   });
 
   const data = await res.json();
@@ -233,21 +201,20 @@ async function callPricing() {
   pricingResult.classList.remove("hidden");
 }
 
-async function callAI(type) {
-  const input = document.getElementById(type + "Input").value.trim();
-  if (!input) return alert("Please enter text");
+async function callAI(type){
+  const input = document.getElementById(type+"Input").value.trim();
+  if(!input) return alert("Please enter text");
 
-  const res = await fetch(`/api/${type}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: input })
+  const res = await fetch(`/api/${type}`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ text: input })
   });
 
   const data = await res.json();
-  document.getElementById(type + "Output").value = data.output;
-  document.getElementById(type + "Result").classList.remove("hidden");
+  document.getElementById(type+"Output").value = data.output;
+  document.getElementById(type+"Result").classList.remove("hidden");
 }
 </script>
-
 </body>
 </html>
