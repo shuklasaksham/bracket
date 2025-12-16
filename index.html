@@ -1,166 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Project Bracket</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PROJECT X — Clarity for Designers</title>
 
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f0f0f;
-      color: #eaeaea;
-      margin: 0;
-    }
+<style>
+:root{
+  --bg-dark:#0f1220;
+  --bg-light:#ffffff;
+  --bg-soft:#f8fafc;
+  --text-dark:#0f172a;
+  --text-muted:#64748b;
+  --accent:#6366f1;
+  --border:#e5e7eb;
+}
 
-    .container {
-      max-width: 760px;
-      margin: 40px auto;
-      padding: 24px;
-    }
+*{box-sizing:border-box}
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 6px;
-    }
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--text-dark);
+  background:var(--bg-light);
+  line-height:1.6;
+}
 
-    .sub {
-      color: #aaa;
-      margin-bottom: 32px;
-    }
+a{text-decoration:none;color:inherit}
 
-    label {
-      display: block;
-      margin-top: 18px;
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:96px 20px;
+}
 
-    select, textarea, button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      font-size: 14px;
-    }
+/* NAVBAR */
+.navbar{
+  background:var(--bg-dark);
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
 
-    select, textarea {
-      background: #1b1b1b;
-      color: #fff;
-    }
+.nav-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
-    textarea {
-      resize: vertical;
-    }
+.logo{
+  font-weight:700;
+  font-size:16px;
+  letter-spacing:0.4px;
+}
 
-    button {
-      background: #fff;
-      color: #000;
-      font-weight: 600;
-      margin-top: 32px;
-      cursor: pointer;
-    }
+.nav-links{
+  display:flex;
+  gap:28px;
+  align-items:center;
+}
 
-    .output {
-      margin-top: 40px;
-      padding: 24px;
-      background: #161616;
-      border-radius: 14px;
-      white-space: pre-wrap;
-      line-height: 1.6;
-    }
+.nav-links a{
+  font-size:14px;
+  color:#c7d2fe;
+}
 
-    footer {
-      margin-top: 60px;
-      text-align: center;
-      color: #666;
-      font-size: 12px;
-    }
-  </style>
+.nav-links a.primary{
+  background:var(--accent);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+}
+
+/* HERO */
+.hero{
+  background:var(--bg-dark);
+  color:#fff;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:48px;
+  align-items:center;
+}
+
+.hero h1{
+  font-size:44px;
+  line-height:1.15;
+  margin-bottom:20px;
+}
+
+.hero p{
+  font-size:18px;
+  color:#c7d2fe;
+  margin-bottom:32px;
+}
+
+.cta{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  padding:16px 32px;
+  border-radius:14px;
+  font-weight:600;
+  font-size:16px;
+}
+
+.micro{
+  margin-top:14px;
+  font-size:13px;
+  color:#9ca3af;
+}
+
+/* HERO CARD */
+.preview-card{
+  background:#ffffff;
+  color:var(--text-dark);
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.4);
+}
+
+.preview-item{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.preview-item strong{
+  display:block;
+  font-size:14px;
+  margin-bottom:4px;
+}
+
+.preview-item span{
+  font-size:13px;
+  color:var(--text-muted);
+}
+
+/* SECTIONS */
+section h2{
+  font-size:30px;
+  margin-bottom:24px;
+}
+
+.problem ul{
+  max-width:720px;
+  padding-left:18px;
+}
+
+.problem li{
+  margin-bottom:14px;
+  font-size:16px;
+}
+
+/* FEATURES */
+.features{
+  background:var(--bg-soft);
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;
+}
+
+.feature{
+  background:#fff;
+  border-radius:20px;
+  padding:28px;
+  border:1px solid var(--border);
+}
+
+.feature h3{
+  margin-top:0;
+  font-size:18px;
+}
+
+.feature p{
+  font-size:14px;
+  color:var(--text-muted);
+}
+
+/* TRUST */
+.trust{
+  background:var(--bg-dark);
+  color:#fff;
+}
+
+.trust ul{
+  max-width:720px;
+  padding-left:18px;
+}
+
+.trust li{
+  margin-bottom:12px;
+  color:#c7d2fe;
+}
+
+/* FINAL CTA */
+.final h2{
+  font-size:32px;
+  margin-bottom:20px;
+}
+
+/* FOOTER */
+footer{
+  padding:32px 20px;
+  border-top:1px solid var(--border);
+  font-size:13px;
+  color:var(--text-muted);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+  .hero h1{
+    font-size:34px;
+  }
+  .nav-links{
+    gap:16px;
+  }
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Project Bracket</h1>
-    <p class="sub">AI-assisted scope clarity, pricing, and working rules.</p>
 
-    <label>Project type</label>
-    <select id="projectType">
-      <option value="uiux">UI / UX Design</option>
-      <option value="branding">Branding & Identity</option>
-      <option value="website">Website Design</option>
-      <option value="mobile">Mobile App Design</option>
-      <option value="illustration">Illustration</option>
-      <option value="custom">Custom / Undefined</option>
-    </select>
-
-    <label>Project complexity</label>
-    <select id="complexity">
-      <option value="simple">Simple</option>
-      <option value="moderate">Moderate</option>
-      <option value="complex">Complex</option>
-    </select>
-
-    <label>Number of key screens / deliverables</label>
-    <select id="deliverables">
-      <option value="few">Few (1–5)</option>
-      <option value="some">Some (6–15)</option>
-      <option value="many">Many (16+)</option>
-    </select>
-
-    <label>Client clarity level</label>
-    <select id="clarity">
-      <option value="clear">Very clear</option>
-      <option value="partial">Somewhat clear</option>
-      <option value="unclear">Exploratory / unclear</option>
-    </select>
-
-    <label>Timeline expectation</label>
-    <select id="timeline">
-      <option value="flexible">Flexible</option>
-      <option value="standard">Standard</option>
-      <option value="urgent">Urgent</option>
-    </select>
-
-    <label>Additional context (optional)</label>
-    <textarea
-      id="details"
-      rows="5"
-      placeholder="Constraints, politics, budget anxiety, internal approvals, inspirations…"
-    ></textarea>
-
-    <button onclick="generate()">Generate Bracket</button>
-
-    <div id="output" class="output" style="display:none;"></div>
-
-    <footer>
-      Quote → Scope → Assumptions → Playbook
-    </footer>
+<!-- NAV -->
+<div class="navbar">
+  <div class="nav-inner">
+    <div class="logo">PROJECT X</div>
+    <div class="nav-links">
+      <a href="#features">How it works</a>
+      <a href="/app.html" class="primary">Open tool</a>
+    </div>
   </div>
+</div>
 
-  <script>
-    async function generate() {
-      const payload = {
-        projectType: projectType.value,
-        complexity: complexity.value,
-        deliverables: deliverables.value,
-        clarity: clarity.value,
-        timeline: timeline.value,
-        details: details.value
-      };
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1>
+        Clarity for Designers.<br>
+        Pricing, Scope & Client Communication — without guesswork.
+      </h1>
+      <p>
+        PROJECT X helps designers price fairly, define scope clearly,
+        and handle client conversations professionally.
+      </p>
+      <a href="/app.html" class="cta">Start using the tool →</a>
+      <div class="micro">
+        No login · Free to use · Early version · Built for Indian designers
+      </div>
+    </div>
 
-      output.style.display = "block";
-      output.textContent = "Interpreting scope…";
+    <div class="preview-card">
+      <div class="preview-item">
+        <strong>Pricing</strong>
+        <span>Defensible project price ranges</span>
+      </div>
+      <div class="preview-item">
+        <strong>Scope</strong>
+        <span>Clear boundaries & deliverables</span>
+      </div>
+      <div class="preview-item">
+        <strong>Client Playbook</strong>
+        <span>Professional ready-to-send messages</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-      const res = await fetch("/api/pricing", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <h2>If you’re a designer, this probably sounds familiar</h2>
+    <ul>
+      <li>Unsure whether your price is too high or too low</li>
+      <li>Clients asking for “just one more change”</li>
+      <li>Scope creep without clear boundaries</li>
+      <li>Awkward conversations around revisions, timelines, and cost</li>
+    </ul>
+  </div>
+</section>
 
-      const data = await res.json();
-      output.textContent = data.output || "Something failed.";
-    }
-  </script>
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <h2>What PROJECT X helps you do</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <h3>Pricing</h3>
+        <p>Calculate realistic, defensible price ranges based on scope, experience, and urgency.</p>
+      </div>
+      <div class="feature">
+        <h3>Scope</h3>
+        <p>Generate clear scopes of work that protect your time and reduce misunderstandings.</p>
+      </div>
+      <div class="feature">
+        <h3>Client Playbook</h3>
+        <p>Handle common client situations with calm, professional, copy-ready messages.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="container">
+    <h2>Why designers trust PROJECT X</h2>
+    <ul>
+      <li>Built by a designer, not a consultancy</li>
+      <li>Focused on Indian freelance realities</li>
+      <li>No login, no data capture</li>
+      <li>You stay in control — this is guidance, not advice</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="container">
+    <h2>Ready to work with more clarity and confidence?</h2>
+    <a href="/app.html" class="cta">Open PROJECT X →</a>
+  </div>
+</section>
+
+<footer>
+  © PROJECT X · Early version — feedback welcome · Contact: shuklasaksham01@gmail.com
+</footer>
+
 </body>
 </html>
