@@ -12,20 +12,12 @@
 
 <style>
 :root{
-  --bg-main:#ffffff;
-  --bg-soft:#f8fafc;
-  --bg-card:rgba(255,255,255,0.7);
-
   --text-primary:#0f172a;
   --text-secondary:#475569;
   --text-muted:#64748b;
 
   --accent:#6c6cff;
-  --accent-soft:rgba(108,108,255,0.12);
-
-  --border:rgba(15,23,42,0.08);
-  --shadow-soft:0 10px 30px rgba(15,23,42,0.08);
-  --shadow-card:0 20px 40px rgba(15,23,42,0.12);
+  --border-soft:rgba(15,23,42,0.08);
 }
 
 *{box-sizing:border-box}
@@ -34,12 +26,15 @@ html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:'Inter', system-ui, sans-serif;
-  background:
-    radial-gradient(900px 300px at 10% -10%, rgba(108,108,255,0.08), transparent 60%),
-    radial-gradient(700px 260px at 90% 0%, rgba(180,180,255,0.06), transparent 65%),
-    var(--bg-main);
   color:var(--text-primary);
   line-height:1.7;
+
+  /* LIQUID AMBIENT BACKGROUND */
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(180,160,255,0.35), transparent 60%),
+    radial-gradient(900px 500px at 90% 20%, rgba(255,180,220,0.28), transparent 65%),
+    radial-gradient(800px 400px at 50% 90%, rgba(140,200,255,0.25), transparent 60%),
+    #f9fafb;
 }
 
 a{text-decoration:none;color:inherit}
@@ -50,15 +45,15 @@ a{text-decoration:none;color:inherit}
   padding:96px 20px;
 }
 
-/* NAV — iOS glass */
+/* NAV — GLASS */
 .navbar{
   position:sticky;
   top:0;
   z-index:10;
-  background:rgba(255,255,255,0.65);
-  backdrop-filter:blur(16px) saturate(180%);
-  -webkit-backdrop-filter:blur(16px) saturate(180%);
-  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.55);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border-soft);
 }
 
 .nav-inner{
@@ -72,11 +67,6 @@ a{text-decoration:none;color:inherit}
 
 .brand img{
   height:32px;
-  transition:transform .3s ease;
-}
-
-.brand img:hover{
-  transform:translateY(-1px);
 }
 
 .nav-links a{
@@ -87,10 +77,6 @@ a{text-decoration:none;color:inherit}
 /* HERO */
 .hero{
   position:relative;
-  background:
-    radial-gradient(800px 260px at 50% -40px, rgba(108,108,255,0.14), transparent 60%),
-    radial-gradient(600px 200px at 20% 20%, rgba(180,180,255,0.10), transparent 65%),
-    var(--bg-soft);
 }
 
 .hero-content{
@@ -99,11 +85,10 @@ a{text-decoration:none;color:inherit}
 
 .hero-logo{
   margin-bottom:28px;
-  animation:floatIn 0.8s ease forwards;
 }
 
 .hero-logo img{
-  height:100px;
+  height:96px;
 }
 
 .hero h1{
@@ -113,9 +98,6 @@ a{text-decoration:none;color:inherit}
   letter-spacing:-0.5px;
   max-width:820px;
   margin:0 auto 24px;
-  opacity:0;
-  animation:fadeUp .8s ease forwards;
-  animation-delay:.15s;
 }
 
 .hero p{
@@ -123,41 +105,46 @@ a{text-decoration:none;color:inherit}
   color:var(--text-secondary);
   max-width:620px;
   margin:0 auto 40px;
-  opacity:0;
-  animation:fadeUp .8s ease forwards;
-  animation-delay:.3s;
 }
 
-/* CTA */
+/* CTA — LIQUID GLASS */
 .hero-action{
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:14px;
-  opacity:0;
-  animation:fadeUp .8s ease forwards;
-  animation-delay:.45s;
 }
 
 .cta{
-  padding:14px 30px;
+  padding:14px 34px;
+  border-radius:14px;
+
   background:
+    linear-gradient(135deg,
+      rgba(255,255,255,0.35),
+      rgba(255,255,255,0.15)
+    ),
     linear-gradient(180deg, #7b7bff, #5f5fff);
+
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+
   color:#fff;
-  border-radius:12px;
   font-weight:600;
   font-size:15px;
-  box-shadow:0 12px 30px rgba(108,108,255,0.35);
-  transition:transform .2s ease, box-shadow .2s ease;
+
+  box-shadow:
+    0 20px 40px rgba(108,108,255,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+
+  transition:transform .25s ease, box-shadow .25s ease;
 }
 
 .cta:hover{
   transform:translateY(-2px);
-  box-shadow:0 20px 44px rgba(108,108,255,0.45);
-}
-
-.cta:active{
-  transform:translateY(0);
+  box-shadow:
+    0 26px 56px rgba(108,108,255,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.5);
 }
 
 .micro{
@@ -165,7 +152,7 @@ a{text-decoration:none;color:inherit}
   color:var(--text-muted);
 }
 
-/* PREVIEW — glass cards */
+/* PREVIEW — GLASS CARDS */
 .preview{
   margin-top:80px;
   display:grid;
@@ -174,20 +161,26 @@ a{text-decoration:none;color:inherit}
 }
 
 .preview-item{
-  background:var(--bg-card);
-  backdrop-filter:blur(12px) saturate(160%);
-  -webkit-backdrop-filter:blur(12px) saturate(160%);
-  border-radius:18px;
+  background:rgba(255,255,255,0.55);
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+
+  border-radius:20px;
   padding:28px;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow-card);
-  transition:transform .3s ease, box-shadow .3s ease;
-  opacity:0;
+
+  border:1px solid rgba(255,255,255,0.35);
+  box-shadow:
+    0 20px 40px rgba(15,23,42,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition:transform .35s ease, box-shadow .35s ease;
 }
 
 .preview-item:hover{
   transform:translateY(-6px);
-  box-shadow:0 30px 60px rgba(15,23,42,0.18);
+  box-shadow:
+    0 30px 60px rgba(15,23,42,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.7);
 }
 
 .preview-item strong{
@@ -205,9 +198,6 @@ a{text-decoration:none;color:inherit}
 /* FINAL CTA */
 .final{
   text-align:center;
-  background:
-    radial-gradient(600px 200px at 50% 0%, rgba(108,108,255,0.10), transparent 60%),
-    var(--bg-soft);
   padding:100px 20px;
 }
 
@@ -220,26 +210,10 @@ a{text-decoration:none;color:inherit}
 /* FOOTER */
 footer{
   padding:32px 20px;
-  border-top:1px solid var(--border);
+  border-top:1px solid var(--border-soft);
   font-size:13px;
   color:var(--text-muted);
   text-align:center;
-}
-
-/* ANIMATIONS */
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(12px)}
-  to{opacity:1; transform:translateY(0)}
-}
-
-@keyframes floatIn{
-  from{opacity:0; transform:translateY(8px)}
-  to{opacity:1; transform:translateY(0)}
-}
-
-/* REVEAL */
-.reveal{
-  animation:fadeUp .7s ease forwards;
 }
 
 /* RESPONSIVE */
@@ -288,15 +262,15 @@ footer{
     </div>
 
     <div class="preview">
-      <div class="preview-item reveal">
+      <div class="preview-item">
         <strong>Pricing</strong>
         <span>Experience-aware price ranges grounded in reality</span>
       </div>
-      <div class="preview-item reveal">
+      <div class="preview-item">
         <strong>Scope</strong>
         <span>Clear boundaries that prevent scope creep</span>
       </div>
-      <div class="preview-item reveal">
+      <div class="preview-item">
         <strong>Client Playbook</strong>
         <span>Professional responses for difficult moments</span>
       </div>
@@ -314,19 +288,6 @@ footer{
 <footer>
   © Bracket · Early version · Feedback welcome
 </footer>
-
-<script>
-const items = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.style.opacity = 1;
-    }
-  });
-},{threshold:0.2});
-
-items.forEach(i=>observer.observe(i));
-</script>
 
 </body>
 </html>
