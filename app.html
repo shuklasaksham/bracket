@@ -5,113 +5,202 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bracket — App</title>
 
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --bg-dark:#0f1220;
-  --bg-light:#ffffff;
-  --text-dark:#0f172a;
+  --text-primary:#0f172a;
+  --text-secondary:#475569;
   --text-muted:#64748b;
-  --accent:#6366f1;
-  --border:#e5e7eb;
+
+  --accent:#5b5bff;
+
+  --glass-bg:rgba(255,255,255,0.75);
+  --border-light:rgba(15,23,42,0.08);
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-  background:var(--bg-dark);
-  color:#fff;
+  font-family:'Inter', system-ui, sans-serif;
+  color:var(--text-primary);
+  line-height:1.6;
+
+  /* SAME AMBIENT BG AS LANDING */
+  background:
+    radial-gradient(1000px 520px at 12% 10%, rgba(170,150,255,0.30), transparent 60%),
+    radial-gradient(900px 520px at 88% 15%, rgba(255,170,210,0.22), transparent 65%),
+    radial-gradient(800px 440px at 50% 92%, rgba(130,190,255,0.20), transparent 60%),
+    #f9fafb;
 }
 
-/* NAV */
-.navbar{border-bottom:1px solid rgba(255,255,255,0.1)}
+/* NAVBAR — GLASS */
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:var(--glass-bg);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  border-bottom:1px solid var(--border-light);
+}
+
 .nav-inner{
   max-width:1100px;
   margin:auto;
-  padding:16px 20px;
+  padding:20px 24px;
   display:flex;
-  justify-content:space-between
+  justify-content:space-between;
+  align-items:center;
 }
-.logo a{color:#fff;text-decoration:none;font-weight:700}
-.nav-links a{color:#c7d2fe;text-decoration:none;font-size:14px}
 
-/* APP */
-.app-shell{display:flex;justify-content:center;padding:32px 16px}
-.app{width:100%;max-width:720px}
+.logo a{
+  font-family:'Inter Tight', sans-serif;
+  font-weight:600;
+  letter-spacing:0.4px;
+  text-decoration:none;
+  color:var(--text-primary);
+}
 
+.nav-links a{
+  font-size:14px;
+  color:var(--text-secondary);
+  text-decoration:none;
+}
+
+/* APP LAYOUT */
+.app-shell{
+  display:flex;
+  justify-content:center;
+  padding:48px 16px;
+}
+
+.app{
+  width:100%;
+  max-width:760px;
+}
+
+/* TABS */
 .tabs{
   display:flex;
-  gap:24px;
-  border-bottom:1px solid rgba(255,255,255,0.2);
-  margin-bottom:16px
+  gap:32px;
+  border-bottom:1px solid var(--border-light);
+  margin-bottom:24px;
 }
+
 .tab{
   cursor:pointer;
-  color:#c7d2fe;
-  font-weight:600;
-  padding-bottom:10px
+  font-weight:500;
+  color:var(--text-muted);
+  padding-bottom:12px;
 }
+
 .tab.active{
-  color:#fff;
-  border-bottom:2px solid #fff
+  color:var(--text-primary);
+  border-bottom:2px solid var(--accent);
 }
 
+/* GLASS CARD */
 .card{
-  background:#fff;
-  color:var(--text-dark);
-  border-radius:16px;
-  padding:24px;
-  box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  background:var(--glass-bg);
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+
+  border-radius:22px;
+  padding:28px;
+
+  border:1px solid var(--border-light);
+  box-shadow:
+    0 24px 48px rgba(15,23,42,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.65);
 }
 
+/* HEADINGS */
+.card h3{
+  font-family:'Inter Tight', sans-serif;
+  margin-top:0;
+}
+
+/* FORMS */
 label{
   display:block;
-  margin-top:14px;
-  font-size:14px;
-  font-weight:600
+  margin-top:18px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text-secondary);
 }
 
 select, textarea{
   width:100%;
   margin-top:6px;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid var(--border);
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--border-light);
   font-size:14px;
+  font-family:inherit;
+  background:#ffffff;
 }
 
-/* INPUT textareas only */
 textarea{
   resize:none;
 }
 
-/* OUTPUT textarea */
+/* OUTPUT */
 textarea.output-box{
   resize:none;
-  overflow:hidden;        /* 🚫 no scroll */
-  min-height:120px;       /* comfortable starting height */
+  overflow:hidden;
+  min-height:120px;
 }
 
+/* BUTTON — GLASS BUT CALM */
 button{
-  margin-top:18px;
+  margin-top:22px;
   width:100%;
   padding:14px;
   border:none;
-  border-radius:12px;
-  font-size:16px;
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.45),
+      rgba(255,255,255,0.2)
+    ),
+    var(--accent);
+
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+
+  color:#ffffff;
+  font-size:15px;
   font-weight:600;
-  background:var(--accent);
-  color:#fff;
-  cursor:pointer
+  cursor:pointer;
+
+  box-shadow:
+    0 14px 32px rgba(91,91,255,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+
+  transition:transform .2s ease, box-shadow .2s ease;
 }
 
+button:hover{
+  transform:translateY(-1px);
+  box-shadow:
+    0 18px 42px rgba(91,91,255,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.55);
+}
+
+/* RESULT */
 .result{
-  margin-top:16px;
+  margin-top:18px;
   padding:16px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:#f9fafb
+  border-radius:14px;
+  border:1px solid var(--border-light);
+  background:rgba(255,255,255,0.9);
 }
 
 .hidden{display:none}
@@ -119,6 +208,8 @@ button{
 </head>
 
 <body>
+
+<!-- NAV -->
 <div class="navbar">
   <div class="nav-inner">
     <div class="logo"><a href="/">BRACKET</a></div>
@@ -228,7 +319,6 @@ function switchTab(id, el){
   document.getElementById(id).classList.remove('hidden');
 }
 
-/* Auto-resize output textarea */
 function autoResize(el){
   el.style.height = "auto";
   el.style.height = el.scrollHeight + "px";
@@ -273,5 +363,6 @@ async function callAI(type){
   autoResize(output);
 }
 </script>
+
 </body>
 </html>
