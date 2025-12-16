@@ -6,130 +6,89 @@ export default async function handler(req, res) {
       timeline,
       revisions,
       clientType,
-      experienceLevel,
-      additionalContext
+      experience,
+      context
     } = req.body || {};
 
-    if (
-      !projectType ||
-      !scopeSize ||
-      !timeline ||
-      !revisions ||
-      !clientType ||
-      !experienceLevel
-    ) {
+    // Basic validation
+    if (!projectType || !scopeSize || !timeline || !revisions || !clientType || !experience) {
       return res.status(400).json({
         output: "Missing required pricing parameters."
       });
     }
 
     /**
-     * -----------------------------
-     * BASE PRICE (Indian standards)
-     * -----------------------------
+     * 🇮🇳 INDIAN BASE PRICING (MONTHLY FREELANCE REALITY)
+     * These are intentionally conservative.
      */
-
-    let basePrice = 0;
-
-    // Project type base
-    const projectBaseMap = {
+    const BASE_PRICES = {
       "Brand identity": 20000,
-      "Logo design": 10000,
-      "UI/UX design": 30000,
-      "Website design": 25000,
-      "App design": 35000,
+      "UI/UX design": 18000,
+      "Website design": 15000,
+      "App design": 22000,
       "Social media creatives": 8000,
-      "Pitch deck / presentation": 12000
+      "Pitch deck": 12000,
+      "Illustration": 10000
     };
 
-    basePrice += projectBaseMap[projectType] || 20000;
-
-    // Scope size multiplier
-    const scopeMultiplier = {
+    const SCOPE_MULTIPLIER = {
       "Small (few deliverables)": 1,
-      "Medium (multiple deliverables)": 1.4,
-      "Large (complex / many deliverables)": 1.8
+      "Medium (multiple deliverables)": 1.5,
+      "Large (complex / many deliverables)": 2.2
     };
 
-    basePrice *= scopeMultiplier[scopeSize] || 1;
-
-    // Timeline multiplier
-    const timelineMultiplier = {
+    const TIMELINE_MULTIPLIER = {
       "Flexible": 1,
-      "Moderate": 1.15,
-      "Urgent": 1.3
+      "Moderate": 1.2,
+      "Urgent": 1.5
     };
 
-    basePrice *= timelineMultiplier[timeline] || 1;
-
-    // Revisions multiplier
-    const revisionMultiplier = {
-      "1–2 rounds": 1,
-      "3–4 rounds": 1.15,
-      "Unlimited / unclear": 1.3
+    const EXPERIENCE_MULTIPLIER = {
+      "Early (0–2 years)": 0.9,
+      "Mid (2–5 years)": 1.1,
+      "Senior (5+ years)": 1.35
     };
 
-    basePrice *= revisionMultiplier[revisions] || 1;
+    const base = BASE_PRICES[projectType] || 15000;
 
-    // Client type adjustment
-    const clientAdjustment = {
-      "Startup / small business": 1,
-      "Agency": 1.2,
-      "Enterprise": 1.4,
-      "Individual / personal": 0.9
-    };
+    let estimated =
+      base *
+      SCOPE_MULTIPLIER[scopeSize] *
+      TIMELINE_MULTIPLIER[timeline] *
+      EXPERIENCE_MULTIPLIER[experience];
 
-    basePrice *= clientAdjustment[clientType] || 1;
+    // Revision pressure adjustment
+    if (revisions === "Unlimited / unclear") {
+      estimated *= 1.25;
+    }
 
-    // Experience adjustment
-    const experienceAdjustment = {
-      "Early (0–2 years)": 0.85,
-      "Mid (3–5 years)": 1,
-      "Senior (6+ years)": 1.25
-    };
+    // Client risk adjustment
+    if (clientType === "Agency / intermediary") {
+      estimated *= 1.15;
+    }
 
-    basePrice *= experienceAdjustment[experienceLevel] || 1;
+    const minPrice = Math.round(estimated * 0.85);
+    const maxPrice = Math.round(estimated * 1.15);
 
-    /**
-     * -----------------------------
-     * FINAL RANGE
-     * -----------------------------
-     */
-
-    const minPrice = Math.round(basePrice * 0.9);
-    const maxPrice = Math.round(basePrice * 1.15);
-
-    /**
-     * -----------------------------
-     * AI EXPLANATION (NOT DECISION)
-     * -----------------------------
-     */
-
+    // AI for explanation only
     const explanationPrompt = `
-You are assisting an Indian freelance designer.
+You are a senior Indian freelance designer.
 
-Pricing calculation (already done):
+Explain the following pricing clearly and confidently:
+- Price range: ₹${minPrice} – ₹${maxPrice}
 - Project type: ${projectType}
-- Scope size: ${scopeSize}
+- Scope: ${scopeSize}
 - Timeline: ${timeline}
 - Revisions: ${revisions}
 - Client type: ${clientType}
-- Experience: ${experienceLevel}
-- Estimated price range: ₹${minPrice} – ₹${maxPrice}
-
-Additional context from designer:
-${additionalContext || "None"}
-
-Write a concise explanation covering:
-- Why this range is reasonable in the Indian freelance market
-- Key risk factors (scope creep, urgency, client behavior)
-- One short negotiation tip
+- Experience: ${experience}
+${context ? `Additional context: ${context}` : ""}
 
 Rules:
+- Keep it under 90 words
 - No markdown
-- No bullet overload
-- Calm, confident, practical tone
-- 6–8 short lines max
+- Sound experienced, not apologetic
+- Mention 1 risk if applicable
 `;
 
     const groqRes = await fetch(
@@ -149,11 +108,9 @@ Rules:
     );
 
     const aiData = await groqRes.json();
-    const explanation =
-      aiData?.choices?.[0]?.message?.content || "";
 
     return res.status(200).json({
-      output: `Estimated price range: ₹${minPrice} – ₹${maxPrice}\n\n${explanation}`
+      output: `Price range (INR): ₹${minPrice} – ₹${maxPrice}\n\n${aiData?.choices?.[0]?.message?.content || ""}`
     });
 
   } catch (err) {
