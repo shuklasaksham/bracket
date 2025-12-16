@@ -21,6 +21,8 @@
   --text-muted:#64748b;
 
   --accent:#6c6cff;
+  --accent-soft:rgba(108,108,255,0.12);
+
   --border:#e5e7eb;
   --shadow-soft:0 10px 30px rgba(15,23,42,0.08);
   --shadow-card:0 20px 40px rgba(15,23,42,0.12);
@@ -32,7 +34,10 @@ html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:'Inter', system-ui, sans-serif;
-  background:var(--bg-main);
+  background:
+    radial-gradient(900px 300px at 10% -10%, rgba(108,108,255,0.08), transparent 60%),
+    radial-gradient(700px 260px at 90% 0%, rgba(180,180,255,0.06), transparent 65%),
+    var(--bg-main);
   color:var(--text-primary);
   line-height:1.7;
 }
@@ -50,8 +55,8 @@ a{text-decoration:none;color:inherit}
   position:sticky;
   top:0;
   z-index:10;
-  background:#ffffffcc;
-  backdrop-filter:blur(10px);
+  background:rgba(255,255,255,0.8);
+  backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
 }
 
@@ -65,12 +70,7 @@ a{text-decoration:none;color:inherit}
 }
 
 .brand img{
-  height:44px;
-  transition:transform .3s ease;
-}
-
-.brand img:hover{
-  transform:translateY(-1px);
+  height:32px;
 }
 
 .nav-links a{
@@ -82,21 +82,30 @@ a{text-decoration:none;color:inherit}
 .hero{
   position:relative;
   background:
-    radial-gradient(800px 300px at 50% -50px, rgba(108,108,255,0.12), transparent 60%),
+    radial-gradient(800px 240px at 50% -40px, rgba(108,108,255,0.12), transparent 60%),
     var(--bg-soft);
 }
 
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(248,250,252,1) 100%);
+}
+
 .hero-content{
+  position:relative;
   text-align:center;
 }
 
 .hero-logo{
   margin-bottom:28px;
-  animation:floatIn 0.8s ease forwards;
 }
 
 .hero-logo img{
-  height:100px;
+  height:96px;
 }
 
 .hero h1{
@@ -106,9 +115,6 @@ a{text-decoration:none;color:inherit}
   letter-spacing:-0.5px;
   max-width:820px;
   margin:0 auto 24px;
-  opacity:0;
-  animation:fadeUp .8s ease forwards;
-  animation-delay:.15s;
 }
 
 .hero p{
@@ -116,9 +122,6 @@ a{text-decoration:none;color:inherit}
   color:var(--text-secondary);
   max-width:620px;
   margin:0 auto 40px;
-  opacity:0;
-  animation:fadeUp .8s ease forwards;
-  animation-delay:.3s;
 }
 
 /* CTA */
@@ -127,29 +130,23 @@ a{text-decoration:none;color:inherit}
   flex-direction:column;
   align-items:center;
   gap:14px;
-  opacity:0;
-  animation:fadeUp .8s ease forwards;
-  animation-delay:.45s;
 }
 
 .cta{
   padding:14px 30px;
-  background:linear-gradient(180deg, #7b7bff, #5f5fff);
+  background:
+    linear-gradient(180deg, #7a7aff, #5f5fff);
   color:#fff;
   border-radius:12px;
   font-weight:600;
   font-size:15px;
   box-shadow:var(--shadow-soft);
-  transition:transform .2s ease, box-shadow .2s ease;
+  transition:transform .25s ease, box-shadow .25s ease;
 }
 
 .cta:hover{
   transform:translateY(-2px);
   box-shadow:0 18px 40px rgba(108,108,255,0.35);
-}
-
-.cta:active{
-  transform:translateY(0);
 }
 
 .micro{
@@ -166,13 +163,13 @@ a{text-decoration:none;color:inherit}
 }
 
 .preview-item{
-  background:var(--bg-card);
+  background:
+    linear-gradient(180deg, #ffffff, #f9fafb);
   border-radius:18px;
   padding:28px;
   border:1px solid var(--border);
   box-shadow:var(--shadow-card);
   transition:transform .3s ease, box-shadow .3s ease;
-  opacity:0;
 }
 
 .preview-item:hover{
@@ -214,22 +211,6 @@ footer{
   font-size:13px;
   color:var(--text-muted);
   text-align:center;
-}
-
-/* ANIMATIONS */
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(12px)}
-  to{opacity:1; transform:translateY(0)}
-}
-
-@keyframes floatIn{
-  from{opacity:0; transform:translateY(8px)}
-  to{opacity:1; transform:translateY(0)}
-}
-
-/* REVEAL */
-.reveal{
-  animation:fadeUp .7s ease forwards;
 }
 
 /* RESPONSIVE */
@@ -278,15 +259,15 @@ footer{
     </div>
 
     <div class="preview">
-      <div class="preview-item reveal">
+      <div class="preview-item">
         <strong>Pricing</strong>
         <span>Experience-aware price ranges grounded in reality</span>
       </div>
-      <div class="preview-item reveal">
+      <div class="preview-item">
         <strong>Scope</strong>
         <span>Clear boundaries that prevent scope creep</span>
       </div>
-      <div class="preview-item reveal">
+      <div class="preview-item">
         <strong>Client Playbook</strong>
         <span>Professional responses for difficult moments</span>
       </div>
@@ -304,19 +285,6 @@ footer{
 <footer>
   © Bracket · Early version · Feedback welcome
 </footer>
-
-<script>
-const items = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.style.opacity = 1;
-    }
-  });
-},{threshold:0.2});
-
-items.forEach(i=>observer.observe(i));
-</script>
 
 </body>
 </html>
