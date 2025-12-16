@@ -29,6 +29,7 @@ Rules:
 - Include only what is explicitly mentioned
 - Do not assume development or additional services
 - Be precise and unambiguous
+- Do NOT wrap the response in quotation marks
 - Keep language client-friendly but firm
 
 Structure the output exactly as:
