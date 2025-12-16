@@ -16,8 +16,10 @@
   --text-secondary:#475569;
   --text-muted:#64748b;
 
-  --accent:#6c6cff;
-  --border-soft:rgba(15,23,42,0.12);
+  --accent:#5b5bff;
+  --border:rgba(15,23,42,0.08);
+  --shadow-soft:0 10px 24px rgba(15,23,42,0.08);
+  --shadow-strong:0 24px 48px rgba(15,23,42,0.14);
 }
 
 *{box-sizing:border-box}
@@ -29,11 +31,11 @@ body{
   color:var(--text-primary);
   line-height:1.7;
 
-  /* VISIBLE LIQUID BACKGROUND */
+  /* PREMIUM LIGHT BACKGROUND */
   background:
-    radial-gradient(1100px 600px at 12% 12%, rgba(170,150,255,0.45), transparent 60%),
-    radial-gradient(900px 500px at 88% 18%, rgba(255,170,210,0.38), transparent 65%),
-    radial-gradient(800px 420px at 50% 92%, rgba(130,190,255,0.35), transparent 60%),
+    radial-gradient(1000px 500px at 10% 10%, rgba(170,150,255,0.35), transparent 60%),
+    radial-gradient(900px 500px at 90% 15%, rgba(255,170,210,0.28), transparent 65%),
+    radial-gradient(800px 420px at 50% 90%, rgba(130,190,255,0.25), transparent 60%),
     #f9fafb;
 }
 
@@ -45,17 +47,14 @@ a{text-decoration:none;color:inherit}
   padding:96px 20px;
 }
 
-/* NAV — CLEAR GLASS */
+/* NAVBAR */
 .navbar{
   position:sticky;
   top:0;
   z-index:10;
-
-  background:rgba(255,255,255,0.6);
-  backdrop-filter:blur(22px) saturate(200%);
-  -webkit-backdrop-filter:blur(22px) saturate(200%);
-
-  border-bottom:1px solid rgba(255,255,255,0.7);
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
 }
 
 .nav-inner{
@@ -78,20 +77,6 @@ a{text-decoration:none;color:inherit}
 
 /* HERO */
 .hero{
-  position:relative;
-}
-
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(600px 260px at 50% 0%, rgba(255,255,255,0.75), transparent 70%);
-  pointer-events:none;
-}
-
-.hero-content{
-  position:relative;
   text-align:center;
 }
 
@@ -119,7 +104,7 @@ a{text-decoration:none;color:inherit}
   margin:0 auto 40px;
 }
 
-/* CTA — LIQUID GLASS BUTTON */
+/* CTA — CLEAN & CALM */
 .hero-action{
   display:flex;
   flex-direction:column;
@@ -128,35 +113,21 @@ a{text-decoration:none;color:inherit}
 }
 
 .cta{
-  padding:14px 36px;
-  border-radius:16px;
-
-  background:
-    linear-gradient(135deg,
-      rgba(255,255,255,0.45),
-      rgba(255,255,255,0.2)
-    ),
-    linear-gradient(180deg, #7b7bff, #5f5fff);
-
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-
-  color:#fff;
+  padding:14px 32px;
+  border-radius:14px;
+  background:var(--accent);
+  color:#ffffff;
   font-weight:600;
   font-size:15px;
 
-  box-shadow:
-    0 28px 60px rgba(108,108,255,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.55);
-
-  transition:transform .25s ease, box-shadow .25s ease;
+  box-shadow:0 8px 20px rgba(91,91,255,0.25);
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
 
 .cta:hover{
-  transform:translateY(-2px);
-  box-shadow:
-    0 36px 72px rgba(108,108,255,0.55),
-    inset 0 1px 0 rgba(255,255,255,0.65);
+  transform:translateY(-1px);
+  box-shadow:0 12px 28px rgba(91,91,255,0.35);
+  background:#5252f0;
 }
 
 .micro{
@@ -164,7 +135,7 @@ a{text-decoration:none;color:inherit}
   color:var(--text-muted);
 }
 
-/* PREVIEW — STRONG GLASS CARDS */
+/* PREVIEW CARDS — MATCH BG */
 .preview{
   margin-top:80px;
   display:grid;
@@ -173,26 +144,22 @@ a{text-decoration:none;color:inherit}
 }
 
 .preview-item{
-  background:rgba(255,255,255,0.6);
-  backdrop-filter:blur(26px) saturate(180%);
-  -webkit-backdrop-filter:blur(26px) saturate(180%);
-
-  border-radius:24px;
-  padding:30px;
-
-  border:1px solid rgba(255,255,255,0.7);
-  box-shadow:
-    0 40px 80px rgba(15,23,42,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.9);
-
-  transition:transform .35s ease, box-shadow .35s ease;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.95),
+      rgba(248,250,252,0.95)
+    );
+  border-radius:20px;
+  padding:28px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-strong);
+  transition:transform .3s ease, box-shadow .3s ease;
 }
 
 .preview-item:hover{
-  transform:translateY(-8px);
-  box-shadow:
-    0 50px 100px rgba(15,23,42,0.22),
-    inset 0 1px 0 rgba(255,255,255,1);
+  transform:translateY(-4px);
+  box-shadow:0 32px 64px rgba(15,23,42,0.18);
 }
 
 .preview-item strong{
@@ -222,7 +189,7 @@ a{text-decoration:none;color:inherit}
 /* FOOTER */
 footer{
   padding:32px 20px;
-  border-top:1px solid var(--border-soft);
+  border-top:1px solid var(--border);
   font-size:13px;
   color:var(--text-muted);
   text-align:center;
@@ -251,7 +218,7 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container hero-content">
+  <div class="container">
 
     <div class="hero-logo">
       <img src="/logo-mark.png" alt="Bracket">
