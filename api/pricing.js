@@ -72,6 +72,8 @@ Rules:
 - No headings
 - Calm, confident, consultant tone
 - 3–4 short sentences max
+- under 30 words
+- include professional level formatting
 
 Price range:
 ${rangeText}
