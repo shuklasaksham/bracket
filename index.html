@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bracket — Pricing Clarity for Designers</title>
 
-<!-- Premium Fonts -->
+<!-- Premium fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,8 +13,8 @@
 <style>
 :root{
   --bg-main:#0b0d14;
-  --bg-surface:#111422;
   --bg-card:#15182b;
+  --bg-surface:#111422;
 
   --text-primary:#e6e8f0;
   --text-secondary:#a6accd;
@@ -35,7 +35,7 @@ body{
   line-height:1.7;
 }
 
-/* Subtle grain for premium feel */
+/* subtle grain */
 body::after{
   content:"";
   position:fixed;
@@ -68,33 +68,27 @@ a{text-decoration:none;color:inherit}
   margin:0 auto;
   padding:16px 24px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
-/* LOGO CHIP */
+/* LOGO */
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:6px 10px;
-  border-radius:10px;
-  background:rgba(0,0,0,0.35);
-  border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(8px);
+  gap:12px;
 }
 
 .brand img{
-  height:22px;
-  display:block;
+  height:28px;
+  width:auto;
 }
 
 .brand span{
   font-family:'Inter Tight', sans-serif;
-  font-weight:600;
+  font-weight:700;
+  letter-spacing:0.8px;
   font-size:14px;
-  letter-spacing:0.6px;
-  color:#ffffff;
 }
 
 .nav-links a{
@@ -109,7 +103,6 @@ a{text-decoration:none;color:inherit}
   background:var(--bg-main);
 }
 
-/* Cinematic gradient */
 .hero::before{
   content:"";
   position:absolute;
@@ -129,23 +122,17 @@ a{text-decoration:none;color:inherit}
   text-align:center;
 }
 
-/* HERO LOGO */
 .hero-logo{
   display:flex;
   justify-content:center;
-  margin-bottom:32px;
+  margin-bottom:28px;
 }
 
 .hero-logo img{
-  height:44px;
-  padding:10px 14px;
-  border-radius:14px;
-  background:rgba(0,0,0,0.35);
-  border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
+  height:48px;
+  opacity:0.9;
 }
 
-/* HERO TEXT */
 .hero h1{
   font-family:'Inter Tight', sans-serif;
   font-size:56px;
@@ -191,7 +178,7 @@ a{text-decoration:none;color:inherit}
   color:var(--text-muted);
 }
 
-/* PREVIEW CARDS */
+/* PREVIEW */
 .preview{
   margin-top:96px;
   display:grid;
@@ -253,7 +240,7 @@ footer{
 <div class="navbar">
   <div class="nav-inner">
     <div class="brand">
-      <img src="/logo-icon.png" alt="Bracket">
+      <img src="/logo-icon.png" alt="Bracket logo">
       <span>BRACKET</span>
     </div>
     <div class="nav-links">
@@ -267,7 +254,7 @@ footer{
   <div class="container">
 
     <div class="hero-logo">
-      <img src="/logo-icon.png" alt="Bracket">
+      <img src="/logo-mark.png" alt="Bracket">
     </div>
 
     <h1>
