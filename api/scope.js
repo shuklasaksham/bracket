@@ -21,32 +21,8 @@ export default async function handler(req, res) {
           messages: [
             {
               role: "user",
-              content: `Rewrite this into a professional scope of work with Included, Excluded, and Change Requests sections:\n\n${text}`
-              export default async function handler(req, res) {
-  try {
-    const { text } = req.body || {};
-
-    if (!text) {
-      return res.status(400).json({
-        output: "No scope description provided."
-      });
-    }
-
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.key01}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
-          messages: [
-            {
-              role: "user",
               content: `
-Rewrite the project description below into a clear, professional scope of work.
+Rewrite the project description below into a clear, professional scope of work under 50 words.
 
 Rules:
 - Use clear section headings
@@ -73,34 +49,14 @@ ${text}
 
     const data = await response.json();
 
-    const output =
-      data?.choices?.[0]?.message?.content ||
-      "Scope could not be generated.";
-
-    res.status(200).json({ output });
-  } catch {
-    res.status(500).json({
-      output: "Server error while generating scope."
+    return res.status(200).json({
+      output: data?.choices?.[0]?.message?.content || "Scope could not be generated."
     });
-  }
-}
-            }
-          ],
-          temperature: 0.2
-        })
-      }
-    );
 
-    const data = await response.json();
-
-    const output =
-      data?.choices?.[0]?.message?.content ||
-      "Scope could not be generated.";
-
-    res.status(200).json({ output });
-  } catch {
-    res.status(500).json({
-      output: "Server error while generating scope."
+  } catch (err) {
+    return res.status(500).json({
+      output: "Server error while generating scope.",
+      error: String(err)
     });
   }
 }
