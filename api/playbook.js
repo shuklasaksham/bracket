@@ -27,6 +27,7 @@ Write a short, firm, and professional client response.
 Rules:
 - Max 4–5 short lines
 - No greetings or sign-offs
+- Do NOT wrap the response in quotation marks
 - No apologies or emotional language
 - Clearly restate the boundary or expectation
 - Calm, confident, and respectful tone
