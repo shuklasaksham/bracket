@@ -78,6 +78,8 @@ Rules:
 - Do NOT list bullets or headings
 - Calm, confident consultant tone
 - 3–4 short sentences max
+- Keep it under 30 words
+- give professional level font formatting
 
 Price range:
 ${rangeText}
