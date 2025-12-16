@@ -28,6 +28,7 @@ Rules:
 - Use clear section headings
 - Include only what is explicitly mentioned
 - Do not assume development or additional services
+- Do NOT use Markdown, asterisks, or special formatting
 - Be precise and unambiguous
 - Do NOT wrap the response in quotation marks
 - Keep language client-friendly but firm
