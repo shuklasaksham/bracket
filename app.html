@@ -15,13 +15,12 @@
   --text-secondary:#475569;
   --text-muted:#64748b;
   --accent:#5b5bff;
-
   --glass-bg:rgba(255,255,255,0.72);
   --border-light:rgba(15,23,42,0.08);
 }
 
-/* RESET */
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:'Inter', system-ui, sans-serif;
@@ -140,7 +139,7 @@ button.reset{
   background:rgba(255,255,255,0.85);
 }
 
-/* COOL CHECKBOX GROUP */
+/* CHECKBOX GROUP */
 .group{
   margin-top:10px;
   padding:14px;
@@ -151,7 +150,6 @@ button.reset{
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:10px;
 }
-
 .group label{
   display:flex;
   align-items:center;
@@ -162,19 +160,8 @@ button.reset{
   border-radius:12px;
   background:rgba(255,255,255,0.7);
   border:1px solid rgba(15,23,42,0.05);
-  cursor:pointer;
-  transition:all .2s ease;
 }
-
-.group label:hover{
-  background:rgba(255,255,255,0.9);
-}
-
-.group input{
-  width:16px;
-  height:16px;
-  accent-color:var(--accent);
-}
+.group input{accent-color:var(--accent)}
 
 .hidden{display:none}
 </style>
@@ -203,16 +190,28 @@ button.reset{
   <div class="tab" onclick="switchTab('playbook',this)">Client Playbook</div>
 </div>
 
-<!-- PRICING (UNCHANGED) -->
+<!-- PRICING -->
 <div id="pricing" class="card">
   <h3>Pricing</h3>
 
   <label>Project type</label>
   <select id="projectType">
     <option value="" disabled selected>Select project type</option>
-    <option>UI/UX – Product / SaaS</option>
-    <option>UI/UX – Website / Marketing</option>
+    <option>UI/UX – SaaS / Product</option>
+    <option>UI/UX – Enterprise / Internal Tool</option>
+    <option>Website Design (Marketing / Corporate)</option>
+    <option>Landing Page (Conversion-focused)</option>
     <option>Mobile App Design</option>
+    <option>Design System / Component Library</option>
+    <option>Brand Identity (Logo + Basics)</option>
+    <option>Brand Refresh / Rebrand</option>
+    <option>Brand Guidelines / Visual Language</option>
+    <option>No-code Website (Webflow / Framer)</option>
+    <option>Illustration / Custom Artwork</option>
+    <option>Social Media Creatives</option>
+    <option>Presentation / Pitch Deck</option>
+    <option>Design Audit / UX Review</option>
+    <option>Ongoing Design Support (Monthly)</option>
     <option>Custom / Not sure yet</option>
   </select>
 
@@ -222,6 +221,7 @@ button.reset{
     <option>Early-career (0–2 years)</option>
     <option>Mid-level (3–5 years)</option>
     <option>Senior (6–10 years)</option>
+    <option>Very senior / specialist (10+ years)</option>
   </select>
 
   <label>Project size</label>
@@ -266,12 +266,22 @@ button.reset{
   <label>Type of work</label>
   <select id="workType">
     <option value="" disabled selected>Select</option>
-    <option>Product UI design</option>
-    <option>Marketing / website design</option>
-    <option>Brand identity / visuals</option>
-    <option>Design audit / review</option>
-    <option>Illustration / graphics</option>
-    <option>Mixed / custom work</option>
+    <option>Product UI Design</option>
+    <option>Web Experience Design</option>
+    <option>Mobile App Experience</option>
+    <option>Brand Identity Design</option>
+    <option>Visual System / Language</option>
+    <option>Design System Setup</option>
+    <option>Marketing Design</option>
+    <option>Content-led Design</option>
+    <option>Illustration / Artwork</option>
+    <option>Presentation Design</option>
+    <option>UX Audit / Review</option>
+    <option>Early-stage Concepting</option>
+    <option>Redesign / Refresh</option>
+    <option>Ongoing Design Support</option>
+    <option>Mixed / Multi-disciplinary</option>
+    <option>Custom / Exploratory</option>
   </select>
 
   <label>What will be delivered</label>
@@ -338,6 +348,20 @@ button.reset{
 
   <div id="scopeResult" class="result hidden">
     <textarea id="scopeOutput" class="output-box" readonly></textarea>
+  </div>
+</div>
+
+<!-- PLAYBOOK -->
+<div id="playbook" class="card hidden">
+  <h3>Client Playbook</h3>
+
+  <label>Describe the client situation</label>
+  <textarea id="playbookInput"></textarea>
+
+  <button onclick="callAI('playbook')">Generate response</button>
+
+  <div id="playbookResult" class="result hidden">
+    <textarea id="playbookOutput" class="output-box" readonly></textarea>
   </div>
 </div>
 
