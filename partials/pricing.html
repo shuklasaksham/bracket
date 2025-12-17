@@ -4,23 +4,59 @@
   <label>Project type</label>
   <select id="projectType">
     <option value="" disabled selected>Select project type</option>
-    <!-- all options unchanged -->
+    <option>UI/UX – SaaS / Product</option>
+    <option>UI/UX – Enterprise / Internal Tool</option>
+    <option>Website Design (Marketing / Corporate)</option>
+    <option>Landing Page (Conversion-focused)</option>
+    <option>Mobile App Design</option>
+    <option>Design System / Component Library</option>
+    <option>Brand Identity (Logo + Basics)</option>
+    <option>Brand Refresh / Rebrand</option>
+    <option>Brand Guidelines / Visual Language</option>
+    <option>No-code Website (Webflow / Framer)</option>
+    <option>Illustration / Custom Artwork</option>
+    <option>Social Media Creatives</option>
+    <option>Presentation / Pitch Deck</option>
+    <option>Design Audit / UX Review</option>
+    <option>Ongoing Design Support (Monthly)</option>
+    <option>Custom / Not sure yet</option>
   </select>
 
   <label>Designer experience</label>
-  <select id="experience">…</select>
+  <select id="experience">
+    <option value="" disabled selected>Select experience</option>
+    <option>Early-career (0–2 years)</option>
+    <option>Mid-level (3–5 years)</option>
+    <option>Senior (6–10 years)</option>
+    <option>Very senior / specialist (10+ years)</option>
+  </select>
 
   <label>Project size</label>
-  <select id="projectSize">…</select>
+  <select id="projectSize">
+    <option value="" disabled selected>Select size</option>
+    <option>Small</option>
+    <option>Medium</option>
+    <option>Large</option>
+  </select>
 
   <label>Client clarity</label>
-  <select id="clientClarity">…</select>
+  <select id="clientClarity">
+    <option value="" disabled selected>Select clarity</option>
+    <option>Very clear</option>
+    <option>Somewhat clear</option>
+    <option>Exploratory / unclear</option>
+  </select>
 
   <label>Timeline</label>
-  <select id="timeline">…</select>
+  <select id="timeline">
+    <option value="" disabled selected>Select timeline</option>
+    <option>Flexible</option>
+    <option>Normal</option>
+    <option>Urgent</option>
+  </select>
 
   <label>Additional context (optional)</label>
-  <textarea id="pricingContext"></textarea>
+  <textarea id="pricingContext" placeholder="Any extra details that may affect scope, complexity, or timeline"></textarea>
 
   <button onclick="callPricing()">Generate range</button>
   <button class="reset" onclick="resetPricing()">Reset</button>
