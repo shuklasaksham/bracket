@@ -285,7 +285,7 @@ button.reset{
   </select>
 
   <label>What will be delivered</label>
-  <div class="group">
+  <div class="group" id="deliverables">
     <label><input type="checkbox" value="Screens / pages">Screens / pages</label>
     <label><input type="checkbox" value="Visual concepts">Visual concepts</label>
     <label><input type="checkbox" value="Final static designs">Final static designs</label>
@@ -323,7 +323,7 @@ button.reset{
   </select>
 
   <label>What affects the timeline</label>
-  <div class="group">
+  <div class="group" id="dependencies">
     <label><input type="checkbox" value="Timely client feedback">Timely client feedback</label>
     <label><input type="checkbox" value="Asset availability">Asset availability</label>
     <label><input type="checkbox" value="Stakeholder approvals">Stakeholder approvals</label>
@@ -331,7 +331,7 @@ button.reset{
   </div>
 
   <label>Not included in this scope</label>
-  <div class="group">
+  <div class="group" id="exclusions">
     <label><input type="checkbox" value="Copywriting">Copywriting</label>
     <label><input type="checkbox" value="Development">Development</label>
     <label><input type="checkbox" value="Animations">Animations</label>
@@ -376,6 +376,39 @@ function switchTab(id, el){
   document.getElementById(id).classList.remove('hidden');
 }
 
+function autoResize(el){
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight + "px";
+}
+
+/* -------- PRICING -------- */
+async function callPricing(){
+  if(!projectType.value || !experience.value || !projectSize.value || !clientClarity.value || !timeline.value){
+    alert("Please fill all required fields");
+    return;
+  }
+
+  const payload = {
+    projectType: projectType.value,
+    experience: experience.value,
+    size: projectSize.value,
+    clarity: clientClarity.value,
+    timeline: timeline.value,
+    context: pricingContext.value
+  };
+
+  const res = await fetch("/api/pricing",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  pricingOutput.value = data.output;
+  pricingResult.classList.remove("hidden");
+  autoResize(pricingOutput);
+}
+
 function resetPricing(){
   projectType.selectedIndex = 0;
   experience.selectedIndex = 0;
@@ -386,11 +419,67 @@ function resetPricing(){
   pricingResult.classList.add("hidden");
 }
 
+/* -------- SCOPE -------- */
+function getChecked(id){
+  return [...document.querySelectorAll(`#${id} input:checked`)].map(i=>i.value);
+}
+
+async function generateScope(){
+  if(!workType.value){
+    alert("Please select type of work");
+    return;
+  }
+
+  const payload = {
+    workType: workType.value,
+    deliverables: getChecked("deliverables"),
+    coverage: coverage.value,
+    revisions: revisions.value,
+    feedback: feedback.value,
+    changes: changes.value,
+    dependencies: getChecked("dependencies"),
+    exclusions: getChecked("exclusions"),
+    context: scopeContext.value
+  };
+
+  const res = await fetch("/api/scope",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  scopeOutput.value = data.output;
+  scopeResult.classList.remove("hidden");
+  autoResize(scopeOutput);
+}
+
 function resetScope(){
   document.querySelectorAll('#scope select').forEach(s=>s.selectedIndex=0);
   document.querySelectorAll('#scope textarea').forEach(t=>t.value="");
   document.querySelectorAll('#scope input[type="checkbox"]').forEach(c=>c.checked=false);
   scopeResult.classList.add("hidden");
+}
+
+/* -------- PLAYBOOK -------- */
+async function callAI(type){
+  const input = document.getElementById(type+"Input").value.trim();
+  if(!input){
+    alert("Please enter text");
+    return;
+  }
+
+  const res = await fetch(`/api/${type}`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ text: input })
+  });
+
+  const data = await res.json();
+  const output = document.getElementById(type+"Output");
+  output.value = data.output;
+  document.getElementById(type+"Result").classList.remove("hidden");
+  autoResize(output);
 }
 </script>
 
