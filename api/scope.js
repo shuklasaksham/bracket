@@ -1,64 +1,126 @@
 export default async function handler(req, res) {
   try {
-    const { text } = req.body || {};
+    const {
+      workType,
+      deliverables,
+      coverage,
+      revisions,
+      feedback,
+      changes,
+      dependencies,
+      exclusions,
+      context
+    } = req.body || {};
 
-    if (!text) {
-      return res.status(400).json({
-        output: "No scope description provided."
+    if (!workType || !deliverables || deliverables.length === 0) {
+      return res.json({
+        output: "Please select the scope parameters to generate a clear scope."
       });
     }
 
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.key01}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
-          messages: [
-            {
-              role: "user",
-              content: `
-Rewrite the project description below into a clear, professional scope of work under 50 words.
+    /* ---------- LOGIC LAYER ---------- */
 
-Rules:
-- Use clear section headings
-- Include only what is explicitly mentioned
-- Do not assume development or additional services
-- Do NOT use Markdown, asterisks, or special formatting
-- Be precise and unambiguous
-- Do NOT wrap the response in quotation marks
-- Keep language client-friendly but firm
+    const coverageMap = {
+      "Focused": "a focused set of key flows or pages",
+      "Standard": "the core flows and primary states",
+      "Broad": "most user-facing surfaces across the product"
+    };
 
-Structure the output exactly as:
-1. Project Overview
-2. Included
-3. Excluded
-4. Revisions & Change Requests
+    const revisionMap = {
+      "Fixed rounds": "a defined number of revision rounds with consolidated feedback",
+      "Milestone based": "ongoing feedback aligned to agreed milestones",
+      "Final polish only": "light refinement after the main direction is approved"
+    };
 
-Project description:
-${text}
-`
-            }
-          ],
-          temperature: 0.2
-        })
-      }
-    );
+    const feedbackMap = {
+      "Single decision-maker": "feedback is shared through a single point of contact",
+      "Consolidated team feedback": "feedback is consolidated internally before being shared",
+      "Exploratory": "feedback is shared collaboratively during discussions"
+    };
 
-    const data = await response.json();
+    const changeMap = {
+      "Within scope": "adjustments within the agreed scope are included",
+      "Discuss collaboratively": "minor additions can be discussed and evaluated collaboratively",
+      "Scope expansion": "new requests are treated as a scope expansion"
+    };
 
-    return res.status(200).json({
-      output: data?.choices?.[0]?.message?.content || "Scope could not be generated."
+    const dependencyLines = (dependencies || []).map(d => `• ${d}`);
+
+    const exclusionLines = (exclusions || []).map(e => `• ${e}`);
+
+    /* ---------- PROMPT ---------- */
+
+    const prompt = `
+You are a senior designer writing a calm, collaborative project scope.
+
+Tone rules:
+- Professional
+- Clear
+- Non-legal
+- Confident, not defensive
+- No emojis
+
+Write the scope using the exact sections below.
+
+Project details:
+- Type of work: ${workType}
+- Design coverage: ${coverageMap[coverage]}
+- Deliverables: ${deliverables.join(", ")}
+- Revisions: ${revisionMap[revisions]}
+- Feedback model: ${feedbackMap[feedback]}
+- Change handling: ${changeMap[changes]}
+- Timeline dependencies:
+${dependencyLines.join("\n")}
+- Out of scope:
+${exclusionLines.join("\n")}
+- Additional context: ${context || "None"}
+
+Required structure:
+
+Scope Overview:
+Short paragraph summarizing what will be done.
+
+Included Deliverables:
+Bullet list of deliverables.
+
+Revisions & Collaboration:
+Explain how revisions and feedback work.
+
+Changes & Additions:
+Explain how changes beyond scope are handled.
+
+Timeline & Dependencies:
+Explain shared responsibilities and dependencies.
+
+Out of Scope:
+Explicit list.
+
+Assumptions:
+List calm, reasonable assumptions.
+
+Keep it concise and copy-ready.
+`;
+
+    /* ---------- AI CALL ---------- */
+
+    const aiRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.key01}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama3-70b-8192",
+        messages: [{ role: "user", content: prompt }]
+      })
     });
+
+    const aiData = await aiRes.json();
+    const output = aiData.choices?.[0]?.message?.content || "Unable to generate scope.";
+
+    res.json({ output });
 
   } catch (err) {
-    return res.status(500).json({
-      output: "Server error while generating scope.",
-      error: String(err)
-    });
+    res.json({ output: "Something went wrong while generating scope." });
   }
 }
