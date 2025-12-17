@@ -27,7 +27,7 @@
 
   transition: transform .25s ease, box-shadow .25s ease;
 }
-.card::before{
+/* .card::before{
   content: "";
   position: absolute;
   inset: 0;
@@ -35,14 +35,14 @@
   background: url("/assets/images/card-bg.svg") center / cover no-repeat;
 
   opacity: 1;              /* 🔑 CRITICAL */
-  mix-blend-mode: soft-light; /* makes it lighting, not paint */
-
+  /* mix-blend-mode: soft-light; /* makes it lighting, not paint */ 
+/* 
   pointer-events: none;
 }
 .card > *{
   position: relative;
   z-index: 1;
-}
+} */
 
 
 
