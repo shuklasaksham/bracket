@@ -1,1 +1,66 @@
+/* =========================
+   BASE — Variables & Reset
+========================= */
 
+:root{
+  /* Colors */
+  --text-primary:#0f172a;
+  --text-secondary:#475569;
+  --text-muted:#64748b;
+
+  --accent:#5b5bff;
+  --accent-soft:rgba(91,91,255,0.15);
+
+  /* Glass */
+  --glass-bg:rgba(255,255,255,0.72);
+  --glass-strong:rgba(255,255,255,0.85);
+
+  /* Borders & Shadows */
+  --border-light:rgba(15,23,42,0.08);
+  --shadow-soft:0 16px 36px rgba(15,23,42,0.12);
+  --shadow-strong:0 28px 60px rgba(15,23,42,0.18);
+
+  /* Radius */
+  --radius-sm:12px;
+  --radius-md:16px;
+  --radius-lg:22px;
+}
+
+/* Reset */
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:'Inter', system-ui, sans-serif;
+  color:var(--text-primary);
+  line-height:1.6;
+
+  /* Ambient background */
+  background:
+    radial-gradient(1000px 520px at 12% 10%, rgba(170,150,255,0.30), transparent 60%),
+    radial-gradient(900px 520px at 88% 15%, rgba(255,170,210,0.22), transparent 65%),
+    radial-gradient(800px 440px at 50% 92%, rgba(130,190,255,0.20), transparent 60%),
+    #f9fafb;
+}
+
+img{
+  max-width:100%;
+  display:block;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none;
+}
