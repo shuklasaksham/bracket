@@ -1,0 +1,37 @@
+<div class="card">
+  <h3>Define project scope</h3>
+
+  <label>Type of work</label>
+  <select id="workType">…</select>
+
+  <label>What will be delivered</label>
+  <div class="group" id="deliverables">…</div>
+
+  <label>Design coverage</label>
+  <select id="coverage">…</select>
+
+  <label>How revisions work</label>
+  <select id="revisions">…</select>
+
+  <label>How feedback is shared</label>
+  <select id="feedback">…</select>
+
+  <label>How changes are handled</label>
+  <select id="changes">…</select>
+
+  <label>What affects the timeline</label>
+  <div class="group" id="dependencies">…</div>
+
+  <label>Not included in this scope</label>
+  <div class="group" id="exclusions">…</div>
+
+  <label>Additional context (optional)</label>
+  <textarea id="scopeContext"></textarea>
+
+  <button onclick="generateScope()">Generate scope</button>
+  <button class="reset" onclick="resetScope()">Reset</button>
+
+  <div id="scopeResult" class="result hidden">
+    <textarea id="scopeOutput" class="output-box" readonly></textarea>
+  </div>
+</div>
