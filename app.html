@@ -234,6 +234,118 @@ button.reset{
 </div>
 </div>
 
+<div id="scope" class="card">
+
+  <h3>Define project scope</h3>
+
+  <label>Type of work</label>
+  <select id="workType">
+    <option disabled selected value="">Select</option>
+    <option>Product UI design</option>
+    <option>Marketing / website design</option>
+    <option>Brand identity / visuals</option>
+    <option>Design audit / review</option>
+    <option>Illustration / graphics</option>
+    <option>Mixed / custom work</option>
+  </select>
+
+  <label>What will be delivered</label>
+  <select id="deliverables" multiple>
+    <option>Screens / pages</option>
+    <option>Visual concepts</option>
+    <option>Final static designs</option>
+    <option>Editable source files</option>
+    <option>Design handoff notes</option>
+  </select>
+
+  <label>Design coverage</label>
+  <select id="coverage">
+    <option disabled selected value="">Select</option>
+    <option>Focused</option>
+    <option>Standard</option>
+    <option>Broad</option>
+  </select>
+
+  <label>How revisions work</label>
+  <select id="revisions">
+    <option>Fixed rounds</option>
+    <option>Milestone based</option>
+    <option>Final polish only</option>
+  </select>
+
+  <label>How feedback is shared</label>
+  <select id="feedback">
+    <option>Single decision-maker</option>
+    <option>Consolidated team feedback</option>
+    <option>Exploratory</option>
+  </select>
+
+  <label>How changes are handled</label>
+  <select id="changes">
+    <option>Within scope</option>
+    <option>Discuss collaboratively</option>
+    <option>Scope expansion</option>
+  </select>
+
+  <label>What affects the timeline</label>
+  <select id="dependencies" multiple>
+    <option>Timely client feedback</option>
+    <option>Asset availability</option>
+    <option>Stakeholder approvals</option>
+    <option>External dependencies</option>
+  </select>
+
+  <label>Not included in this scope</label>
+  <select id="exclusions" multiple>
+    <option>Copywriting</option>
+    <option>Development</option>
+    <option>Animations</option>
+    <option>Additional screens</option>
+    <option>Ongoing support</option>
+    <option>Marketing strategy</option>
+  </select>
+
+  <label>Additional context (optional)</label>
+  <textarea id="scopeContext"></textarea>
+
+  <button onclick="generateScope()">Generate scope</button>
+
+  <div id="scopeResult" class="hidden">
+    <textarea id="scopeOutput" class="output-box" readonly></textarea>
+  </div>
+</div>
+
+<script>
+function getMulti(id){
+  return [...document.getElementById(id).selectedOptions].map(o=>o.value);
+}
+
+async function generateScope(){
+  const payload = {
+    workType: workType.value,
+    deliverables: getMulti("deliverables"),
+    coverage: coverage.value,
+    revisions: revisions.value,
+    feedback: feedback.value,
+    changes: changes.value,
+    dependencies: getMulti("dependencies"),
+    exclusions: getMulti("exclusions"),
+    context: scopeContext.value
+  };
+
+  const res = await fetch("/api/scope",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  scopeOutput.value = data.output;
+  scopeResult.classList.remove("hidden");
+}
+</script>
+
+  
 <script>
 function switchTab(id, el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
