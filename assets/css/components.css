@@ -2,22 +2,50 @@
    COMPONENTS — UI Pieces
 ========================= */
 
-/* CARD (GLASS) */
+/* =========================
+   CARD — APPLE GLASS SURFACE
+========================= */
+
 .card{
+  position:relative;
+  border-radius:var(--radius-lg);
+  padding:28px;
+  overflow:hidden;
+
   background:rgba(255,255,255,0.55);
   backdrop-filter:blur(22px) saturate(160%);
   -webkit-backdrop-filter:blur(22px) saturate(160%);
-
-  border-radius:var(--radius-lg);
-  padding:28px;
 
   border:1px solid rgba(255,255,255,0.55);
   box-shadow:var(--shadow-strong);
 }
 
+/* Apple SVG background layer */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background-image:url("/assets/images/card-bg.svg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  opacity:0.85;
+  pointer-events:none;
+}
+
+/* Content layer */
+.card > *{
+  position:relative;
+  z-index:1;
+}
+
 .card h3{
   font-family:'Inter Tight', sans-serif;
   margin-top:0;
+}
+gin-top:0;
 }
 
 /* BUTTONS */
