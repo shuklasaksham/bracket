@@ -1,374 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bracket — App</title>
+export default async function handler(req, res) {
+  try {
+    const {
+      projectType,
+      experience,
+      size,
+      clarity,
+      timeline,
+      context
+    } = req.body || {};
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+    if (!projectType || !experience || !size || !clarity || !timeline) {
+      return res.status(400).json({
+        output: "Missing required pricing inputs."
+      });
+    }
 
-<style>
-:root{
-  --text-primary:#0f172a;
-  --text-secondary:#475569;
-  --text-muted:#64748b;
-  --accent:#5b5bff;
+    /* ---------- BASE PRICE (India-realistic, ~80%) ---------- */
+    let base = 0;
 
-  --glass-bg:rgba(255,255,255,0.72);
-  --border-light:rgba(15,23,42,0.08);
+    const projectBase = {
+      "UI/UX – SaaS / Product": 45000,
+      "UI/UX – Enterprise / Internal Tool": 60000,
+      "Website Design (Marketing / Corporate)": 30000,
+      "Landing Page (Conversion-focused)": 20000,
+      "Mobile App Design": 50000,
+      "Design System / Component Library": 70000,
+      "Brand Identity (Logo + Basics)": 35000,
+      "Brand Refresh / Rebrand": 40000,
+      "Brand Guidelines / Visual Language": 45000,
+      "No-code Website (Webflow / Framer)": 40000,
+      "Illustration / Custom Artwork": 25000,
+      "Social Media Creatives": 15000,
+      "Presentation / Pitch Deck": 20000,
+      "Design Audit / UX Review": 18000,
+      "Ongoing Design Support (Monthly)": 30000,
+      "Custom / Not sure yet": 30000
+    };
+
+    base = projectBase[projectType] || 30000;
+
+    /* ---------- EXPERIENCE MULTIPLIER ---------- */
+    const expMult = {
+      "Early-career (0–2 years)": 0.85,
+      "Mid-level (3–5 years)": 1,
+      "Senior (6–10 years)": 1.3,
+      "Very senior / specialist (10+ years)": 1.6
+    };
+
+    base *= expMult[experience] || 1;
+
+    /* ---------- SIZE ---------- */
+    const sizeMult = {
+      "Small": 0.8,
+      "Medium": 1,
+      "Large": 1.4
+    };
+
+    base *= sizeMult[size] || 1;
+
+    /* ---------- CLARITY ---------- */
+    if (clarity === "Exploratory / unclear") base *= 1.2;
+    if (clarity === "Somewhat clear") base *= 1.1;
+
+    /* ---------- TIMELINE ---------- */
+    if (timeline === "Urgent") base *= 1.25;
+    if (timeline === "Flexible") base *= 0.95;
+
+    /* ---------- RANGE ---------- */
+    const min = Math.round(base * 0.9 / 1000) * 1000;
+    const max = Math.round(base * 1.15 / 1000) * 1000;
+
+    /* ---------- RESPONSE ---------- */
+    res.status(200).json({
+      output: `A reasonable price range for this project would be **₹${min.toLocaleString()} – ₹${max.toLocaleString()}**.
+
+This range assumes:
+• Clear scope agreement before starting
+• Limited revisions within the agreed scope
+• Professional delivery standards
+
+If the project expands or requirements evolve, pricing should be revisited accordingly.`
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      output: "Something went wrong while calculating the price."
+    });
+  }
 }
-
-/* RESET */
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:'Inter', system-ui, sans-serif;
-  color:var(--text-primary);
-  background:
-    radial-gradient(1000px 520px at 12% 10%, rgba(170,150,255,0.30), transparent 60%),
-    radial-gradient(900px 520px at 88% 15%, rgba(255,170,210,0.22), transparent 65%),
-    radial-gradient(800px 440px at 50% 92%, rgba(130,190,255,0.20), transparent 60%),
-    #f9fafb;
-}
-
-/* NAV */
-.navbar{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:var(--glass-bg);
-  backdrop-filter:blur(14px) saturate(160%);
-  border-bottom:1px solid var(--border-light);
-}
-.nav-inner{
-  max-width:1100px;
-  margin:auto;
-  padding:24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.brand img{height:32px}
-.nav-links a{
-  font-size:14px;
-  color:var(--text-secondary);
-  text-decoration:none;
-}
-
-/* APP */
-.app-shell{display:flex;justify-content:center;padding:48px 16px}
-.app{width:100%;max-width:760px}
-
-/* TABS */
-.tabs{
-  display:flex;
-  gap:32px;
-  border-bottom:1px solid var(--border-light);
-  margin-bottom:24px;
-}
-.tab{
-  cursor:pointer;
-  font-weight:500;
-  color:var(--text-muted);
-  padding-bottom:12px;
-}
-.tab.active{
-  color:var(--text-primary);
-  border-bottom:2px solid var(--accent);
-}
-
-/* CARD */
-.card{
-  background:rgba(255,255,255,0.55);
-  backdrop-filter:blur(22px);
-  border-radius:22px;
-  padding:28px;
-  border:1px solid rgba(255,255,255,0.55);
-  box-shadow:0 28px 60px rgba(15,23,42,0.16);
-}
-.card h3{
-  font-family:'Inter Tight', sans-serif;
-  margin-top:0;
-}
-
-/* FORM */
-label{
-  display:block;
-  margin-top:18px;
-  font-size:13px;
-  font-weight:600;
-  color:var(--text-secondary);
-}
-select, textarea{
-  width:100%;
-  margin-top:6px;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid var(--border-light);
-  font-size:14px;
-  background:#fff;
-}
-textarea{resize:none}
-textarea.output-box{min-height:140px;overflow:hidden}
-
-/* BUTTONS */
-button{
-  margin-top:18px;
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:none;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0.15)),
-    var(--accent);
-  color:#fff;
-  font-weight:600;
-  cursor:pointer;
-}
-button.reset{
-  background:#e5e7eb;
-  color:#0f172a;
-}
-
-/* RESULT */
-.result{
-  margin-top:18px;
-  padding:16px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.85);
-}
-
-/* COOL CHECKBOX GROUP */
-.group{
-  margin-top:10px;
-  padding:14px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.6);
-  border:1px solid var(--border-light);
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:10px;
-}
-
-.group label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:14px;
-  font-weight:500;
-  padding:10px 12px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.7);
-  border:1px solid rgba(15,23,42,0.05);
-  cursor:pointer;
-  transition:all .2s ease;
-}
-
-.group label:hover{
-  background:rgba(255,255,255,0.9);
-}
-
-.group input{
-  width:16px;
-  height:16px;
-  accent-color:var(--accent);
-}
-
-.hidden{display:none}
-</style>
-</head>
-
-<body>
-
-<!-- NAV -->
-<div class="navbar">
-  <div class="nav-inner">
-    <a href="/" class="brand">
-      <img src="/logo-icon.png" alt="Bracket">
-    </a>
-    <div class="nav-links">
-      <a href="/contact.html">Contact</a>
-    </div>
-  </div>
-</div>
-
-<div class="app-shell">
-<div class="app">
-
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('pricing',this)">Pricing</div>
-  <div class="tab" onclick="switchTab('scope',this)">Scope</div>
-  <div class="tab" onclick="switchTab('playbook',this)">Client Playbook</div>
-</div>
-
-<!-- PRICING (UNCHANGED) -->
-<div id="pricing" class="card">
-  <h3>Pricing</h3>
-
-  <label>Project type</label>
-  <select id="projectType">
-    <option value="" disabled selected>Select project type</option>
-    <option>UI/UX – Product / SaaS</option>
-    <option>UI/UX – Website / Marketing</option>
-    <option>Mobile App Design</option>
-    <option>Custom / Not sure yet</option>
-  </select>
-
-  <label>Designer experience</label>
-  <select id="experience">
-    <option value="" disabled selected>Select experience</option>
-    <option>Early-career (0–2 years)</option>
-    <option>Mid-level (3–5 years)</option>
-    <option>Senior (6–10 years)</option>
-  </select>
-
-  <label>Project size</label>
-  <select id="projectSize">
-    <option value="" disabled selected>Select size</option>
-    <option>Small</option>
-    <option>Medium</option>
-    <option>Large</option>
-  </select>
-
-  <label>Client clarity</label>
-  <select id="clientClarity">
-    <option value="" disabled selected>Select clarity</option>
-    <option>Very clear</option>
-    <option>Somewhat clear</option>
-    <option>Exploratory / unclear</option>
-  </select>
-
-  <label>Timeline</label>
-  <select id="timeline">
-    <option value="" disabled selected>Select timeline</option>
-    <option>Flexible</option>
-    <option>Normal</option>
-    <option>Urgent</option>
-  </select>
-
-  <label>Additional context (optional)</label>
-  <textarea id="pricingContext"></textarea>
-
-  <button onclick="callPricing()">Generate range</button>
-  <button class="reset" onclick="resetPricing()">Reset</button>
-
-  <div id="pricingResult" class="result hidden">
-    <textarea id="pricingOutput" class="output-box" readonly></textarea>
-  </div>
-</div>
-
-<!-- SCOPE -->
-<div id="scope" class="card hidden">
-  <h3>Define project scope</h3>
-
-  <label>Type of work</label>
-  <select id="workType">
-    <option value="" disabled selected>Select</option>
-    <option>Product UI design</option>
-    <option>Marketing / website design</option>
-    <option>Brand identity / visuals</option>
-    <option>Design audit / review</option>
-    <option>Illustration / graphics</option>
-    <option>Mixed / custom work</option>
-  </select>
-
-  <label>What will be delivered</label>
-  <div class="group">
-    <label><input type="checkbox" value="Screens / pages">Screens / pages</label>
-    <label><input type="checkbox" value="Visual concepts">Visual concepts</label>
-    <label><input type="checkbox" value="Final static designs">Final static designs</label>
-    <label><input type="checkbox" value="Editable source files">Editable source files</label>
-    <label><input type="checkbox" value="Design handoff notes">Design handoff notes</label>
-  </div>
-
-  <label>Design coverage</label>
-  <select id="coverage">
-    <option value="" disabled selected>Select</option>
-    <option>Focused</option>
-    <option>Standard</option>
-    <option>Broad</option>
-  </select>
-
-  <label>How revisions work</label>
-  <select id="revisions">
-    <option>Fixed rounds</option>
-    <option>Milestone based</option>
-    <option>Final polish only</option>
-  </select>
-
-  <label>How feedback is shared</label>
-  <select id="feedback">
-    <option>Single decision-maker</option>
-    <option>Consolidated team feedback</option>
-    <option>Exploratory</option>
-  </select>
-
-  <label>How changes are handled</label>
-  <select id="changes">
-    <option>Within scope</option>
-    <option>Discuss collaboratively</option>
-    <option>Scope expansion</option>
-  </select>
-
-  <label>What affects the timeline</label>
-  <div class="group">
-    <label><input type="checkbox" value="Timely client feedback">Timely client feedback</label>
-    <label><input type="checkbox" value="Asset availability">Asset availability</label>
-    <label><input type="checkbox" value="Stakeholder approvals">Stakeholder approvals</label>
-    <label><input type="checkbox" value="External dependencies">External dependencies</label>
-  </div>
-
-  <label>Not included in this scope</label>
-  <div class="group">
-    <label><input type="checkbox" value="Copywriting">Copywriting</label>
-    <label><input type="checkbox" value="Development">Development</label>
-    <label><input type="checkbox" value="Animations">Animations</label>
-    <label><input type="checkbox" value="Additional screens">Additional screens</label>
-    <label><input type="checkbox" value="Ongoing support">Ongoing support</label>
-    <label><input type="checkbox" value="Marketing strategy">Marketing strategy</label>
-  </div>
-
-  <label>Additional context (optional)</label>
-  <textarea id="scopeContext"></textarea>
-
-  <button onclick="generateScope()">Generate scope</button>
-  <button class="reset" onclick="resetScope()">Reset</button>
-
-  <div id="scopeResult" class="result hidden">
-    <textarea id="scopeOutput" class="output-box" readonly></textarea>
-  </div>
-</div>
-
-</div>
-</div>
-
-<script>
-function switchTab(id, el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
-
-function resetPricing(){
-  projectType.selectedIndex = 0;
-  experience.selectedIndex = 0;
-  projectSize.selectedIndex = 0;
-  clientClarity.selectedIndex = 0;
-  timeline.selectedIndex = 0;
-  pricingContext.value = "";
-  pricingResult.classList.add("hidden");
-}
-
-function resetScope(){
-  document.querySelectorAll('#scope select').forEach(s=>s.selectedIndex=0);
-  document.querySelectorAll('#scope textarea').forEach(t=>t.value="");
-  document.querySelectorAll('#scope input[type="checkbox"]').forEach(c=>c.checked=false);
-  scopeResult.classList.add("hidden");
-}
-</script>
-
-</body>
-</html>
