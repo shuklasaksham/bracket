@@ -13,7 +13,7 @@ async function callPricing(){
     context: pricingContext.value
   };
 
-  const res = await fetch("/api/pricing",{
+  const res = await fetch("/api/pricing.js",{
     method:"POST",
     headers:{ "Content-Type":"application/json" },
     body:JSON.stringify(payload)
