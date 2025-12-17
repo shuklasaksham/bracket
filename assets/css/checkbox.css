@@ -1,0 +1,114 @@
+/* =========================
+   CHECKBOX SYSTEM
+   Figma-accurate states
+========================= */
+
+.checkbox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  position:relative;
+  user-select:none;
+}
+
+/* Hide native checkbox */
+.checkbox input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* Base square */
+.checkbox-ui{
+  width:20px;
+  height:20px;
+  border-radius:6px;
+
+  background:#ffffff;
+  border:1.5px solid var(--border-light);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    box-shadow .15s ease,
+    transform .08s ease;
+}
+
+/* Check icon */
+.checkbox-ui img{
+  width:12px;
+  height:12px;
+  opacity:0;
+  transform:scale(0.85);
+
+  transition:
+    opacity .12s ease,
+    transform .12s ease;
+}
+
+/* =========================
+   STATES
+========================= */
+
+/* Enabled / Checked */
+.checkbox input:checked + .checkbox-ui{
+  background:linear-gradient(180deg, #0a7cff, #0a4ecf);
+  border-color:#0a5bd8;
+}
+
+.checkbox input:checked + .checkbox-ui img{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* Hover */
+.checkbox:hover .checkbox-ui::after{
+  content:"";
+  position:absolute;
+  inset:-14px;
+  border-radius:50%;
+  background:rgba(10,91,216,0.18);
+}
+
+/* Focus (keyboard accessibility) */
+.checkbox input:focus-visible + .checkbox-ui::after{
+  content:"";
+  position:absolute;
+  inset:-16px;
+  border-radius:50%;
+  background:rgba(10,91,216,0.22);
+}
+
+/* Pressed */
+.checkbox:active .checkbox-ui{
+  transform:scale(0.95);
+}
+
+.checkbox:active .checkbox-ui::after{
+  background:rgba(10,91,216,0.28);
+}
+
+/* Disabled */
+.checkbox input:disabled + .checkbox-ui{
+  background:#8b8b8b;
+  border-color:#8b8b8b;
+}
+
+.checkbox input:disabled + .checkbox-ui img{
+  opacity:0.6;
+}
+
+.checkbox input:disabled ~ span{
+  color:#9ca3af;
+}
+
+.checkbox input:disabled{
+  cursor:not-allowed;
+}
