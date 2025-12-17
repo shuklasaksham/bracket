@@ -1,0 +1,31 @@
+<div class="card">
+  <h3>Pricing</h3>
+
+  <label>Project type</label>
+  <select id="projectType">
+    <option value="" disabled selected>Select project type</option>
+    <!-- all options unchanged -->
+  </select>
+
+  <label>Designer experience</label>
+  <select id="experience">…</select>
+
+  <label>Project size</label>
+  <select id="projectSize">…</select>
+
+  <label>Client clarity</label>
+  <select id="clientClarity">…</select>
+
+  <label>Timeline</label>
+  <select id="timeline">…</select>
+
+  <label>Additional context (optional)</label>
+  <textarea id="pricingContext"></textarea>
+
+  <button onclick="callPricing()">Generate range</button>
+  <button class="reset" onclick="resetPricing()">Reset</button>
+
+  <div id="pricingResult" class="result hidden">
+    <textarea id="pricingOutput" class="output-box" readonly></textarea>
+  </div>
+</div>
