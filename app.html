@@ -9,256 +9,160 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --text-primary:#0f172a;
-  --text-secondary:#475569;
-  --text-muted:#64748b;
-  --accent:#5b5bff;
-  --border-light:rgba(15,23,42,0.08);
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:'Inter', system-ui, sans-serif;
-  color:var(--text-primary);
-  background:
-    radial-gradient(1000px 520px at 12% 10%, rgba(170,150,255,0.30), transparent 60%),
-    radial-gradient(900px 520px at 88% 15%, rgba(255,170,210,0.22), transparent 65%),
-    radial-gradient(800px 440px at 50% 92%, rgba(130,190,255,0.20), transparent 60%),
-    #f9fafb;
-}
-
-/* NAV */
-.navbar{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:rgba(255,255,255,0.72);
-  backdrop-filter:blur(14px) saturate(160%);
-  border-bottom:1px solid var(--border-light);
-}
-.nav-inner{
-  max-width:1100px;
-  margin:auto;
-  padding:24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.brand img{height:32px}
-.nav-links a{
-  font-size:14px;
-  color:var(--text-secondary);
-  text-decoration:none;
-}
-
-/* APP */
-.app-shell{display:flex;justify-content:center;padding:48px 16px}
-.app{width:100%;max-width:760px}
-
-/* TABS */
-.tabs{
-  display:flex;
-  gap:32px;
-  border-bottom:1px solid var(--border-light);
-  margin-bottom:24px;
-}
-.tab{
-  cursor:pointer;
-  font-weight:500;
-  color:var(--text-muted);
-  padding-bottom:12px;
-}
-.tab.active{
-  color:var(--text-primary);
-  border-bottom:2px solid var(--accent);
-}
-
-/* CARD — SVG BACKGROUND */
-.card{
-  position:relative;
-  background:
-    url("/assets/images/card-bg.svg") center/cover no-repeat;
-  border-radius:22px;
-  padding:28px;
-  box-shadow:0 28px 60px rgba(15,23,42,0.16);
-}
-
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:22px;
-  backdrop-filter:blur(22px) saturate(160%);
-  background:rgba(255,255,255,0.55);
-}
-
-.card > *{
-  position:relative;
-  z-index:1;
-}
-
-.card h3{
-  font-family:'Inter Tight', sans-serif;
-  margin-top:0;
-}
-
-/* FORM */
-label{
-  display:block;
-  margin-top:18px;
-  font-size:13px;
-  font-weight:600;
-  color:var(--text-secondary);
-}
-
-select, textarea{
-  width:100%;
-  margin-top:6px;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid var(--border-light);
-  font-size:14px;
-  background:#fff;
-}
-
-textarea{resize:none}
-textarea.output-box{min-height:140px;overflow:hidden}
-
-/* BUTTONS */
-button{
-  margin-top:18px;
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:none;
-  background:var(--accent);
-  color:#fff;
-  font-weight:600;
-  cursor:pointer;
-}
-button.reset{
-  background:#e5e7eb;
-  color:#0f172a;
-}
-
-/* RESULT */
-.result{
-  margin-top:18px;
-  padding:16px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.85);
-}
-
-/* CHECKBOX GROUP */
-.group{
-  margin-top:10px;
-  padding:14px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.6);
-  border:1px solid var(--border-light);
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:10px;
-}
-
-.group label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:14px;
-  font-weight:500;
-  padding:10px 12px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.7);
-  cursor:pointer;
-}
-
-.hidden{display:none}
-
-/* ACCORDION (SVG ICON) */
-summary{
-  list-style:none;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-}
-summary::-webkit-details-marker{display:none}
-
-.accordion-icon{
-  width:18px;
-  height:18px;
-  transition:transform .2s ease;
-}
-details[open] .accordion-icon{
-  transform:rotate(180deg);
-}
-</style>
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<link rel="stylesheet" href="/assets/css/app.css">
 </head>
 
 <body>
 
 <!-- NAV -->
-<div class="navbar">
-  <div class="nav-inner">
-    <a href="/" class="brand">
-      <img src="/logo-icon.png" alt="Bracket">
-    </a>
-    <div class="nav-links">
-      <a href="/contact.html">Contact</a>
+<div id="navbar"></div>
+
+<div class="app-shell">
+  <div class="app">
+
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('pricing',this)">Pricing</div>
+      <div class="tab" onclick="switchTab('scope',this)">Scope</div>
+      <div class="tab" onclick="switchTab('playbook',this)">Client Playbook</div>
     </div>
+
+    <!-- CONTENT -->
+    <div id="pricing"></div>
+    <div id="scope" class="hidden"></div>
+    <div id="playbook" class="hidden"></div>
+
   </div>
 </div>
 
-<div class="app-shell">
-<div class="app">
-
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('pricing',this)">Pricing</div>
-  <div class="tab" onclick="switchTab('scope',this)">Scope</div>
-  <div class="tab" onclick="switchTab('playbook',this)">Client Playbook</div>
-</div>
-
-<!-- PRICING -->
-<div id="pricing" class="card">
-  <h3>Pricing</h3>
-  <!-- pricing content unchanged -->
-</div>
-
-<!-- SCOPE -->
-<div id="scope" class="card hidden">
-  <h3>Define project scope</h3>
-
-  <details class="accordion">
-    <summary>
-      <span>What will be delivered</span>
-      <img src="/assets/icons/accordion.svg" class="accordion-icon" alt="">
-    </summary>
-
-    <div class="group" id="deliverables">
-      <label><input type="checkbox" value="Screens / pages">Screens / pages</label>
-      <label><input type="checkbox" value="Visual concepts">Visual concepts</label>
-      <label><input type="checkbox" value="Final static designs">Final static designs</label>
-      <label><input type="checkbox" value="Editable source files">Editable source files</label>
-      <label><input type="checkbox" value="Design handoff notes">Design handoff notes</label>
-    </div>
-  </details>
-
-</div>
-
-</div>
-</div>
-
 <script>
+/* ---------- LOAD PARTIALS (UI ONLY) ---------- */
+async function load(id, file){
+  const res = await fetch(file);
+  document.getElementById(id).innerHTML = await res.text();
+}
+
+load("navbar", "/partials/navbar.html");
+load("pricing", "/partials/pricing.html");
+load("scope", "/partials/scope.html");
+load("playbook", "/partials/playbook.html");
+
+/* ---------- TAB LOGIC (UNCHANGED) ---------- */
 function switchTab(id, el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
+  document.querySelectorAll('#pricing,#scope,#playbook')
+    .forEach(c=>c.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
+}
+
+function autoResize(el){
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight + "px";
+}
+
+/* ---------- PRICING (UNCHANGED) ---------- */
+async function callPricing(){
+  if(!projectType.value || !experience.value || !projectSize.value || !clientClarity.value || !timeline.value){
+    alert("Please fill all required fields");
+    return;
+  }
+
+  const payload = {
+    projectType: projectType.value,
+    experience: experience.value,
+    size: projectSize.value,
+    clarity: clientClarity.value,
+    timeline: timeline.value,
+    context: pricingContext.value
+  };
+
+  const res = await fetch("/api/pricing",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  pricingOutput.value = data.output;
+  pricingResult.classList.remove("hidden");
+  autoResize(pricingOutput);
+}
+
+function resetPricing(){
+  projectType.selectedIndex = 0;
+  experience.selectedIndex = 0;
+  projectSize.selectedIndex = 0;
+  clientClarity.selectedIndex = 0;
+  timeline.selectedIndex = 0;
+  pricingContext.value = "";
+  pricingResult.classList.add("hidden");
+}
+
+/* ---------- SCOPE (UNCHANGED) ---------- */
+function getChecked(id){
+  return [...document.querySelectorAll(`#${id} input:checked`)].map(i=>i.value);
+}
+
+async function generateScope(){
+  if(!workType.value){
+    alert("Please select type of work");
+    return;
+  }
+
+  const payload = {
+    workType: workType.value,
+    deliverables: getChecked("deliverables"),
+    coverage: coverage.value,
+    revisions: revisions.value,
+    feedback: feedback.value,
+    changes: changes.value,
+    dependencies: getChecked("dependencies"),
+    exclusions: getChecked("exclusions"),
+    context: scopeContext.value
+  };
+
+  const res = await fetch("/api/scope",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  scopeOutput.value = data.output;
+  scopeResult.classList.remove("hidden");
+  autoResize(scopeOutput);
+}
+
+function resetScope(){
+  document.querySelectorAll('#scope select').forEach(s=>s.selectedIndex=0);
+  document.querySelectorAll('#scope textarea').forEach(t=>t.value="");
+  document.querySelectorAll('#scope input[type="checkbox"]').forEach(c=>c.checked=false);
+  scopeResult.classList.add("hidden");
+}
+
+/* ---------- PLAYBOOK (UNCHANGED) ---------- */
+async function callAI(type){
+  const input = document.getElementById(type+"Input").value.trim();
+  if(!input){
+    alert("Please enter text");
+    return;
+  }
+
+  const res = await fetch(`/api/${type}`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ text: input })
+  });
+
+  const data = await res.json();
+  const output = document.getElementById(type+"Output");
+  output.value = data.output;
+  document.getElementById(type+"Result").classList.remove("hidden");
+  autoResize(output);
 }
 </script>
 
