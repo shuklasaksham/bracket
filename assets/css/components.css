@@ -34,7 +34,7 @@
 
   background: url("/assets/images/card-bg.svg") center / cover no-repeat;
 
-  opacity: 0.12;              /* 🔑 CRITICAL */
+  opacity: 1;              /* 🔑 CRITICAL */
   mix-blend-mode: soft-light; /* makes it lighting, not paint */
 
   pointer-events: none;
