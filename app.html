@@ -45,124 +45,56 @@ async function load(id, file){
   document.getElementById(id).innerHTML = await res.text();
 }
 
-load("navbar", "/partials/navbar.html");
-load("pricing", "/partials/pricing.html");
-load("scope", "/partials/scope.html");
-load("playbook", "/partials/playbook.html");
+async function init(){
+  await load("navbar", "/partials/navbar.html");
+  await load("pricing", "/partials/pricing.html");
+  await load("scope", "/partials/scope.html");
+  await load("playbook", "/partials/playbook.html");
 
-/* ---------- TAB LOGIC (UNCHANGED) ---------- */
-function switchTab(id, el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('#pricing,#scope,#playbook')
-    .forEach(c=>c.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
+  bindUI(); // 👈 THIS is the missing link
 }
 
-function autoResize(el){
-  el.style.height = "auto";
-  el.style.height = el.scrollHeight + "px";
-}
+init();
+/* ---------- BIND UI ELEMENTS ---------- */
 
-/* ---------- PRICING (UNCHANGED) ---------- */
-async function callPricing(){
-  if(!projectType.value || !experience.value || !projectSize.value || !clientClarity.value || !timeline.value){
-    alert("Please fill all required fields");
-    return;
-  }
+let projectType,
+    experience,
+    projectSize,
+    clientClarity,
+    timeline,
+    pricingContext,
+    pricingResult,
+    pricingOutput;
 
-  const payload = {
-    projectType: projectType.value,
-    experience: experience.value,
-    size: projectSize.value,
-    clarity: clientClarity.value,
-    timeline: timeline.value,
-    context: pricingContext.value
-  };
+let workType,
+    coverage,
+    revisions,
+    feedback,
+    changes,
+    scopeContext,
+    scopeResult,
+    scopeOutput;
 
-  const res = await fetch("/api/pricing",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify(payload)
-  });
+function bindUI(){
+  /* PRICING */
+  projectType = document.getElementById("projectType");
+  experience = document.getElementById("experience");
+  projectSize = document.getElementById("projectSize");
+  clientClarity = document.getElementById("clientClarity");
+  timeline = document.getElementById("timeline");
+  pricingContext = document.getElementById("pricingContext");
+  pricingResult = document.getElementById("pricingResult");
+  pricingOutput = document.getElementById("pricingOutput");
 
-  const data = await res.json();
-  pricingOutput.value = data.output;
-  pricingResult.classList.remove("hidden");
-  autoResize(pricingOutput);
-}
-
-function resetPricing(){
-  projectType.selectedIndex = 0;
-  experience.selectedIndex = 0;
-  projectSize.selectedIndex = 0;
-  clientClarity.selectedIndex = 0;
-  timeline.selectedIndex = 0;
-  pricingContext.value = "";
-  pricingResult.classList.add("hidden");
-}
-
-/* ---------- SCOPE (UNCHANGED) ---------- */
-function getChecked(id){
-  return [...document.querySelectorAll(`#${id} input:checked`)].map(i=>i.value);
-}
-
-async function generateScope(){
-  if(!workType.value){
-    alert("Please select type of work");
-    return;
-  }
-
-  const payload = {
-    workType: workType.value,
-    deliverables: getChecked("deliverables"),
-    coverage: coverage.value,
-    revisions: revisions.value,
-    feedback: feedback.value,
-    changes: changes.value,
-    dependencies: getChecked("dependencies"),
-    exclusions: getChecked("exclusions"),
-    context: scopeContext.value
-  };
-
-  const res = await fetch("/api/scope",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify(payload)
-  });
-
-  const data = await res.json();
-  scopeOutput.value = data.output;
-  scopeResult.classList.remove("hidden");
-  autoResize(scopeOutput);
-}
-
-function resetScope(){
-  document.querySelectorAll('#scope select').forEach(s=>s.selectedIndex=0);
-  document.querySelectorAll('#scope textarea').forEach(t=>t.value="");
-  document.querySelectorAll('#scope input[type="checkbox"]').forEach(c=>c.checked=false);
-  scopeResult.classList.add("hidden");
-}
-
-/* ---------- PLAYBOOK (UNCHANGED) ---------- */
-async function callAI(type){
-  const input = document.getElementById(type+"Input").value.trim();
-  if(!input){
-    alert("Please enter text");
-    return;
-  }
-
-  const res = await fetch(`/api/${type}`,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({ text: input })
-  });
-
-  const data = await res.json();
-  const output = document.getElementById(type+"Output");
-  output.value = data.output;
-  document.getElementById(type+"Result").classList.remove("hidden");
-  autoResize(output);
+  /* SCOPE */
+  workType = document.getElementById("workType");
+  coverage = document.getElementById("coverage");
+  revisions = document.getElementById("revisions");
+  feedback = document.getElementById("feedback");
+  changes = document.getElementById("changes");
+  scopeContext = document.getElementById("scopeContext");
+  scopeResult = document.getElementById("scopeResult");
+  scopeOutput = document.getElementById("scopeOutput");
 }
 </script>
 
