@@ -20,6 +20,16 @@
   box-shadow:var(--shadow-strong);
 }
 
+.card{
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 30px 70px rgba(15,23,42,0.18);
+}
+
 /* Apple SVG background layer */
 .card::before{
   content:"";
