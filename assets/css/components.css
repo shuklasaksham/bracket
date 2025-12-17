@@ -3,7 +3,7 @@
 ========================= */
 
 /* =========================
-   CARD — APPLE GLASS SURFACE
+   CARD — GLASS WITH SUBTLE SVG
 ========================= */
 
 .card{
@@ -13,33 +13,35 @@
   padding: 28px;
   border-radius: var(--radius-lg);
 
-  /* Base glass layer */
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  /* Primary glass surface */
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(26px) saturate(170%);
+  -webkit-backdrop-filter: blur(26px) saturate(170%);
 
-  border: 1px solid rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.55);
 
   box-shadow:
-    0 28px 60px rgba(15,23,42,0.16),
-    inset 0 1px 0 rgba(255,255,255,0.6);
+    0 28px 60px rgba(15,23,42,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.75);
 
   transition: transform .25s ease, box-shadow .25s ease;
 }
 
-/* Apple-style SVG background layer */
+/* Subtle SVG texture — NOT a surface */
 .card::before{
   content: "";
   position: absolute;
   inset: 0;
 
   background: url("/assets/images/card-bg.svg") center / cover no-repeat;
-  opacity: 0.85;
+
+  opacity: 0.18;              /* 👈 THIS is the key */
+  mix-blend-mode: soft-light; /* keeps it airy */
 
   pointer-events: none;
 }
 
-/* Content stays above SVG */
+/* Content above texture */
 .card > *{
   position: relative;
   z-index: 1;
@@ -48,8 +50,8 @@
 .card:hover{
   transform: translateY(-2px);
   box-shadow:
-    0 30px 70px rgba(15,23,42,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.65);
+    0 32px 72px rgba(15,23,42,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.85);
 }
 
 .card h3{
@@ -57,7 +59,7 @@
   margin-top: 0;
 }
 
-/* Trust copy under headings */
+/* Trust copy */
 .trust-copy{
   margin-top: -6px;
   margin-bottom: 18px;
@@ -108,13 +110,13 @@ button:hover{
 }
 
 button.reset{
-  background: #e5e7eb;
+  background: rgba(15,23,42,0.06);
   color: #0f172a;
   box-shadow: none;
 }
 
 /* =========================
-   INPUTS & FORMS
+   INPUTS — GLASS STYLE
 ========================= */
 
 label{
@@ -136,19 +138,24 @@ textarea{
   font-family: inherit;
 
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-light);
-  background: #ffffff;
+  border: 1px solid rgba(15,23,42,0.08);
+
+  /* Glass input */
+  background: rgba(255,255,255,0.85);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-/* Custom accordion icon (browser-safe) */
+/* Accordion icon */
 select{
   background:
     url("/assets/icons/accordion.svg") no-repeat right 14px center,
-    #ffffff;
+    rgba(255,255,255,0.85);
 
   background-size: 16px;
   padding-right: 44px;
