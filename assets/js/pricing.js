@@ -1,5 +1,11 @@
 async function callPricing(){
-  if(!projectType.value || !experience.value || !projectSize.value || !clientClarity.value || !timeline.value){
+  if(
+    !projectType.value ||
+    !experience.value ||
+    !projectSize.value ||
+    !clientClarity.value ||
+    !timeline.value
+  ){
     alert("Please fill all required fields");
     return;
   }
@@ -13,10 +19,10 @@ async function callPricing(){
     context: pricingContext.value
   };
 
-  const res = await fetch("/api/pricing.js",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify(payload)
+  const res = await fetch("/api/pricing", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
   });
 
   const data = await res.json();
@@ -33,4 +39,3 @@ function resetPricing(){
   pricingContext.value = "";
   pricingResult.classList.add("hidden");
 }
-
