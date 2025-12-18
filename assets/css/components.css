@@ -5,6 +5,58 @@
 /* =========================
    CARD — SVG SURFACE (PRIMARY)
 ========================= */
+/* =========================
+   CHECKBOX GROUP (FIX)
+========================= */
+
+.group{
+  margin-top:10px;
+  padding:14px;
+
+  border-radius:var(--radius-lg);
+  background:rgba(255,255,255,0.6);
+  border:1px solid var(--border-light);
+
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 12px;
+}
+
+/* THIS is what removes the empty right space */
+.group label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:8px 12px;
+  font-size:14px;
+  font-weight:500;
+
+  border-radius:10px;
+  background:rgba(255,255,255,0.85);
+  border:1px solid rgba(15,23,42,0.06);
+
+  white-space:nowrap;   /* 👈 CRITICAL */
+  cursor:pointer;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease;
+}
+
+.group label:hover{
+  background:rgba(255,255,255,1);
+  border-color:rgba(0,136,255,0.25);
+}
+
+/* Checkbox itself */
+.group input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  margin:0;
+
+  accent-color:#0088FF;
+}
 
 .card{
   position: relative;
