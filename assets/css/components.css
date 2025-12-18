@@ -8,6 +8,15 @@
 /* =========================
    CHECKBOX GROUP (FIX)
 ========================= */
+/* =========================
+   BUTTON MODIFIERS
+========================= */
+
+.btn-inline{
+  width: auto;
+  padding-left: 32px;
+  padding-right: 32px;
+}
 
 .group{
   margin-top:10px;
