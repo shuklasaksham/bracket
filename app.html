@@ -100,6 +100,25 @@ function bindUI(){
   scopeResult = document.getElementById("scopeResult");
   scopeOutput = document.getElementById("scopeOutput");
 }
+
+  <script>
+function switchTab(id, el){
+  // activate tab
+  document.querySelectorAll('.tab').forEach(t =>
+    t.classList.remove('active')
+  );
+  el.classList.add('active');
+
+  // hide all sections
+  document.getElementById('pricing').classList.add('hidden');
+  document.getElementById('scope').classList.add('hidden');
+  document.getElementById('playbook').classList.add('hidden');
+
+  // show selected section
+  document.getElementById(id).classList.remove('hidden');
+}
+</script>
+
 </script>
 
 </body>
