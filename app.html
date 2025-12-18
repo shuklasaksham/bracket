@@ -16,11 +16,7 @@
 </head>
 
 <body>
-  
-<script src="/assets/js/pricing.js"></script>
-<script src="/assets/js/scope.js"></script>
-<script src="/assets/js/playbook.js"></script>
-<script src="/assets/js/app.js"></script>
+
 <!-- NAV -->
 <div id="navbar"></div>
 
@@ -41,9 +37,8 @@
 
   </div>
 </div>
-
 <script>
-/* ---------- LOAD PARTIALS (UI ONLY) ---------- */
+/* ---------- LOAD PARTIALS ---------- */
 async function load(id, file){
   const res = await fetch(file);
   document.getElementById(id).innerHTML = await res.text();
@@ -55,29 +50,30 @@ async function init(){
   await load("scope", "/partials/scope.html");
   await load("playbook", "/partials/playbook.html");
 
-  bindUI(); // 👈 THIS is the missing link
+  bindUI();   // bind elements AFTER partials load
 }
 
 init();
-/* ---------- BIND UI ELEMENTS ---------- */
 
-let projectType,
-    experience,
-    projectSize,
-    clientClarity,
-    timeline,
-    pricingContext,
-    pricingResult,
-    pricingOutput;
+/* ---------- TAB SWITCH ---------- */
+function switchTab(id, el){
+  document.querySelectorAll('.tab').forEach(t =>
+    t.classList.remove('active')
+  );
+  el.classList.add('active');
 
-let workType,
-    coverage,
-    revisions,
-    feedback,
-    changes,
-    scopeContext,
-    scopeResult,
-    scopeOutput;
+  document.getElementById('pricing').classList.add('hidden');
+  document.getElementById('scope').classList.add('hidden');
+  document.getElementById('playbook').classList.add('hidden');
+
+  document.getElementById(id).classList.remove('hidden');
+}
+
+/* ---------- BIND UI ---------- */
+let projectType, experience, projectSize, clientClarity, timeline;
+let pricingContext, pricingResult, pricingOutput;
+let workType, coverage, revisions, feedback, changes;
+let scopeContext, scopeResult, scopeOutput;
 
 function bindUI(){
   /* PRICING */
@@ -100,25 +96,13 @@ function bindUI(){
   scopeResult = document.getElementById("scopeResult");
   scopeOutput = document.getElementById("scopeOutput");
 }
- <script>
-function switchTab(id, el){
-  // activate tab
-  document.querySelectorAll('.tab').forEach(t =>
-    t.classList.remove('active')
-  );
-  el.classList.add('active');
-
-  // hide all sections
-  document.getElementById('pricing').classList.add('hidden');
-  document.getElementById('scope').classList.add('hidden');
-  document.getElementById('playbook').classList.add('hidden');
-
-  // show selected section
-  document.getElementById(id).classList.remove('hidden');
-}
 </script>
 
-</script>
+<!-- JS LOGIC FILES (LAST) -->
+<script src="/assets/js/pricing.js"></script>
+<script src="/assets/js/scope.js"></script>
+<script src="/assets/js/playbook.js"></script>
+
 
 </body>
 </html>
