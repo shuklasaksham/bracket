@@ -241,7 +241,8 @@ textarea{
 /* OUTPUT TEXTAREA — MAIN FIX */
 textarea.output-box{
   width: 100%;
-  min-height: 220px;       /* 👈 BIG FIX */
+  min-height: 180px;
+  max-height: 320px;      /* 👈 KEY */
   padding: 16px;
 
   font-size: 14px;
@@ -250,11 +251,20 @@ textarea.output-box{
   border-radius: var(--radius-md);
   border: none;
 
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.96);
 
   resize: none;
-  overflow: hidden;
+  overflow-y: auto;       /* 👈 KEY */
+  scrollbar-width: thin;
 
   color: var(--text-primary);
 }
+textarea.output-box::-webkit-scrollbar{
+  width:6px;
+}
+textarea.output-box::-webkit-scrollbar-thumb{
+  background:rgba(15,23,42,0.2);
+  border-radius:6px;
+}
+
 
