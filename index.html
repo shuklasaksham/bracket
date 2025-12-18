@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bracket — Clarity for designers</title>
 
+  <link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/layout.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +40,13 @@ body{
 }
 
 a{text-decoration:none;color:inherit}
+  
+.hero-action{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
 
 .container{
   max-width:1100px;
@@ -91,27 +102,6 @@ a{text-decoration:none;color:inherit}
   margin:0 auto 40px;
 }
 
-/* CTA */
-.hero-action{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:14px;
-}
-
-.cta{
-  padding:14px 34px;
-  border-radius:16px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.25)),
-    var(--accent);
-  backdrop-filter:blur(10px);
-  color:#fff;
-  font-weight:600;
-  font-size:15px;
-  border:1px solid rgba(255,255,255,0.45);
-  box-shadow:0 16px 36px rgba(91,91,255,0.35);
-}
 
 .micro{font-size:13px;color:var(--text-muted)}
 
@@ -192,7 +182,7 @@ footer{
     </p>
 
     <div class="hero-action">
-      <a href="/app.html" class="cta">Open Bracket →</a>
+      <a href="/app.html" class="btn">Open Bracket →</a>
       <div class="micro">Free · No login · Built for Indian freelance realities</div>
     </div>
 
@@ -215,7 +205,7 @@ footer{
 
 <section class="final">
   <h2>Work with clarity, not anxiety</h2>
-  <a href="/app.html" class="cta">Open Bracket →</a>
+  <a href="/app.html" class="btn">Open Bracket →</a>
 </section>
 
 <footer>
