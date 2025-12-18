@@ -1,33 +1,100 @@
 <div class="card">
   <h3>Define project scope</h3>
 
+  <!-- TYPE OF WORK -->
   <label>Type of work</label>
-  <select id="workType">…</select>
+  <select id="workType">
+    <option value="" disabled selected>Select type of work</option>
+    <option>Product UI Design</option>
+    <option>Web Experience Design</option>
+    <option>Mobile App Experience</option>
+    <option>Brand Identity Design</option>
+    <option>Visual System / Language</option>
+    <option>Design System Setup</option>
+    <option>Marketing Design</option>
+    <option>Content-led Design</option>
+    <option>Illustration / Artwork</option>
+    <option>Presentation Design</option>
+    <option>UX Audit / Review</option>
+    <option>Early-stage Concepting</option>
+    <option>Redesign / Refresh</option>
+    <option>Ongoing Design Support</option>
+    <option>Mixed / Multi-disciplinary</option>
+    <option>Custom / Exploratory</option>
+  </select>
 
+  <!-- DELIVERABLES -->
   <label>What will be delivered</label>
-  <div class="group" id="deliverables">…</div>
+  <div class="group" id="deliverables">
+    <label><input type="checkbox" value="Screens / pages"> Screens / pages</label>
+    <label><input type="checkbox" value="Visual concepts"> Visual concepts</label>
+    <label><input type="checkbox" value="Final static designs"> Final static designs</label>
+    <label><input type="checkbox" value="Interactive prototypes"> Interactive prototypes</label>
+    <label><input type="checkbox" value="Editable source files"> Editable source files</label>
+    <label><input type="checkbox" value="Design handoff notes"> Design handoff notes</label>
+  </div>
 
+  <!-- COVERAGE -->
   <label>Design coverage</label>
-  <select id="coverage">…</select>
+  <select id="coverage">
+    <option value="" disabled selected>Select coverage</option>
+    <option>Focused (key flows / screens)</option>
+    <option>Standard (primary user journeys)</option>
+    <option>Broad (end-to-end experience)</option>
+  </select>
 
+  <!-- REVISIONS -->
   <label>How revisions work</label>
-  <select id="revisions">…</select>
+  <select id="revisions">
+    <option value="" disabled selected>Select revision model</option>
+    <option>Fixed number of rounds</option>
+    <option>Milestone-based reviews</option>
+    <option>Final polish only</option>
+  </select>
 
+  <!-- FEEDBACK -->
   <label>How feedback is shared</label>
-  <select id="feedback">…</select>
+  <select id="feedback">
+    <option value="" disabled selected>Select feedback model</option>
+    <option>Single decision-maker</option>
+    <option>Consolidated team feedback</option>
+    <option>Exploratory / iterative</option>
+  </select>
 
+  <!-- CHANGES -->
   <label>How changes are handled</label>
-  <select id="changes">…</select>
+  <select id="changes">
+    <option value="" disabled selected>Select change handling</option>
+    <option>Within agreed scope</option>
+    <option>Discussed collaboratively</option>
+    <option>Treated as scope expansion</option>
+  </select>
 
+  <!-- DEPENDENCIES -->
   <label>What affects the timeline</label>
-  <div class="group" id="dependencies">…</div>
+  <div class="group" id="dependencies">
+    <label><input type="checkbox" value="Timely client feedback"> Timely client feedback</label>
+    <label><input type="checkbox" value="Asset availability"> Asset availability</label>
+    <label><input type="checkbox" value="Stakeholder approvals"> Stakeholder approvals</label>
+    <label><input type="checkbox" value="External dependencies"> External dependencies</label>
+  </div>
 
+  <!-- EXCLUSIONS -->
   <label>Not included in this scope</label>
-  <div class="group" id="exclusions">…</div>
+  <div class="group" id="exclusions">
+    <label><input type="checkbox" value="Copywriting"> Copywriting</label>
+    <label><input type="checkbox" value="Development"> Development</label>
+    <label><input type="checkbox" value="Animations"> Animations</label>
+    <label><input type="checkbox" value="Additional screens"> Additional screens</label>
+    <label><input type="checkbox" value="Ongoing support"> Ongoing support</label>
+    <label><input type="checkbox" value="Marketing strategy"> Marketing strategy</label>
+  </div>
 
+  <!-- CONTEXT -->
   <label>Additional context (optional)</label>
   <textarea id="scopeContext"></textarea>
 
+  <!-- ACTIONS -->
   <button onclick="generateScope()">Generate scope</button>
   <button class="reset" onclick="resetScope()">Reset</button>
 
