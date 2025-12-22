@@ -1,222 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bracket — Clarity for designers</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bracket — Decision clarity for designers</title>
 
-  <link rel="stylesheet" href="/assets/css/base.css">
-<link rel="stylesheet" href="/assets/css/layout.css">
-<link rel="stylesheet" href="/assets/css/components.css">
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --text-primary:#0f172a;
+      --text-secondary:#475569;
+      --text-muted:#64748b;
 
-<style>
-  .hero-logo{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
+      --brand:#2563eb;
+      --brand-hover:#1d4ed8;
 
-:root{
-  --text-primary:#0f172a;
-  --text-secondary:#475569;
-  --text-muted:#64748b;
-  --accent:#5b5bff;
-  --glass-bg:rgba(255,255,255,0.72);
-  --border-light:rgba(15,23,42,0.08);
-}
+      --surface-page:#f9fafb;
+      --surface-card:rgba(255,255,255,0.75);
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+      --border-subtle:rgba(15,23,42,0.08);
+    }
 
-body{
-  margin:0;
-  font-family:'Inter', system-ui, sans-serif;
-  color:var(--text-primary);
-  line-height:1.7;
-  background:
-    radial-gradient(1000px 520px at 12% 10%, rgba(170,150,255,0.30), transparent 60%),
-    radial-gradient(900px 520px at 88% 15%, rgba(255,170,210,0.22), transparent 65%),
-    radial-gradient(800px 440px at 50% 92%, rgba(130,190,255,0.20), transparent 60%),
-    #f9fafb;
-}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
 
-a{text-decoration:none;color:inherit}
-  
-.hero-action{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:14px;
-}
+    body{
+      margin:0;
+      font-family:'Inter',system-ui,sans-serif;
+      color:var(--text-primary);
+      background:
+        radial-gradient(900px 500px at 10% 10%, rgba(125,211,252,0.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(196,181,253,0.30), transparent 65%),
+        radial-gradient(800px 500px at 50% 90%, rgba(186,230,253,0.25), transparent 60%),
+        var(--surface-page);
+    }
 
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:96px 20px;
-}
+    a{text-decoration:none;color:inherit}
 
-/* NAV */
-.navbar{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:var(--glass-bg);
-  backdrop-filter:blur(14px) saturate(160%);
-  border-bottom:1px solid var(--border-light);
-}
+    /* ---------- Layout ---------- */
 
-.nav-inner{
-  max-width:1100px;
-  margin:0 auto;
-  padding:24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:80px 20px;
+    }
 
-.brand img{height:32px}
+    /* ---------- Navbar ---------- */
 
-.nav-links a{
-  font-size:14px;
-  color:var(--text-secondary);
-}
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:rgba(255,255,255,0.6);
+      backdrop-filter:blur(14px) saturate(160%);
+      border-bottom:1px solid var(--border-subtle);
+    }
 
-/* HERO */
-.hero{text-align:center}
+    .nav-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
 
-.hero-logo{margin-bottom:28px}
-.hero-logo img{height:96px}
+    .brand{
+      font-weight:600;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
 
-.hero h1{
-  font-family:'Inter Tight', sans-serif;
-  font-size:52px;
-  line-height:1.1;
-  letter-spacing:-0.5px;
-  max-width:820px;
-  margin:0 auto 24px;
-}
+    .nav-actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
 
-.hero p{
-  font-size:18px;
-  color:var(--text-secondary);
-  max-width:620px;
-  margin:0 auto 40px;
-}
+    .nav-link{
+      font-size:13px;
+      color:var(--text-secondary);
+    }
 
+    /* ---------- Buttons ---------- */
 
-.micro{font-size:13px;color:var(--text-muted)}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height:36px;
+      padding:0 16px;
+      font-size:13px;
+      font-weight:600;
+      border-radius:8px;
+      border:1px solid transparent;
+      cursor:pointer;
+      background:var(--brand);
+      color:white;
+    }
 
-/* PREVIEW */
-.preview{
-  margin-top:80px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:28px;
-}
+    .btn:hover{background:var(--brand-hover)}
 
-.preview-item{
-  background:var(--glass-bg);
-  backdrop-filter:blur(12px);
-  border-radius:22px;
-  padding:28px;
-  border:1px solid var(--border-light);
-  box-shadow:0 20px 40px rgba(15,23,42,0.14);
-}
+    .btn.secondary{
+      background:transparent;
+      border-color:var(--border-subtle);
+      color:var(--text-primary);
+    }
 
-.preview-item strong{
-  font-family:'Inter Tight', sans-serif;
-  display:block;
-  margin-bottom:8px;
-}
+    /* ---------- Hero ---------- */
 
-.preview-item span{
-  font-size:14px;
-  color:var(--text-muted);
-}
+    .hero{
+      text-align:center;
+    }
 
-/* FINAL */
-.final{text-align:center;padding:100px 20px}
-.final h2{
-  font-family:'Inter Tight', sans-serif;
-  font-size:38px;
-  margin-bottom:24px;
-}
+    .hero-logo{
+      margin-bottom:32px;
+    }
 
-footer{
-  padding:32px 20px;
-  border-top:1px solid var(--border-light);
-  font-size:13px;
-  color:var(--text-muted);
-  text-align:center;
-}
-</style>
+    .hero-logo img{
+      height:88px;
+    }
+
+    .hero h1{
+      font-size:38px;
+      line-height:1.2;
+      font-weight:600;
+      max-width:720px;
+      margin:0 auto 16px;
+    }
+
+    .hero p{
+      font-size:16px;
+      line-height:1.5;
+      color:var(--text-secondary);
+      max-width:620px;
+      margin:0 auto 24px;
+    }
+
+    .hero-actions{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .hero-meta{
+      font-size:12px;
+      color:var(--text-muted);
+    }
+
+    /* ---------- Problems ---------- */
+
+    .section-title{
+      text-align:center;
+      font-size:22px;
+      font-weight:600;
+      margin-bottom:24px;
+    }
+
+    .problem-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      max-width:900px;
+      margin:0 auto;
+    }
+
+    .problem-card{
+      background:var(--surface-card);
+      border:1px solid var(--border-subtle);
+      border-radius:14px;
+      padding:16px;
+      font-size:13px;
+      color:var(--text-secondary);
+    }
+
+    /* ---------- Features ---------- */
+
+    .features{
+      margin-top:80px;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .feature-card{
+      background:var(--surface-card);
+      border:1px solid var(--border-subtle);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    .feature-card h3{
+      font-size:13px;
+      font-weight:600;
+      margin:0 0 8px;
+    }
+
+    .feature-card p{
+      font-size:13px;
+      line-height:1.5;
+      color:var(--text-secondary);
+      margin:0;
+    }
+
+    .feature-grid.secondary{
+      margin-top:24px;
+      grid-template-columns:repeat(2,1fr);
+      max-width:740px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* ---------- Final CTA ---------- */
+
+    .final{
+      text-align:center;
+      padding:80px 20px;
+    }
+
+    .final h2{
+      font-size:22px;
+      font-weight:600;
+      margin-bottom:24px;
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer{
+      border-top:1px solid var(--border-subtle);
+      padding:24px;
+      text-align:center;
+      font-size:12px;
+      color:var(--text-muted);
+    }
+
+    /* ---------- Responsive ---------- */
+
+    @media (max-width:900px){
+      .problem-grid,
+      .feature-grid{
+        grid-template-columns:1fr;
+      }
+
+      .feature-grid.secondary{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<div class="navbar">
-  <div class="nav-inner">
-    <a href="/" class="brand">
-            <img src="/assets/images/logo-icon.png" alt="Bracket">
-    </a>
-    <div class="nav-links">
-      <a href="/contact.html">Contact</a>
+  <!-- NAV -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="brand">Bracket</div>
+      <div class="nav-actions">
+        <a href="/contact.html" class="nav-link">Contact</a>
+        <a href="/app.html" class="btn">Open App</a>
+      </div>
     </div>
-  </div>
-</div>
+  </header>
 
-<section class="hero">
-  <div class="container">
-    <div class="hero-logo">      <img src="/assets/images/logo-mark.png" alt="Bracket">
+  <!-- HERO -->
+  <section class="hero container">
+    <div class="hero-logo">
+      <img src="/assets/images/logo-mark.png" alt="Bracket">
     </div>
 
-    <h1>
-      Clarity for designers<br>
-      who take their work seriously.
-    </h1>
+    <h1>Decision clarity for designers working on real projects.</h1>
 
     <p>
-      Decide what to charge, define scope confidently,
-      and handle client conversations calmly —
-      without second-guessing yourself.
+      BRACKET helps designers make confident decisions around pricing,
+      scope, and client communication — without guessing,
+      over-explaining, or underselling themselves.
     </p>
 
-    <div class="hero-action">
-      <a href="/app.html" class="btn">Open Bracket →</a>
-      <div class="micro">Free · No login · Built for Indian freelance realities</div>
+    <div class="hero-actions">
+      <a href="/app.html" class="btn">Open Bracket</a>
+      <a href="/contact.html" class="btn secondary">Talk to us</a>
     </div>
 
-    <div class="preview">
-      <div class="preview-item">
-        <strong>Pricing</strong>
-        <span>Experience-aware price ranges grounded in reality</span>
+    <div class="hero-meta">
+      Built for Indian designers • Free during early access
+    </div>
+  </section>
+
+  <!-- PROBLEMS -->
+  <section class="container">
+    <h2 class="section-title">Design work fails at decision points</h2>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        Pricing feels arbitrary and reactive, not reasoned.
       </div>
-      <div class="preview-item">
-        <strong>Scope</strong>
-        <span>Clear boundaries that prevent scope creep</span>
+      <div class="problem-card">
+        Scope is discussed, but rarely enforced clearly.
       </div>
-      <div class="preview-item">
-        <strong>Client Playbook</strong>
-        <span>Professional responses for difficult moments</span>
+      <div class="problem-card">
+        Difficult client moments are handled emotionally instead of deliberately.
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="final">
-  <h2>Work with clarity, not anxiety</h2>
-  <a href="/app.html" class="btn">Open Bracket →</a>
-</section>
+  <!-- FEATURES -->
+  <section class="container features">
+    <h2 class="section-title">What BRACKET offers</h2>
 
-<footer>
-  © Bracket · Early version · Feedback welcome
-</footer>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Project Intake</h3>
+        <p>Understand the true nature of a project before committing — complexity, risk, and expectations.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Pricing Clarity</h3>
+        <p>Experience-aware pricing ranges grounded in real design work, not guesswork.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Scope System</h3>
+        <p>Clearly defined deliverables, exclusions, and assumptions that protect both sides.</p>
+      </div>
+    </div>
+
+    <div class="feature-grid secondary">
+      <div class="feature-card">
+        <h3>Client Playbook</h3>
+        <p>Structured responses for revisions, delays, scope creep, and negotiation.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Decision Memory</h3>
+        <p>A single place to document decisions, boundaries, and rationale — nothing ambiguous later.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <h2>Design with clarity, not anxiety.</h2>
+    <a href="/app.html" class="btn">Open Bracket</a>
+  </section>
+
+  <footer>
+    © Bracket · Early product · Feedback welcome
+  </footer>
 
 </body>
 </html>
