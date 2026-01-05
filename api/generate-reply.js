@@ -28,7 +28,7 @@ export default async function handler(req, res) {
           Authorization: `Bearer ${process.env.open_ai_key}`
         },
         body: JSON.stringify({
-           model: "gpt-5.2",
+           model: "gpt-oss",
           messages: [
             {
               role: "system",
