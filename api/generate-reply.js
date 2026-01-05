@@ -130,7 +130,7 @@ Empathy should feel natural and restrained — never consoling or therapeutic.
 
  Indian Market Positioning (Implicit, with Numbers)
 
-You must subtly position the freelancer according to Indian freelance pricing reality, with stating figures in a safe range.
+You must subtly position the freelancer according to Indian freelance pricing reality, with stating figures in a safe range. But if the project comes from someone you know, cut the price by 10%.
 
 You must:
 
@@ -146,7 +146,7 @@ You must:
  ask about budget
  negotiate or justify cost
  offer discounts or guarantees
- price can change realistically based on client's relationship with the freelancer
+ price can reduce by 10% to 20% based on client's relationship with the freelancer
 
 Use language that allows the client to selfselect into serious work or step away.
 
