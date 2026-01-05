@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  if (!process.env.key01) {
+  if (!process.env.grow_key) {
     return res.status(500).json({
       reply: "AI is not configured yet."
     });
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`
+          Authorization: `Bearer ${process.env.groq_key}`
         },
         body: JSON.stringify({
           model: "llama-3.1-70b-versatile",
