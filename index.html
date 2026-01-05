@@ -2,360 +2,372 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Bracket — Calm, confident first replies</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bracket — Decision clarity for designers</title>
 
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --text-primary:#0f172a;
-      --text-secondary:#475569;
-      --text-muted:#64748b;
-
-      --brand:#2563eb;
-      --brand-hover:#1d4ed8;
-
-      --surface-page:#f9fafb;
-      --surface-card:rgba(255,255,255,0.75);
-
-      --border-subtle:rgba(15,23,42,0.08);
+    :root {
+      --bg: #f9fafb;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e5e7eb;
+      --primary: #6366f1;
+      --secondary: #22c55e;
+      --gradient: linear-gradient(135deg, #6366f1, #22c55e);
+      --radius: 16px;
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    * { box-sizing: border-box; }
 
-    body{
-      margin:0;
-      font-family:'Inter',system-ui,sans-serif;
-      color:var(--text-primary);
-      background:
-        radial-gradient(900px 500px at 10% 10%, rgba(125,211,252,0.35), transparent 60%),
-        radial-gradient(900px 500px at 90% 20%, rgba(196,181,253,0.30), transparent 65%),
-        radial-gradient(800px 500px at 50% 90%, rgba(186,230,253,0.25), transparent 60%),
-        var(--surface-page);
+    body {
+      margin: 0;
+      font-family: "Quicksand", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    a{text-decoration:none;color:inherit}
+    a { text-decoration: none; color: inherit; }
 
-    /* ---------- Layout ---------- */
+    /* NAV */
 
-    .container{
-      max-width:1100px;
-      margin:0 auto;
-      padding:80px 20px;
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(249,250,251,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
     }
 
-    /* ---------- Navbar ---------- */
-
-    .navbar{
-      position:sticky;
-      top:0;
-      z-index:10;
-      background:rgba(255,255,255,0.6);
-      backdrop-filter:blur(14px) saturate(160%);
-      border-bottom:1px solid var(--border-subtle);
+    .nav-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .nav-inner{
-      max-width:1100px;
-      margin:0 auto;
-      padding:20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    .logo {
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--primary);
     }
 
-    .brand{
-      font-weight:600;
-      font-size:16px;
-      display:flex;
-      align-items:center;
-      gap:8px;
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
     }
 
-    .nav-actions{
-      display:flex;
-      gap:12px;
-      align-items:center;
+    .nav-cta {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: var(--gradient);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
     }
 
-    .nav-link{
-      font-size:13px;
-      color:var(--text-secondary);
+    /* HERO */
+
+    .hero {
+      max-width: 1200px;
+      margin: auto;
+      padding: 80px 24px 72px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
     }
 
-    /* ---------- Buttons ---------- */
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height:36px;
-      padding:0 16px;
-      font-size:13px;
-      font-weight:600;
-      border-radius:8px;
-      border:1px solid transparent;
-      cursor:pointer;
-      background:var(--brand);
-      color:white;
+    .hero h1 {
+      font-size: 52px;
+      line-height: 1.05;
+      margin-bottom: 16px;
     }
 
-    .btn:hover{background:var(--brand-hover)}
-
-    .btn.secondary{
-      background:transparent;
-      border-color:var(--border-subtle);
-      color:var(--text-primary);
+    .hero h1 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    /* ---------- Hero ---------- */
-
-    .hero{
-      text-align:center;
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 8px;
     }
 
-    .hero-logo{
-      margin-bottom:32px;
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
     }
 
-    .hero-logo img{
-      height:88px;
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
     }
 
-    .hero h1{
-      font-size:38px;
-      line-height:1.2;
-      font-weight:600;
-      max-width:720px;
-      margin:0 auto 16px;
+    .primary-btn {
+      padding: 14px 26px;
+      border-radius: 999px;
+      background: var(--gradient);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
     }
 
-    .hero p{
-      font-size:16px;
-      line-height:1.5;
-      color:var(--text-secondary);
-      max-width:620px;
-      margin:0 auto 24px;
+    .secondary-btn {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 15px;
     }
 
-    .hero-actions{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      margin-bottom:16px;
+    /* PREVIEW */
+
+    .preview-wrap { position: relative; }
+
+    .glow {
+      position: absolute;
+      inset: -24px;
+      background: var(--gradient);
+      filter: blur(70px);
+      opacity: 0.25;
+      z-index: 0;
     }
 
-    .hero-meta{
-      font-size:12px;
-      color:var(--text-muted);
+    .preview {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 40px rgba(15,23,42,0.08);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
-    /* ---------- Problems ---------- */
+    /* SECTIONS */
 
-    .section-title{
-      text-align:center;
-      font-size:22px;
-      font-weight:600;
-      margin-bottom:24px;
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 72px 24px;
     }
 
-    .problem-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-      max-width:900px;
-      margin:0 auto;
+    h2 {
+      font-size: 36px;
+      margin-bottom: 12px;
     }
 
-    .problem-card{
-      background:var(--surface-card);
-      border:1px solid var(--border-subtle);
-      border-radius:14px;
-      padding:16px;
-      font-size:13px;
-      color:var(--text-secondary);
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
     }
 
-    /* ---------- Features ---------- */
+    /* TIMELINE */
 
-    .features{
-      margin-top:80px;
+    .timeline {
+      max-width: 720px;
+      margin-top: 32px;
+      border-left: 3px solid var(--border);
+      padding-left: 28px;
     }
 
-    .feature-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
+    .step {
+      margin-bottom: 24px;
+      position: relative;
+      font-size: 16px;
     }
 
-    .feature-card{
-      background:var(--surface-card);
-      border:1px solid var(--border-subtle);
-      border-radius:16px;
-      padding:16px;
+    .step::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+      position: absolute;
+      left: -34px;
+      top: 4px;
     }
 
-    .feature-card h3{
-      font-size:13px;
-      font-weight:600;
-      margin:0 0 8px;
+    /* FLOW */
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
     }
 
-    .feature-card p{
-      font-size:13px;
-      line-height:1.5;
-      color:var(--text-secondary);
-      margin:0;
+    .flow-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--border);
+      font-size: 16px;
     }
 
-    .feature-grid.secondary{
-      margin-top:24px;
-      grid-template-columns:repeat(2,1fr);
-      max-width:740px;
-      margin-left:auto;
-      margin-right:auto;
+    .flow-card span {
+      font-weight: 700;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 6px;
     }
 
-    /* ---------- Final CTA ---------- */
+    /* SIGNATURE + CTA */
 
-    .final{
-      text-align:center;
-      padding:80px 20px;
+    .signature {
+      margin-top: 64px;
+      background: var(--gradient);
+      border-radius: var(--radius);
+      padding: 40px;
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
     }
 
-    .final h2{
-      font-size:22px;
-      font-weight:600;
-      margin-bottom:24px;
+    .signature p {
+      font-size: 16px;
+      opacity: 0.9;
     }
 
-    /* ---------- Footer ---------- */
-
-    footer{
-      border-top:1px solid var(--border-subtle);
-      padding:24px;
-      text-align:center;
-      font-size:12px;
-      color:var(--text-muted);
+    .cta-box {
+      margin: 64px auto 0;
+      max-width: 640px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      border: 1px solid var(--border);
     }
 
-    /* ---------- Responsive ---------- */
+    .cta-box h2 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
 
-    @media (max-width:900px){
-      .problem-grid,
-      .feature-grid{
-        grid-template-columns:1fr;
-      }
+    .cta-box p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
 
-      .feature-grid.secondary{
-        grid-template-columns:1fr;
-      }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-bottom: 56px; }
+      .flow, .signature { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- NAV -->
-  <header class="navbar">
-    <div class="nav-inner">
-      <div class="brand">Bracket</div>
-      <div class="nav-actions">
-        <a href="/contact.html" class="nav-link">Contact</a>
-        <a href="/app.html" class="btn">Open App</a>
-      </div>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Bracket</div>
+    <div class="nav-links">
+      <a href="#">Product</a>
+      <a href="#">How it works</a>
+      <a href="#">Why Bracket</a>
     </div>
-  </header>
+    <a class="nav-cta" href="#">Try it free</a>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero container">
-    <div class="hero-logo">
-      <img src="/assets/images/logo-mark.png" alt="Bracket">
-    </div>
-
-    <h1>Decision clarity for designers working on real projects.</h1>
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <h1>
+      Write your first reply<br>
+      <span>and feel good about it.</span>
+    </h1>
 
     <p>
-      BRACKET helps designers make confident decisions around pricing,
-      scope, and client communication — without guessing,
-      over-explaining, or underselling themselves.
+      Bracket helps freelancers send calm, confident first replies —
+      without anxiety or second-guessing.
     </p>
 
+    <div class="meta">⏱ Takes ~5 minutes · No account required</div>
+
     <div class="hero-actions">
-      <a href="/app.html" class="btn">Open Bracket</a>
-      <a href="/contact.html" class="btn secondary">Talk to us</a>
+      <a class="primary-btn" href="#">Draft your first reply</a>
+      <a class="secondary-btn" href="#">See an example</a>
     </div>
+  </div>
 
-    <div class="hero-meta">
-      Built for Indian designers • Free during early access
+  <div class="preview-wrap">
+    <div class="glow"></div>
+    <div class="preview">
+Hi,
+
+From what I understand, you’re looking to get this right early,
+without unnecessary back-and-forth.
+
+I’ve worked on similar situations where clarity upfront helped
+projects move faster later on — that’s where I’d be a good fit.
+
+Happy to walk you through how I’d approach this.
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- PROBLEMS -->
-  <section class="container">
-    <h2 class="section-title">Design work fails at decision points</h2>
+<!-- PROBLEM -->
+<section>
+  <h2>You shouldn’t feel anxious after sending a reply.</h2>
+  <p class="section-sub">
+    But most freelancers do — especially at the start.
+  </p>
 
-    <div class="problem-grid">
-      <div class="problem-card">
-        Pricing feels arbitrary and reactive, not reasoned.
-      </div>
-      <div class="problem-card">
-        Scope is discussed, but rarely enforced clearly.
-      </div>
-      <div class="problem-card">
-        Difficult client moments are handled emotionally instead of deliberately.
-      </div>
-    </div>
-  </section>
+  <div class="timeline">
+    <div class="step">You open the client message and pause.</div>
+    <div class="step">You rewrite the reply multiple times.</div>
+    <div class="step">You send it… and keep thinking about it.</div>
+  </div>
+</section>
 
-  <!-- FEATURES -->
-  <section class="container features">
-    <h2 class="section-title">What BRACKET offers</h2>
+<!-- SOLUTION -->
+<section>
+  <h2>Bracket gives you clarity before you hit send.</h2>
+  <p class="section-sub">
+    A simple structure to think clearly — then write.
+  </p>
 
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h3>Project Intake</h3>
-        <p>Understand the true nature of a project before committing — complexity, risk, and expectations.</p>
-      </div>
+  <div class="flow">
+    <div class="flow-card"><span>01</span>Understand the real need</div>
+    <div class="flow-card"><span>02</span>Frame why you fit</div>
+    <div class="flow-card"><span>03</span>Send with confidence</div>
+  </div>
+</section>
 
-      <div class="feature-card">
-        <h3>Pricing Clarity</h3>
-        <p>Experience-aware pricing ranges grounded in real design work, not guesswork.</p>
-      </div>
+<!-- SIGNATURE -->
+<section>
+  <div class="signature">
+    <h2>Most users send the first version.</h2>
+    <p>
+      Because once the thinking is clear,
+      the words usually fall into place.
+    </p>
+  </div>
 
-      <div class="feature-card">
-        <h3>Scope System</h3>
-        <p>Clearly defined deliverables, exclusions, and assumptions that protect both sides.</p>
-      </div>
-    </div>
-
-    <div class="feature-grid secondary">
-      <div class="feature-card">
-        <h3>Client Playbook</h3>
-        <p>Structured responses for revisions, delays, scope creep, and negotiation.</p>
-      </div>
-
-      <div class="feature-card">
-        <h3>Decision Memory</h3>
-        <p>A single place to document decisions, boundaries, and rationale — nothing ambiguous later.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section class="final">
-    <h2>Design with clarity, not anxiety.</h2>
-    <a href="/app.html" class="btn">Open Bracket</a>
-  </section>
-
-  <footer>
-    © Bracket · Early product · Feedback welcome
-  </footer>
+  <div class="cta-box">
+    <h2>Try it once.</h2>
+    <p>You’ll know if it’s for you in five minutes.</p>
+    <a class="primary-btn" href="#">Draft your first reply</a>
+  </div>
+</section>
 
 </body>
 </html>
