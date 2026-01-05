@@ -166,7 +166,7 @@
       font-family: "JetBrains Mono", monospace;
     }
 
-    /* ───────── STEP 3 HELPERS ───────── */
+    /* ───────── HELPERS ───────── */
 
     .helpers {
       margin-top: 14px;
@@ -211,6 +211,11 @@
       font-size: 15px;
     }
 
+    .primary-btn[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .secondary-btn {
       font-size: 14px;
       color: var(--muted);
@@ -229,6 +234,7 @@
       font-family: "JetBrains Mono", monospace;
       font-size: 14px;
       line-height: 1.6;
+      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -244,20 +250,16 @@
 
     <div class="stepper">
       <div class="step active" id="indicator1">
-        <div class="step-circle">1</div>
-        Client message
+        <div class="step-circle">1</div> Client message
       </div>
       <div class="step" id="indicator2">
-        <div class="step-circle">2</div>
-        Real need
+        <div class="step-circle">2</div> Real need
       </div>
       <div class="step" id="indicator3">
-        <div class="step-circle">3</div>
-        Your fit
+        <div class="step-circle">3</div> Your fit
       </div>
       <div class="step" id="indicator4">
-        <div class="step-circle">4</div>
-        Final reply
+        <div class="step-circle">4</div> Final reply
       </div>
     </div>
   </div>
@@ -266,7 +268,7 @@
   <div class="step-content active" id="step1">
     <h1>What did the client say?</h1>
     <div class="sub">Paste the message as-is. Raw is perfect.</div>
-    <textarea placeholder="Paste the client message here…"></textarea>
+    <textarea id="clientMessage" placeholder="Paste the client message here…"></textarea>
     <div class="hint">// Nothing is sent automatically</div>
     <div class="actions">
       <span></span>
@@ -278,7 +280,7 @@
   <div class="step-content" id="step2">
     <h1>What do you think they actually need?</h1>
     <div class="sub">Your interpretation — not the perfect answer.</div>
-    <textarea placeholder="They want clarity, guidance, and someone dependable…"></textarea>
+    <textarea id="realNeed" placeholder="They want clarity, guidance, and someone dependable…"></textarea>
     <div class="hint">// Rough thinking is enough</div>
     <div class="actions">
       <button class="secondary-btn" onclick="goToStep(1)">← Back</button>
@@ -290,7 +292,7 @@
   <div class="step-content" id="step3">
     <h1>Why do you make sense for this?</h1>
     <div class="sub">No selling. Just your reasoning.</div>
-    <textarea id="fitInput" placeholder="I’ve worked on similar situations where…"></textarea>
+    <textarea id="fitReason" placeholder="I’ve worked on similar situations where…"></textarea>
 
     <div class="helpers">
       <div class="helper" onclick="addHelper('I’ve handled a similar type of project before.')">similar project</div>
@@ -303,7 +305,7 @@
 
     <div class="actions">
       <button class="secondary-btn" onclick="goToStep(2)">← Back</button>
-      <button class="primary-btn" onclick="goToStep(4)">Generate reply</button>
+      <button class="primary-btn" onclick="generateReply()">Generate reply</button>
     </div>
   </div>
 
@@ -312,23 +314,13 @@
     <h1>Your first reply</h1>
     <div class="sub">Edit freely. Nothing is sent automatically.</div>
 
-    <div class="output-box">
-Hi,
-
-From what I understand, you’re looking to get this right early,
-without unnecessary back-and-forth.
-
-I’ve worked on similar situations where clarity upfront helped
-projects move faster later on — that’s where I’d be a good fit.
-
-Happy to walk you through how I’d approach this.
-    </div>
+    <div class="output-box" id="outputBox">Thinking…</div>
 
     <div class="hint">// Review carefully · Don’t send yet</div>
 
     <div class="actions">
       <button class="secondary-btn" onclick="goToStep(3)">← Back</button>
-      <button class="primary-btn">Copy reply</button>
+      <button class="primary-btn" onclick="copyReply()">Copy reply</button>
     </div>
   </div>
 
@@ -349,16 +341,42 @@ Happy to walk you through how I’d approach this.
     const progress = document.getElementById('progressFill');
     const widths = ['0%', '33%', '66%', '100%'];
     progress.style.width = widths[step - 1];
-
-    if (step === 4) {
-      progress.style.animation = 'none';
-    }
+    if (step === 4) progress.style.animation = 'none';
   }
 
   function addHelper(text) {
-    const input = document.getElementById('fitInput');
+    const input = document.getElementById('fitReason');
     input.value += (input.value ? ' ' : '') + text;
     input.focus();
+  }
+
+  async function generateReply() {
+    goToStep(4);
+    const output = document.getElementById("outputBox");
+    output.textContent = "Thinking…";
+
+    try {
+      const res = await fetch("/api/generate-reply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          clientMessage: document.getElementById("clientMessage").value,
+          realNeed: document.getElementById("realNeed").value,
+          fitReason: document.getElementById("fitReason").value
+        })
+      });
+
+      const data = await res.json();
+      output.textContent = data.reply || "Something went wrong. Try again.";
+
+    } catch (e) {
+      output.textContent = "Could not generate reply. Please try again.";
+    }
+  }
+
+  function copyReply() {
+    navigator.clipboard.writeText(document.getElementById("outputBox").innerText);
+    alert("Reply copied.");
   }
 </script>
 
