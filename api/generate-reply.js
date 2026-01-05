@@ -3,9 +3,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  if (!process.env.GROQ_API_KEY) {
+  if (!process.env.key01) {
     return res.status(500).json({
-      error: "Groq API key not configured"
+      reply: "AI is not configured yet."
     });
   }
 
@@ -13,40 +13,10 @@ export default async function handler(req, res) {
     const { clientMessage, realNeed, fitReason } = req.body || {};
 
     if (!clientMessage || !realNeed || !fitReason) {
-      return res.status(400).json({
-        error: "Missing required inputs"
+      return res.status(200).json({
+        reply: "Please add a bit more context so I can help properly."
       });
     }
-
-    const systemPrompt = `
-You are a calm, experienced freelance professional.
-
-Your task is to draft a FIRST reply to a potential client.
-This reply should open a professional conversation — not close a deal.
-
-Rules:
-- Sound confident, calm, and grounded
-- Focus on understanding the client
-- Explain why the freelancer is a good fit without listing skills
-- Avoid pricing, timelines, guarantees, or commitments
-- Avoid buzzwords or sales language
-- Avoid apologies or insecurity
-- Keep it human and respectful
-- 6–8 sentences maximum
-`;
-
-    const userPrompt = `
-Client message (raw):
-${clientMessage}
-
-What the freelancer believes the client actually needs:
-${realNeed}
-
-Why the freelancer believes they are a good fit:
-${fitReason}
-
-Write the first reply message.
-`;
 
     const groqRes = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
@@ -54,14 +24,32 @@ Write the first reply message.
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.key01}`
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`
         },
         body: JSON.stringify({
           model: "llama-3.1-70b-versatile",
           temperature: 0.3,
           messages: [
-            { role: "system", content: systemPrompt.trim() },
-            { role: "user", content: userPrompt.trim() }
+            {
+              role: "system",
+              content:
+                "You are a calm, senior freelance professional drafting a first reply to a client. Avoid pricing, timelines, guarantees, and sales language."
+            },
+            {
+              role: "user",
+              content: `
+Client message:
+${clientMessage}
+
+Client's real need:
+${realNeed}
+
+Why the freelancer fits:
+${fitReason}
+
+Write a calm first reply (6–8 sentences).
+              `.trim()
+            }
           ]
         })
       }
@@ -69,36 +57,28 @@ Write the first reply message.
 
     const data = await groqRes.json();
 
-    // 🔐 Defensive extraction (Groq-safe)
     let reply = "";
-
     const content = data?.choices?.[0]?.message?.content;
 
     if (typeof content === "string") {
       reply = content;
     } else if (Array.isArray(content)) {
-      // Groq sometimes returns structured content
-      reply = content
-        .map(part => (typeof part.text === "string" ? part.text : ""))
-        .join("")
-        .trim();
+      reply = content.map(c => c.text || "").join("");
     }
 
-    // 🚨 Graceful failure, never throw
-    if (!reply || reply.length < 20) {
-      return res.status(200).json({
-        reply:
-          "Thanks for reaching out. From what I understand, you’re looking to get this right early and avoid unnecessary back-and-forth. I’ve worked in similar situations where clarity upfront helped things move smoothly. Happy to walk you through how I’d approach this."
-      });
+    // NEVER throw. Ever.
+    if (!reply || reply.trim().length < 20) {
+      reply =
+        "Thanks for reaching out. From what I understand, getting clarity early seems important here. I’ve worked with similar situations before and can help guide things in the right direction. Happy to discuss this further.";
     }
 
-    return res.status(200).json({ reply });
+    return res.status(200).json({ reply: reply.trim() });
 
   } catch (err) {
-    console.error("Groq error:", err);
+    console.error("Groq failure:", err);
     return res.status(200).json({
       reply:
-        "Thanks for sharing the details. From what I understand, getting clarity early seems important here. I’ve worked with similar situations before and can help guide things in the right direction. Happy to discuss this further."
+        "Thanks for sharing the details. From what I understand, clarity upfront will be helpful here. I’ve worked on similar situations before and would be happy to walk you through my approach."
     });
   }
 }
