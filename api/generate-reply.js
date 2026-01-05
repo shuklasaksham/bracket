@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  if (!process.env.open_ai_key) {
+  if (!process.env.groq_key) {
     return res.status(500).json({
       reply: "AI is not configured yet."
     });
@@ -20,15 +20,16 @@ export default async function handler(req, res) {
     }
 
     const groqRes = await fetch(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.open_ai_key}`
-        },
-        body: JSON.stringify({
-           model: "gpt-oss",
+  "https://api.groq.com/openai/v1/chat/completions",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.groq_key}`
+    },
+    body: JSON.stringify({
+      model: "gpt-oss-120b",
+      temperature: 0.4,
           messages: [
             {
               role: "system",
