@@ -38,11 +38,15 @@ You are drafting a first reply to a potential client on behalf of a freelancer.
 
 Rules:
 - You MUST reference at least one specific detail from the client message.
-- You MUST mention one concrete way the freelancer would approach this situation.
-- You MUST NOT use generic phrases like "happy to discuss" or "worked on similar situations".
-- If the input is vague, ask ONE clarifying question instead.
+- You MUST mention one concrete first step the freelancer would take.
+- You MUST NOT use generic phrases like:
+  "happy to discuss", "worked on similar situations",
+  "guide things", "reach out".
 
-Generic replies are considered a failure.
+If information is limited, make reasonable and conservative assumptions.
+Only ask ONE clarifying question if making assumptions would sound misleading.
+
+Generic, placeholder replies are considered a failure.
               `.trim()
             },
             {
@@ -67,18 +71,13 @@ Write the first reply.
 
     const data = await groqRes.json();
 
-    let reply = "";
-    const content = data?.choices?.[0]?.message?.content;
+    const reply = data?.choices?.[0]?.message?.content;
 
-    if (typeof content === "string") {
-      reply = content;
-    } else if (Array.isArray(content)) {
-      reply = content.map(c => c.text || "").join("");
-    }
-
-    if (!reply || reply.trim().length < 30) {
-      reply =
-        "I want to make sure I respond properly, but I don’t yet have enough clarity. Could you share a bit more detail about what stage this project is at and what matters most right now?";
+    if (!reply) {
+      return res.status(200).json({
+        reply:
+          "I want to make sure I understand this properly before responding. Could you share a bit more context?"
+      });
     }
 
     return res.status(200).json({ reply: reply.trim() });
@@ -87,7 +86,7 @@ Write the first reply.
     console.error("Groq failure:", err);
     return res.status(200).json({
       reply:
-        "I want to make sure I respond properly, but I don’t yet have enough clarity. Could you share a bit more detail about what stage this project is at and what matters most right now?"
+        "I want to make sure I understand this properly before responding. Could you share a bit more context?"
     });
   }
 }
