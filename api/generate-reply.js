@@ -11,6 +11,7 @@ export default async function handler(req, res) {
 
   try {
     const { clientMessage, realNeed, fitReason } = req.body || {};
+    console.log("INPUTS:", { clientMessage, realNeed, fitReason });
 
     if (!clientMessage || !realNeed || !fitReason) {
       return res.status(200).json({
@@ -32,8 +33,17 @@ export default async function handler(req, res) {
           messages: [
             {
               role: "system",
-              content:
-                "You are a calm, senior freelance professional drafting a first reply to a client. Avoid pricing, timelines, guarantees, and sales language."
+              content: `
+You are drafting a first reply to a potential client on behalf of a freelancer.
+
+Rules:
+- You MUST reference at least one specific detail from the client message.
+- You MUST mention one concrete way the freelancer would approach this situation.
+- You MUST NOT use generic phrases like "happy to discuss" or "worked on similar situations".
+- If the input is vague, ask ONE clarifying question instead.
+
+Generic replies are considered a failure.
+              `.trim()
             },
             {
               role: "user",
@@ -41,13 +51,13 @@ export default async function handler(req, res) {
 Client message:
 ${clientMessage}
 
-Client's real need:
+What the client actually needs:
 ${realNeed}
 
-Why the freelancer fits:
+Why the freelancer is a good fit:
 ${fitReason}
 
-Write a calm first reply (6–8 sentences).
+Write the first reply.
               `.trim()
             }
           ]
@@ -66,10 +76,9 @@ Write a calm first reply (6–8 sentences).
       reply = content.map(c => c.text || "").join("");
     }
 
-    // NEVER throw. Ever.
-    if (!reply || reply.trim().length < 20) {
+    if (!reply || reply.trim().length < 30) {
       reply =
-        "Thanks for reaching out. From what I understand, getting clarity early seems important here. I’ve worked with similar situations before and can help guide things in the right direction. Happy to discuss this further.";
+        "I want to make sure I respond properly, but I don’t yet have enough clarity. Could you share a bit more detail about what stage this project is at and what matters most right now?";
     }
 
     return res.status(200).json({ reply: reply.trim() });
@@ -78,13 +87,7 @@ Write a calm first reply (6–8 sentences).
     console.error("Groq failure:", err);
     return res.status(200).json({
       reply:
-        "Thanks for sharing the details. From what I understand, clarity upfront will be helpful here. I’ve worked on similar situations before and would be happy to walk you through my approach."
+        "I want to make sure I respond properly, but I don’t yet have enough clarity. Could you share a bit more detail about what stage this project is at and what matters most right now?"
     });
   }
-  console.log("INPUTS:", {
-  clientMessage,
-  realNeed,
-  fitReason
-});
-
 }
