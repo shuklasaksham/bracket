@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bracket — Draft your first reply</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e5e7eb;
+      --primary: #6366f1;
+      --secondary: #22c55e;
+      --gradient: linear-gradient(135deg, #6366f1, #22c55e);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Quicksand", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrapper {
+      max-width: 780px;
+      margin: auto;
+      padding: 40px 24px 64px;
+    }
+
+    /* ───────── STEPPER ───────── */
+
+    .stepper-wrap {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step {
+      width: 25%;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      font-weight: 600;
+    }
+
+    .step.active,
+    .step.done {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .step.active .step-circle,
+    .step.done .step-circle {
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+    }
+
+    /* ───────── PROGRESS LINE ───────── */
+
+    .progress-track {
+      position: absolute;
+      top: 14px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--border);
+      border-radius: 999px;
+      z-index: 1;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--gradient);
+      border-radius: 999px;
+      animation: pulse 2s infinite;
+      transition: width 0.5s ease;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(99,102,241,0); }
+      100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+    }
+
+    /* ───────── CONTENT ───────── */
+
+    .step-content {
+      display: none;
+      animation: fadeUp 0.35s ease;
+    }
+
+    .step-content.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      max-width: 560px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 190px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font-family: "Quicksand", system-ui, sans-serif;
+      font-size: 16px;
+      resize: vertical;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+    }
+
+    .hint {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* ───────── STEP 3 HELPERS ───────── */
+
+    .helpers {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .helper {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .helper:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ───────── ACTIONS ───────── */
+
+    .actions {
+      margin-top: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .primary-btn {
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: var(--gradient);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .secondary-btn {
+      font-size: 14px;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ───────── FINAL OUTPUT ───────── */
+
+    .output-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- STEPPER -->
+  <div class="stepper-wrap">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="stepper">
+      <div class="step active" id="indicator1">
+        <div class="step-circle">1</div>
+        Client message
+      </div>
+      <div class="step" id="indicator2">
+        <div class="step-circle">2</div>
+        Real need
+      </div>
+      <div class="step" id="indicator3">
+        <div class="step-circle">3</div>
+        Your fit
+      </div>
+      <div class="step" id="indicator4">
+        <div class="step-circle">4</div>
+        Final reply
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step-content active" id="step1">
+    <h1>What did the client say?</h1>
+    <div class="sub">Paste the message as-is. Raw is perfect.</div>
+    <textarea placeholder="Paste the client message here…"></textarea>
+    <div class="hint">// Nothing is sent automatically</div>
+    <div class="actions">
+      <span></span>
+      <button class="primary-btn" onclick="goToStep(2)">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-content" id="step2">
+    <h1>What do you think they actually need?</h1>
+    <div class="sub">Your interpretation — not the perfect answer.</div>
+    <textarea placeholder="They want clarity, guidance, and someone dependable…"></textarea>
+    <div class="hint">// Rough thinking is enough</div>
+    <div class="actions">
+      <button class="secondary-btn" onclick="goToStep(1)">← Back</button>
+      <button class="primary-btn" onclick="goToStep(3)">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-content" id="step3">
+    <h1>Why do you make sense for this?</h1>
+    <div class="sub">No selling. Just your reasoning.</div>
+    <textarea id="fitInput" placeholder="I’ve worked on similar situations where…"></textarea>
+
+    <div class="helpers">
+      <div class="helper" onclick="addHelper('I’ve handled a similar type of project before.')">similar project</div>
+      <div class="helper" onclick="addHelper('I often help clients get clarity early.')">early clarity</div>
+      <div class="helper" onclick="addHelper('I’m comfortable working with unclear requirements.')">unclear scope</div>
+      <div class="helper" onclick="addHelper('I focus on being reliable and responsive.')">reliability</div>
+    </div>
+
+    <div class="hint">// This is only used to frame the reply</div>
+
+    <div class="actions">
+      <button class="secondary-btn" onclick="goToStep(2)">← Back</button>
+      <button class="primary-btn" onclick="goToStep(4)">Generate reply</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-content" id="step4">
+    <h1>Your first reply</h1>
+    <div class="sub">Edit freely. Nothing is sent automatically.</div>
+
+    <div class="output-box">
+Hi,
+
+From what I understand, you’re looking to get this right early,
+without unnecessary back-and-forth.
+
+I’ve worked on similar situations where clarity upfront helped
+projects move faster later on — that’s where I’d be a good fit.
+
+Happy to walk you through how I’d approach this.
+    </div>
+
+    <div class="hint">// Review carefully · Don’t send yet</div>
+
+    <div class="actions">
+      <button class="secondary-btn" onclick="goToStep(3)">← Back</button>
+      <button class="primary-btn">Copy reply</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function goToStep(step) {
+    document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+
+    for (let i = 1; i <= 4; i++) {
+      const el = document.getElementById('indicator' + i);
+      el.classList.remove('active', 'done');
+      if (i < step) el.classList.add('done');
+      if (i === step) el.classList.add('active');
+    }
+
+    const progress = document.getElementById('progressFill');
+    const widths = ['0%', '33%', '66%', '100%'];
+    progress.style.width = widths[step - 1];
+
+    if (step === 4) {
+      progress.style.animation = 'none';
+    }
+  }
+
+  function addHelper(text) {
+    const input = document.getElementById('fitInput');
+    input.value += (input.value ? ' ' : '') + text;
+    input.focus();
+  }
+</script>
+
+</body>
+</html>
