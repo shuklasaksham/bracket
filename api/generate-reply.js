@@ -146,6 +146,7 @@ You must:
  ask about budget
  negotiate or justify cost
  offer discounts or guarantees
+ price can change realistically based on client's relationship with the freelancer
 
 Use language that allows the client to selfselect into serious work or step away.
 
