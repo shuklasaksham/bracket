@@ -81,4 +81,10 @@ Write a calm first reply (6–8 sentences).
         "Thanks for sharing the details. From what I understand, clarity upfront will be helpful here. I’ve worked on similar situations before and would be happy to walk you through my approach."
     });
   }
+  console.log("INPUTS:", {
+  clientMessage,
+  realNeed,
+  fitReason
+});
+
 }
