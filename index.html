@@ -107,6 +107,13 @@
     .meta {
       font-size: 13px;
       color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .ai-note {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: "JetBrains Mono", monospace;
       margin-bottom: 20px;
     }
 
@@ -263,6 +270,13 @@
     .cta-box p {
       font-size: 16px;
       color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .cta-note {
+      font-size: 13px;
+      color: var(--muted);
+      font-family: "JetBrains Mono", monospace;
       margin-bottom: 20px;
     }
 
@@ -279,11 +293,11 @@
   <div class="nav-inner">
     <div class="logo">Bracket</div>
     <div class="nav-links">
-      <a href="#">Product</a>
-      <a href="#">How it works</a>
-      <a href="#">Why Bracket</a>
+      <a href="#product">Product</a>
+      <a href="#how">How it works</a>
+      <a href="#why">Why Bracket</a>
     </div>
-    <a class="nav-cta" href="/draft-step-1.html">Try it free</a>
+    <a class="nav-cta" href="/draft-reply.html">Try it free</a>
   </div>
 </nav>
 
@@ -301,9 +315,10 @@
     </p>
 
     <div class="meta">⏱ Takes ~5 minutes · No account required</div>
+    <div class="ai-note">// AI-assisted drafting · You stay in control</div>
 
     <div class="hero-actions">
-      <a class="primary-btn" href="/draft-step-1.html">Draft your first reply</a>
+      <a class="primary-btn" href="/draft-reply.html">Draft your first reply</a>
       <a class="secondary-btn" href="#">See an example</a>
     </div>
   </div>
@@ -325,7 +340,7 @@ Happy to walk you through how I’d approach this.
 </div>
 
 <!-- PROBLEM -->
-<section>
+<section id="why">
   <h2>You shouldn’t feel anxious after sending a reply.</h2>
   <p class="section-sub">
     But most freelancers do — especially at the start.
@@ -339,7 +354,7 @@ Happy to walk you through how I’d approach this.
 </section>
 
 <!-- SOLUTION -->
-<section>
+<section id="how">
   <h2>Bracket gives you clarity before you hit send.</h2>
   <p class="section-sub">
     A simple structure to think clearly — then write.
@@ -365,7 +380,8 @@ Happy to walk you through how I’d approach this.
   <div class="cta-box">
     <h2>Try it once.</h2>
     <p>You’ll know if it’s for you in five minutes.</p>
-    <a class="primary-btn" href="/draft-step-1.html">Draft your first reply</a>
+    <div class="cta-note">// Nothing is sent automatically</div>
+    <a class="primary-btn" href="/draft-reply.html">Draft your first reply</a>
   </div>
 </section>
 
