@@ -28,7 +28,7 @@ export default async function handler(req, res) {
           Authorization: `Bearer ${process.env.groq_key}`
         },
         body: JSON.stringify({
-           model: "llama-3.1-8b-instant"
+           model: "llama-3.1-8b-instant",
           messages: [
             {
               role: "system",
