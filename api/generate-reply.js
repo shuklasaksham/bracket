@@ -237,7 +237,7 @@ Write the first reply.
       model: "gemini-2.5-flash", // use stable for now
       contents: [
         {
-          role: "user",
+          role: "system",
           parts: [{ text: prompt }]
         }
       ],
