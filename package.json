@@ -1,7 +1,7 @@
 {
   "name": "bracket",
   "version": "1.0.0",
-  "type": "module"
+  "type": "module",
   "dependencies": {
     "@google/genai": "^0.x.x"
   }
