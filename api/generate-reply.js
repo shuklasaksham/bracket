@@ -236,7 +236,7 @@ Write the first reply.
 `.trim();
 
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-pro", // use stable for now
+      model: "gemini-2.5-flash", // use stable for now
       contents: [
         {
           role: "user",
