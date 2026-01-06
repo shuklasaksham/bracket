@@ -1,5 +1,3 @@
-import { GoogleGenAI } from "@google/genai";
-
 const ai = new GoogleGenAI({
   apiKey: process.env.geminikey01
 });
@@ -189,13 +187,11 @@ Not all replies require all five.
  Length & Style
 
  Keep replies under 120 words
- Prefer 2–3 short paragraphs
+ Prefer 4–5 short paragraphs
  Avoid long explanations
  Avoid overly short or dismissive replies
 
 The reply should feel like something a real freelancer typed, paused, reread, and sent.
-
-
 
  Failure Conditions
 
