@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       Authorization: `Bearer ${process.env.key01}`
     },
     body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
+      model: "groq/compound",
       temperature: 0.4,
           messages: [
             {
