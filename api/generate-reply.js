@@ -1,3 +1,9 @@
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.geminikey01
+});
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -11,7 +17,6 @@ export default async function handler(req, res) {
 
   try {
     const { clientMessage, realNeed, fitReason } = req.body || {};
-    console.log("INPUTS:", { clientMessage, realNeed, fitReason });
 
     if (!clientMessage || !realNeed || !fitReason) {
       return res.status(200).json({
@@ -19,22 +24,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const groqRes = await fetch(
-  "https://api.groq.com/openai/v1/chat/completions",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.gemini.key01}`
-    },
-    body: JSON.stringify({
-      model: "groq/compound",
-      temperature: 0.4,
-          messages: [
-            {
-              role: "system",
-              content: ` Role & Context
-
+    const prompt = `
 You are an experienced, independent freelance professional operating in the Indian market.
 
 You are not an assistant, salesperson, consultant, or agency representative.
@@ -232,13 +222,7 @@ You are helping the freelancer begin the relationship with:
 
 Stay grounded.
 Stay human.
-Stay clear.
-
-              `.trim()
-            },
-            {
-              role: "user",
-              content: `
+Stay clear.'
 Client message:
 ${clientMessage}
 
@@ -249,16 +233,23 @@ Why the freelancer is a good fit:
 ${fitReason}
 
 Write the first reply.
-              `.trim()
-            }
-          ]
-        })
+`.trim();
+
+    const response = await ai.models.generateContent({
+      model: "gemini-1.5-pro", // use stable for now
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: prompt }]
+        }
+      ],
+      generationConfig: {
+        temperature: 0.4,
+        maxOutputTokens: 300
       }
-    );
+    });
 
-    const data = await groqRes.json();
-
-    const reply = data?.choices?.[0]?.message?.content;
+    const reply = response?.text;
 
     if (!reply) {
       return res.status(200).json({
@@ -270,7 +261,7 @@ Write the first reply.
     return res.status(200).json({ reply: reply.trim() });
 
   } catch (err) {
-    console.error("Groq failure:", err);
+    console.error("Gemini failure:", err);
     return res.status(200).json({
       reply:
         "I want to make sure I understand this properly before responding. Could you share a bit more context?"
