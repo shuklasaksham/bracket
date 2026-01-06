@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       Authorization: `Bearer ${process.env.key01}`
     },
     body: JSON.stringify({
-      model: "openai/gpt-oss-120b",
+      model: "llama-3.1-8b-instant",
       temperature: 0.4,
           messages: [
             {
