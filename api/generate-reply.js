@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  if (!process.env.key01) {
+  if (!process.env.geminikey01) {
     return res.status(500).json({
       reply: "AI is not configured yet."
     });
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.key01}`
+      Authorization: `Bearer ${process.env.gemini.key01}`
     },
     body: JSON.stringify({
       model: "groq/compound",
