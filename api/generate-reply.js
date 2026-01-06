@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  if (!process.env.groq_key) {
+  if (!process.env.key01) {
     return res.status(500).json({
       reply: "AI is not configured yet."
     });
@@ -25,10 +25,10 @@ export default async function handler(req, res) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.groq_key}`
+      Authorization: `Bearer ${process.env.key01}`
     },
     body: JSON.stringify({
-      model: "gpt-oss-120b",
+      model: "openai/gpt-oss-120b",
       temperature: 0.4,
           messages: [
             {
